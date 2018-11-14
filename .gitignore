@@ -1,0 +1,10 @@
+.idea
+
+healthcare-api/node_modules/*
+healthcare-api/.idea/*
+healthcare-api/.env
+
+healthcare-frontend/.cache
+healthcare-frontend/.idea
+healthcare-frontend/dist
+healthcare-frontend/node_modules/*
