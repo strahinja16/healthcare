@@ -13,6 +13,7 @@ export function register(name, email, password) {
     name,
     email,
     password,
+    isDoctor: true,
   });
 }
 

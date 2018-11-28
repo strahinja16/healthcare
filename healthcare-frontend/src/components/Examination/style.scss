@@ -1,0 +1,42 @@
+.form {
+  margin: auto;
+
+  .errorMessage {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .label {
+    background-color: transparent !important;
+    padding-left: 0 !important;
+  }
+}
+
+.maxWidth{
+  width: 100%;
+}
+
+.autoMargin{
+  margin: auto;
+}
+
+.mTop{
+  margin-top: 50px;
+}
+
+.classItem{
+  cursor: pointer;
+}
+
+.ceneterAlign{
+  text-align: center;
+}
+
+.addIcon{
+  float:right;
+  cursor: pointer;
+}
+
+.addIcon:hover{
+  text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}

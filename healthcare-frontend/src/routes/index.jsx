@@ -5,6 +5,11 @@ import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { Loader } from 'semantic-ui-react';
 import Loadable from 'react-loadable';
 import AppLayout from '../components/AppLayout';
+import Home from '../pages/Home';
+import Patient from '../pages/Patient';
+import CreatePrescriptionPage from '../pages/CreatePrescriptionPage';
+import CreateExaminationPage from '../pages/CreateExaminationPage';
+import Charts from '../pages/Charts';
 
 const dynamicImport = loader =>
   Loadable({
@@ -16,8 +21,12 @@ const AdminRoutes = () => <Route path="/admin" render={() => 'Admin route'} />;
 
 const LoggedInList = ({ isAdmin }) => (
   <Switch>
-    <Route exact path="/" render={() => 'Hello world.'} />
+    <Route exact path="/patient/:id" component={Patient} />
+    <Route exact path="/patient/:id/prescription" component={CreatePrescriptionPage} />
+    <Route exact path="/patient/:id/examination" component={CreateExaminationPage} />
+    <Route exact path="/patient/:id/charts" component={Charts} />
     <Route path="/logout" component={dynamicImport(() => import('../components/Logout'))} />
+    <Route path="/" component={Home} />
     {isAdmin && <AdminRoutes />}
     <Redirect to="/" />
   </Switch>

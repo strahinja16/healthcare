@@ -1,6 +1,5 @@
 
 import axios from 'axios';
-
 const { API_URL } = process.env;
 
 const development = process.env.NODE_ENV === 'development';
