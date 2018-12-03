@@ -1,13 +1,13 @@
 version: '3'
 
 services:
-  api:
-    build: ./healthcare-api
+  nest-api:
+    build: ./healthcare-nest-api
     ports:
       - "3000:3000"
-    command: npm start
+    command: npm run start:dev
     volumes:
-      - ./healthcare-api:/app
+      - ./healthcare-nest-api:/app
       - /app/node_modules
     depends_on:
       - postgres
@@ -41,4 +41,4 @@ services:
     environment:
       - NODE_ENV=development
     depends_on:
-      - api
+      - nest-api
