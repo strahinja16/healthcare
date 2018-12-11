@@ -1,13 +1,15 @@
 FROM node:latest
 
 RUN mkdir -p /app/src
+RUN apt-get update
+RUN apt-get install --yes bash
+
 WORKDIR /app
 
-RUN apt-get update && apt-get install --yes bash build-essential python
-
 ADD . /app
-RUN npm ci
-RUN npm install -g nodemon
+ADD package.json /app/package.json
+
+RUN npm ci --silent
 
 EXPOSE 3000
-CMD ["node", "/app/src/bin/www"]
+CMD ["npm", "run", "start:dev"]

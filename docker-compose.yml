@@ -2,12 +2,12 @@ version: '3'
 
 services:
   nest-api:
-    build: ./healthcare-nest-api
+    build: ./healthcare-api
     ports:
       - "3000:3000"
     command: npm run start:dev
     volumes:
-      - ./healthcare-nest-api:/app
+      - ./healthcare-api:/app
       - /app/node_modules
     depends_on:
       - postgres
