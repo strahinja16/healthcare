@@ -1,14 +1,17 @@
-import {MiddlewareConsumer, Module, RequestMethod} from '@nestjs/common';
-import { DatabaseModule } from '../database/database.module';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
-import { usersProviders } from './users.providers';
-import {AuthMiddleware} from '../../middleware';
+import { AuthMiddleware } from '../../middleware';
+import { User } from './entity/user.entity';
 
 @Module({
-    imports: [DatabaseModule],
+    imports: [TypeOrmModule.forFeature([User])],
     controllers: [UsersController],
-    providers: [UsersService, ...usersProviders],
+    providers: [
+        UsersService
+    ],
+    exports: [UsersService]
 })
 export class UsersModule {
     public configure(consumer: MiddlewareConsumer) {

@@ -1,46 +1,25 @@
-import {
-    Default,
-    Table,
-    Column,
-    Model,
-    IsUUID,
-    CreatedAt,
-    UpdatedAt,
-    DeletedAt,
-    PrimaryKey,
-    IsEmail,
-} from 'sequelize-typescript';
-import Sequelize from 'sequelize';
-import { IDefineOptions } from 'sequelize-typescript/lib/interfaces/IDefineOptions';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, } from 'typeorm';
+import { IsEmail, IsUUID } from 'class-validator';
 
-const tableOptions: IDefineOptions = { timestamps: true } as IDefineOptions;
-@Table(tableOptions)
-export class User extends Model<User> {
-
-    @Default(Sequelize.UUIDV4)
-    @IsUUID(4)
-    @PrimaryKey
-    @Column({
-        field: 'ID',
-    })
+@Entity()
+export class User {
+    @IsUUID("4")
+    @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @Column
+    @Column()
     name: string;
 
-    @IsEmail
-    @Column
+    @IsEmail()
+    @Column()
     email: string;
 
-    @Column
+    @Column()
     password: string;
 
-    @CreatedAt
-    creationDate: Date;
+    @CreateDateColumn({type: "timestamp"})
+    createdAt: Date;
 
-    @UpdatedAt
-    updatedOn: Date;
-
-    @DeletedAt
-    deletionDate: Date;
+    @UpdateDateColumn({type: "timestamp"})
+    updatedAt: Date;
 }

@@ -1,0 +1,12 @@
+{
+  "type": "postgres",
+  "host": "postgres",
+  "username": "root",
+  "password": "root",
+  "database": "healthcare",
+  "entities": ["src/**/**.entity{.ts,.js}"],
+  "migrations": ["src/migrations/*.ts"],
+  "cli": {
+    "migrationsDir": "src/migrations"
+  }
+}
