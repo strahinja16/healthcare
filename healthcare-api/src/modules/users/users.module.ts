@@ -19,6 +19,7 @@ export class UsersModule {
             .apply(AuthMiddleware)
             .forRoutes(
                 { path: '/users/:id', method: RequestMethod.DELETE },
+                { path: '/users', method: RequestMethod.GET },
             );
     }
 }

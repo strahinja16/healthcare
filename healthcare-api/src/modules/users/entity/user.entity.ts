@@ -1,7 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, } from 'typeorm';
 import { IsEmail, IsUUID } from 'class-validator';
 
-@Entity()
+@Entity({
+  name: "users",
+})
 export class User {
     @IsUUID("4")
     @PrimaryGeneratedColumn("uuid")

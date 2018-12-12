@@ -1,5 +1,5 @@
 
-import { Injectable, Inject } from '@nestjs/common';
+import {Injectable, HttpException, HttpStatus} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {DeleteResult, Repository} from 'typeorm';
 import { CreateUserDto } from './dto/createUser.dto';
@@ -30,12 +30,10 @@ export class UsersService {
 
     async update(id: string, newValue: CreateUserDto): Promise<User | null> {
 
-        console.log(newValue);
         let user = await this.usersRepository.findOne(id);
 
         if (!user.id) {
-            // tslint:disable-next-line:no-console
-            console.error('user doesn\'t exist');
+            throw new HttpException('User does not exist', HttpStatus.BAD_REQUEST);
         }
 
         user = this._assign(user, newValue);
