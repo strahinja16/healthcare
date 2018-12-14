@@ -6,7 +6,7 @@ import {
     Param,
     Body,
     Post,
-    Patch,
+    Put,
     Delete,
     UsePipes,
     ValidationPipe,
@@ -35,12 +35,11 @@ export class UsersController {
     @Post()
     @UsePipes(new ValidationPipe())
     public async createUser(@Response() res, @Body() createUserDto: CreateUserDto) {
-
         const user = await this.usersService.create(createUserDto);
         return res.status(HttpStatus.OK).json(user);
     }
 
-    @Patch('/:id')
+    @Put('/:id')
     public async updateUser(@Param() param, @Response() res, @Body() body) {
 
         const user = await this.usersService.update(param.id, body);
