@@ -11,9 +11,7 @@ import {
 } from '@nestjs/common';
 import { PrescriptionsService } from './prescriptions.service';
 import { CreatePrescriptionDto} from './dto/createPrescription.dto';
-import { ApiUseTags } from '@nestjs/swagger';
 
-@ApiUseTags('prescriptions')
 @Controller('prescriptions')
 export class PrescriptionsController {
     constructor(private readonly prescriptionsService: PrescriptionsService) { }

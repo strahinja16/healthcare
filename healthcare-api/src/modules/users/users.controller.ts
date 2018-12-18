@@ -13,9 +13,7 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/createUser.dto';
-import { ApiUseTags } from '@nestjs/swagger';
 
-@ApiUseTags('users')
 @Controller('users')
 export class UsersController {
     constructor(private readonly usersService: UsersService) { }
@@ -28,8 +26,28 @@ export class UsersController {
 
     @Get('/:id')
     public async getUser(@Response() res, @Param() param) {
-        const users = await this.usersService.findById(param.id);
-        return res.status(HttpStatus.OK).json(users);
+        const user = await this.usersService.findById(param.id);
+        return res.status(HttpStatus.OK).json(user);
+    }
+
+    @Get('/:id/prescriptions')
+    public async getUserPrescriptions(@Response() res, @Param() param) {
+        const user = await this.usersService.findOne({ id: param.id, relations: ["prescriptions"] });
+        return res.status(HttpStatus.OK).json(user.prescriptions);
+    }
+
+
+    @Get('/:id/measurements')
+    public async getUserMeasurements(@Response() res, @Param() param) {
+        const user = await this.usersService.findOne({ id: param.id, relations: ["measurements"] });
+        return res.status(HttpStatus.OK).json(user.measurements);
+    }
+
+
+    @Get('/:id/examinations')
+    public async getUserExaminations(@Response() res, @Param() param) {
+        const user = await this.usersService.findOne({id: param.id, relations: ["examinations"] });
+        return res.status(HttpStatus.OK).json(user.examinations);
     }
 
     @Post()

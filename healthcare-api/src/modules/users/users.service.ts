@@ -4,9 +4,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import {DeleteResult, Repository} from 'typeorm';
 import { CreateUserDto } from './dto/createUser.dto';
 import { User } from './entity/user.entity';
+import {IUsersService} from "./interfaces/users-service.interface";
 
 @Injectable()
-export class UsersService {
+export class UsersService implements IUsersService {
     constructor(
         @InjectRepository(User)
         private readonly usersRepository: Repository<User>,
@@ -25,7 +26,7 @@ export class UsersService {
     }
 
     async create(createUserDto: CreateUserDto): Promise<User> {
-        return await this.usersRepository.save(createUserDto as User);
+        return await this.usersRepository.save(this.convertDtoToEntity(createUserDto));
     }
 
     async update(id: string, newValue: CreateUserDto): Promise<User | null> {
@@ -46,7 +47,16 @@ export class UsersService {
         return await this.usersRepository.delete(id);
     }
 
-    private _assign(user: CreateUserDto, newValue: CreateUserDto): User {
+    private convertDtoToEntity(dto: CreateUserDto): User {
+        let user: Partial<User> =  {
+            ...dto,
+            birthday: new Date(dto.birthday),
+        };
+
+        return user as User;
+    }
+
+    private _assign(user: User, newValue: CreateUserDto) {
         // tslint:disable-next-line:no-string-literal
         for (const key of Object.keys(newValue)) {
             if (user[key] !== newValue[key]) {
@@ -54,6 +64,6 @@ export class UsersService {
                 user[key] = newValue[key];
             }
         }
-        return user as User;
+        return user;
     }
 }

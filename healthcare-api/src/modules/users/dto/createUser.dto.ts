@@ -1,47 +1,49 @@
-import { ApiModelProperty } from '@nestjs/swagger';
-import {IsBoolean, IsEmail, IsNumber, IsString} from 'class-validator';
+import {IsBoolean, IsEmail, IsNumber, IsString, IsOptional} from 'class-validator';
 import {BloodType} from "../enum/blood-type.enum";
 import {Gender} from "../enum/gender.enum";
 
 export class CreateUserDto {
 
     @IsString()
-    @ApiModelProperty()
     readonly name: string;
 
     @IsEmail()
-    @ApiModelProperty()
     readonly email: string;
 
     @IsString()
-    @ApiModelProperty()
     readonly password: string;
 
+    @IsOptional()
     @IsBoolean()
-    @ApiModelProperty()
     readonly isDoctor: boolean;
 
+    @IsOptional()
     @IsString()
-    @ApiModelProperty()
     readonly doctorId: string;
 
+    @IsOptional()
     @IsNumber()
-    @ApiModelProperty()
     readonly height: number;
 
+    @IsOptional()
     @IsNumber()
-    @ApiModelProperty()
     readonly weight: number;
 
     @IsString()
-    @ApiModelProperty()
     readonly bloodType: BloodType;
 
     @IsString()
-    @ApiModelProperty()
     readonly gender: Gender;
 
+    @IsOptional()
     @IsString()
-    @ApiModelProperty()
     readonly birthday: string;
+
+    @IsOptional()
+    @IsString()
+    readonly registerToken: string;
+
+    @IsOptional()
+    @IsString()
+    readonly status: string;
 }

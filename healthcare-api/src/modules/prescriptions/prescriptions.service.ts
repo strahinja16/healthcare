@@ -1,5 +1,5 @@
 
-import {Injectable, HttpException, HttpStatus, Inject} from '@nestjs/common';
+import {Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository} from 'typeorm';
 import { CreatePrescriptionDto } from './dto/createPrescription.dto';
@@ -25,14 +25,18 @@ export class PrescriptionsService {
 
     async create(createPrescriptionDto: CreatePrescriptionDto): Promise<Prescription | HttpException> {
 
-        const { userId, ... rest} = createPrescriptionDto;
+        const { userId, ... prescriptionDto} = createPrescriptionDto;
 
         const user: User = await this.usersRepository.findOne(userId);
         if (!user) {
             return new HttpException('User not found.', HttpStatus.BAD_REQUEST);
         }
 
-        let prescription = { ... rest, user: null };
+        let prescription: Partial<Prescription> = {
+            ... prescriptionDto,
+            user: null,
+            dueDate: new Date(prescriptionDto.dueDate)
+        };
         prescription.user = user;
 
         return await this.prescriptionsRepository.save(prescription as Prescription);

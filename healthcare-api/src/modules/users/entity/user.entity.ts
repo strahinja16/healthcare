@@ -5,6 +5,8 @@ import { Measurement } from "../../measurements/entity/measurement.entity";
 import { Prescription } from "../../prescriptions/entity/prescription.entity";
 import { Gender } from "../enum/gender.enum";
 import { BloodType } from "../enum/blood-type.enum";
+import {PasswordRecovery} from "../../auth/entity/password-recovery.entity";
+import {Status} from "../enum/status.enum";
 
 @Entity({
   name: "users",
@@ -18,7 +20,9 @@ export class User {
     name: string;
 
     @IsEmail()
-    @Column()
+    @Column({
+        unique: true,
+    })
     email: string;
 
     @Column()
@@ -27,13 +31,19 @@ export class User {
     @Column()
     isDoctor: boolean;
 
-    @Column()
+    @Column({
+        nullable: true,
+    })
     doctorId: string;
 
-    @Column()
+    @Column({
+        nullable: true,
+    })
     height: number;
 
-    @Column()
+    @Column({
+        nullable: true,
+    })
     weight: number;
 
     @Column('varchar')
@@ -42,8 +52,22 @@ export class User {
     @Column('varchar')
     gender: Gender;
 
-    @Column()
+    @Column({
+        nullable: true,
+    })
     birthday: Date;
+
+    @Column({
+        type: "varchar",
+        default: Status.Inactive,
+    })
+    status: Status;
+
+    @IsUUID("4")
+    @Column({
+        nullable: true,
+    })
+    registerToken: string;
 
     @OneToMany(type => Examination, examination => examination.user)
     examinations: Examination[];
@@ -53,6 +77,9 @@ export class User {
 
     @OneToMany(type => Prescription, prescription => prescription.user)
     prescriptions: Prescription[];
+
+    @OneToMany(type => PasswordRecovery, passwordRecovery => passwordRecovery.user)
+    passwordRecoveries: PasswordRecovery[];
 
     @CreateDateColumn({type: "timestamp"})
     createdAt: Date;

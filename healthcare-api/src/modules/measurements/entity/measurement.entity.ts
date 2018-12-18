@@ -13,11 +13,17 @@ export class Measurement {
     @Column()
     pressure: string;
 
-    @Column()
-    sugar: string;
+    @Column({
+        type: "numeric",
+        precision: 2,
+    })
+    sugar: number;
 
-    @Column()
-    temperature: string;
+    @Column({
+        type: "numeric",
+        precision: 2,
+    })
+    temperature: number;
 
     @ManyToOne(type => User, user => user.measurements)
     user: User;

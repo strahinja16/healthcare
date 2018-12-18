@@ -7,6 +7,6 @@
   "entities": ["src/**/**.entity{.ts,.js}"],
   "migrations": ["src/migrations/*.ts"],
   "cli": {
-    "migrationsDir": "src/migrations"
+    "migrationsDir": "src/db/migrations"
   }
 }
