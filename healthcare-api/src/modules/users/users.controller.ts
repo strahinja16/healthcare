@@ -32,21 +32,19 @@ export class UsersController {
 
     @Get('/:id/prescriptions')
     public async getUserPrescriptions(@Response() res, @Param() param) {
-        const user = await this.usersService.findOne({ id: param.id, relations: ["prescriptions"] });
+        const user = await this.usersService.findOne({ id: param.id, relations: ['prescriptions'] });
         return res.status(HttpStatus.OK).json(user.prescriptions);
     }
 
-
     @Get('/:id/measurements')
     public async getUserMeasurements(@Response() res, @Param() param) {
-        const user = await this.usersService.findOne({ id: param.id, relations: ["measurements"] });
+        const user = await this.usersService.findOne({ id: param.id, relations: ['measurements'] });
         return res.status(HttpStatus.OK).json(user.measurements);
     }
 
-
     @Get('/:id/examinations')
     public async getUserExaminations(@Response() res, @Param() param) {
-        const user = await this.usersService.findOne({id: param.id, relations: ["examinations"] });
+        const user = await this.usersService.findOne({ id: param.id, relations: ['examinations'] });
         return res.status(HttpStatus.OK).json(user.examinations);
     }
 

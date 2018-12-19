@@ -1,3 +1,4 @@
+
 export enum BloodType {
     '0+' = '0+',
     '0-' = '0-',

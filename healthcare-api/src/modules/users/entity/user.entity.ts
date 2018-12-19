@@ -1,19 +1,47 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+} from 'typeorm';
 import { IsEmail, IsUUID } from 'class-validator';
-import { Examination } from "../../examinations/entity/examination.entity";
-import { Measurement } from "../../measurements/entity/measurement.entity";
-import { Prescription } from "../../prescriptions/entity/prescription.entity";
-import { Gender } from "../enum/gender.enum";
-import { BloodType } from "../enum/blood-type.enum";
-import {PasswordRecovery} from "../../auth/entity/password-recovery.entity";
-import {Status} from "../enum/status.enum";
+import { Examination } from '../../examinations/entity/examination.entity';
+import { Measurement } from '../../measurements/entity/measurement.entity';
+import { Prescription } from '../../prescriptions/entity/prescription.entity';
+import { Gender } from '../enum/gender.enum';
+import { BloodType } from '../enum/blood-type.enum';
+import { PasswordRecovery } from '../../auth/entity/password-recovery.entity';
+import { Status } from '../enum/status.enum';
+import { CreateUserDto } from '../dto/createUser.dto';
 
 @Entity({
-  name: "users",
+  name: 'users',
 })
 export class User {
-    @IsUUID("4")
-    @PrimaryGeneratedColumn("uuid")
+
+    constructor();
+    constructor(user: CreateUserDto);
+    constructor(user?: any)
+    {
+        this.id = user && user.id || undefined;
+        this.name = user && user.name || undefined;
+        this.email = user && user.email || undefined;
+        this.password = user && user.password || undefined;
+        this.isDoctor = user && user.isDoctor || undefined;
+        this.doctorId = user && user.doctorId || undefined;
+        this.height = user && user.height || undefined;
+        this.weight = user && user.weight || undefined;
+        this.bloodType = user && user.bloodType || undefined;
+        this.gender = user && user.gender || undefined;
+        this.birthday = user && new Date(user.birthday) || undefined;
+        this.registerToken = user && user.registerToken || undefined;
+        this.status = user && user.status === Status.Active ? Status.Active : Status.Inactive || undefined;
+    }
+
+    @IsUUID('4')
+    @PrimaryGeneratedColumn('uuid')
     id: string;
 
     @Column()
@@ -58,12 +86,12 @@ export class User {
     birthday: Date;
 
     @Column({
-        type: "varchar",
+        type: 'varchar',
         default: Status.Inactive,
     })
     status: Status;
 
-    @IsUUID("4")
+    @IsUUID('4')
     @Column({
         nullable: true,
     })
@@ -81,9 +109,9 @@ export class User {
     @OneToMany(type => PasswordRecovery, passwordRecovery => passwordRecovery.user)
     passwordRecoveries: PasswordRecovery[];
 
-    @CreateDateColumn({type: "timestamp"})
+    @CreateDateColumn({ type: 'timestamp' })
     createdAt: Date;
 
-    @UpdateDateColumn({type: "timestamp"})
+    @UpdateDateColumn({ type: 'timestamp' })
     updatedAt: Date;
 }

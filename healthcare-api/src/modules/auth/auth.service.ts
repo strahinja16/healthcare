@@ -5,15 +5,15 @@ import * as moment from 'moment';
 import { v4 as uuid } from 'uuid';
 import { IJwtOptions } from './interfaces/auth-jwt-options.interface';
 import { IAuthResponse } from './interfaces/auth-response.interface';
-import { UsersService } from "../users/users.service";
-import {ConfigService} from "../config/config.service";
-import {IResetPassword} from './interfaces/auth-reset-password.interface';
-import {Repository} from "typeorm";
-import {InjectRepository} from '@nestjs/typeorm';
-import {PasswordRecovery} from "./entity/password-recovery.entity";
-import {CreateUserDto} from "../users/dto/createUser.dto";
-import {Status} from "../users/enum/status.enum";
-import { IAuthService } from "./interfaces/auth-service.interface";
+import { UsersService } from '../users/users.service';
+import { ConfigService } from '../config/config.service';
+import { IResetPassword } from './interfaces/auth-reset-password.interface';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { PasswordRecovery } from './entity/password-recovery.entity';
+import { CreateUserDto } from '../users/dto/createUser.dto';
+import { Status } from '../users/enum/status.enum';
+import { IAuthService } from './interfaces/auth-service.interface';
 
 @Injectable()
 export class AuthService implements IAuthService {
@@ -48,14 +48,14 @@ export class AuthService implements IAuthService {
                 password: crypto.createHmac('sha256', credentials.password).digest('hex'),
             },
         });
-        if (!user) throw new HttpException('User not found.', HttpStatus.NOT_FOUND);
+         if (!user) throw new HttpException('User not found.', HttpStatus.NOT_FOUND);
 
-        const payload = {
+         const payload = {
             id: user.id,
             email: user.email,
-        };
+         };
 
-        const token = await jwt.sign(payload, this.configService.get('JWTID'), this._options);
+         const token = await jwt.sign(payload, this.configService.get('JWTID'), this._options);
 
          return {
              user,
@@ -74,7 +74,6 @@ export class AuthService implements IAuthService {
         const user = await this.usersService.create(encryptedCredentials);
         if (!user) throw new HttpException('Error creating new user', HttpStatus.INTERNAL_SERVER_ERROR);
 
-
         await this.mailerProvider.sendMail({
             to: `${user.email}`,
             from: 'noreply@healthcare.com',
@@ -82,9 +81,9 @@ export class AuthService implements IAuthService {
             template: 'welcome',
             context: {
                 username: `${credentials.name}`,
-                link: `${this.configService.get('API')}/auth/confirm/${encryptedCredentials.registerToken}`
-            }
-        })
+                link: `${this.configService.get('API')}/auth/confirm/${encryptedCredentials.registerToken}`,
+            },
+        });
     }
 
     public async forgotPassword(email: string): Promise<void | HttpException> {
@@ -97,7 +96,6 @@ export class AuthService implements IAuthService {
         if (!user) throw new HttpException('User not found.', HttpStatus.NOT_FOUND);
 
         const token = uuid();
-
 
         const passwordRecovery: Partial<PasswordRecovery> = {
             token,
@@ -112,8 +110,8 @@ export class AuthService implements IAuthService {
             subject: 'Password recovery',
             template: 'password-recovery',
             context: {
-                link: `${this.configService.get('FRONTEND')}/reset-password/${token}`
-            }
+                link: `${this.configService.get('FRONTEND')}/reset-password/${token}`,
+            },
         });
     }
 
@@ -127,7 +125,7 @@ export class AuthService implements IAuthService {
 
         const difference = moment.duration(moment().diff(moment(createdAt))).asHours();
 
-        if (difference > parseInt(this.configService.get('EXPIRATION_TIME'),10 )) {
+        if (difference > parseInt(this.configService.get('EXPIRATION_TIME'), 10 )) {
             return new HttpException('Token expired.', HttpStatus.BAD_REQUEST);
         }
     }
@@ -138,14 +136,14 @@ export class AuthService implements IAuthService {
 
         const passwordRecovery = await this.passwordRecoveryRepository.findOne({
             where: {
-                token
+                token,
             },
-            relations: ['user']
+            relations: ['user'],
         });
 
         if (!passwordRecovery) throw new HttpException('Password recovery not found.', HttpStatus.NOT_FOUND);
 
-        console.log(passwordRecovery);
+        // console.log(passwordRecovery);
         const { user } = passwordRecovery;
 
         const updatedUser: CreateUserDto = {

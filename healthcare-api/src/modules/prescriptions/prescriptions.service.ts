@@ -1,13 +1,14 @@
 
-import {Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository} from 'typeorm';
 import { CreatePrescriptionDto } from './dto/createPrescription.dto';
 import { Prescription } from './entity/prescription.entity';
-import {User} from "../users/entity/user.entity";
+import { User } from '../users/entity/user.entity';
+import { IPrescriptionsService } from './interfaces/prescriptions-service.interface';
 
 @Injectable()
-export class PrescriptionsService {
+export class PrescriptionsService implements IPrescriptionsService{
     constructor(
         @InjectRepository(Prescription)
         private readonly prescriptionsRepository: Repository<Prescription>,
@@ -32,10 +33,10 @@ export class PrescriptionsService {
             return new HttpException('User not found.', HttpStatus.BAD_REQUEST);
         }
 
-        let prescription: Partial<Prescription> = {
+        const prescription: Partial<Prescription> = {
             ... prescriptionDto,
             user: null,
-            dueDate: new Date(prescriptionDto.dueDate)
+            dueDate: new Date(prescriptionDto.dueDate),
         };
         prescription.user = user;
 

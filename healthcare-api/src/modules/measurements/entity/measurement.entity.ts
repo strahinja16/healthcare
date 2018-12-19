@@ -1,36 +1,49 @@
-import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
 import { IsUUID } from 'class-validator';
-import {User} from "../../users/entity/user.entity";
+import { User } from '../../users/entity/user.entity';
 
 @Entity({
-    name: "measurements",
+    name: 'measurements',
 })
 export class Measurement {
-    @IsUUID("4")
-    @PrimaryGeneratedColumn("uuid")
+    @IsUUID('4')
+    @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column()
+    @Column({
+        nullable: true,
+    })
     pressure: string;
 
     @Column({
-        type: "numeric",
-        precision: 2,
+        type: 'numeric',
+        precision: 3,
+        nullable: true,
+    })
+    pulse: number;
+
+    @Column({
+        type: 'numeric',
+        precision: 4,
+        nullable: true,
+        scale: 2,
     })
     sugar: number;
 
     @Column({
-        type: "numeric",
-        precision: 2,
+        type: 'numeric',
+        precision: 4,
+        nullable: true,
+        scale: 2,
     })
     temperature: number;
 
     @ManyToOne(type => User, user => user.measurements)
     user: User;
 
-    @CreateDateColumn({type: "timestamp"})
+    @CreateDateColumn({ type: 'timestamp' })
     createdAt: Date;
 
-    @UpdateDateColumn({type: "timestamp"})
+    @UpdateDateColumn({ type: 'timestamp' })
     updatedAt: Date;
 }

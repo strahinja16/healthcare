@@ -1,6 +1,6 @@
-import {IsBoolean, IsEmail, IsNumber, IsString, IsOptional} from 'class-validator';
-import {BloodType} from "../enum/blood-type.enum";
-import {Gender} from "../enum/gender.enum";
+import { IsBoolean, IsEmail, IsNumber, IsString, IsOptional } from 'class-validator';
+import { BloodType } from '../enum/blood-type.enum';
+import { Gender } from '../enum/gender.enum';
 
 export class CreateUserDto {
 

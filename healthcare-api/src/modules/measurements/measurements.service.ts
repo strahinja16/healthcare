@@ -1,13 +1,14 @@
 
-import {Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository} from 'typeorm';
 import { CreateMeasurementDto } from './dto/createMeasurement.dto';
 import { Measurement } from './entity/measurement.entity';
-import {User} from "../users/entity/user.entity";
+import { User } from '../users/entity/user.entity';
+import { IMeasurementsService } from './interfaces/measurements-service.interface';
 
 @Injectable()
-export class MeasurementsService {
+export class MeasurementsService implements IMeasurementsService {
     constructor(
         @InjectRepository(Measurement)
         private readonly measurementsRepository: Repository<Measurement>,
@@ -32,15 +33,18 @@ export class MeasurementsService {
             return new HttpException('User not found.', HttpStatus.BAD_REQUEST);
         }
 
-        let measurement: Partial<Measurement> = {
+        const measurement: Partial<Measurement> = {
             ... measurementDto,
             user: null,
-            temperature: parseFloat(measurementDto.temperature),
-            sugar: parseFloat(measurementDto.sugar),
+            temperature: measurementDto.temperature ? parseFloat(measurementDto.temperature) : null,
+            sugar: measurementDto.sugar ? parseFloat(measurementDto.sugar) : null,
+            pulse: measurementDto.pulse ? parseInt(measurementDto.pulse, 10) : null,
         };
 
+        if (measurement.pulse === null && measurement.temperature === null && measurement.sugar === null ) {
+            return new HttpException('Please input at least one measurement.', HttpStatus.BAD_REQUEST);
+        }
 
-        console.log(measurement);
         measurement.user = user;
 
         return await this.measurementsRepository.save(measurement as Measurement);

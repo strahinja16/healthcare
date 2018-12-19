@@ -1,10 +1,10 @@
 
-import {Injectable, HttpException, HttpStatus} from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import {DeleteResult, Repository} from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { CreateUserDto } from './dto/createUser.dto';
 import { User } from './entity/user.entity';
-import {IUsersService} from "./interfaces/users-service.interface";
+import { IUsersService } from './interfaces/users-service.interface';
 
 @Injectable()
 export class UsersService implements IUsersService {
@@ -26,7 +26,7 @@ export class UsersService implements IUsersService {
     }
 
     async create(createUserDto: CreateUserDto): Promise<User> {
-        return await this.usersRepository.save(this.convertDtoToEntity(createUserDto));
+        return await this.usersRepository.save(new User(createUserDto));
     }
 
     async update(id: string, newValue: CreateUserDto): Promise<User | null> {
@@ -45,15 +45,6 @@ export class UsersService implements IUsersService {
     public async delete(id: string): Promise<DeleteResult> {
 
         return await this.usersRepository.delete(id);
-    }
-
-    private convertDtoToEntity(dto: CreateUserDto): User {
-        let user: Partial<User> =  {
-            ...dto,
-            birthday: new Date(dto.birthday),
-        };
-
-        return user as User;
     }
 
     private _assign(user: User, newValue: CreateUserDto) {

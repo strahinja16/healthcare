@@ -9,9 +9,9 @@ import { User } from './entity/user.entity';
     imports: [TypeOrmModule.forFeature([User])],
     controllers: [UsersController],
     providers: [
-        UsersService
+        UsersService,
     ],
-    exports: [UsersService]
+    exports: [UsersService],
 })
 export class UsersModule {
     public configure(consumer: MiddlewareConsumer) {

@@ -1,13 +1,13 @@
-import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
 import { IsUUID } from 'class-validator';
-import {User} from "../../users/entity/user.entity";
+import { User } from '../../users/entity/user.entity';
 
 @Entity({
-    name: "examinations",
+    name: 'examinations',
 })
 export class Examination {
-    @IsUUID("4")
-    @PrimaryGeneratedColumn("uuid")
+    @IsUUID('4')
+    @PrimaryGeneratedColumn('uuid')
     id: string;
 
     @Column()
@@ -22,9 +22,9 @@ export class Examination {
     @ManyToOne(type => User, user => user.examinations)
     user: User;
 
-    @CreateDateColumn({type: "timestamp"})
+    @CreateDateColumn({ type: 'timestamp' })
     createdAt: Date;
 
-    @UpdateDateColumn({type: "timestamp"})
+    @UpdateDateColumn({ type: 'timestamp' })
     updatedAt: Date;
 }

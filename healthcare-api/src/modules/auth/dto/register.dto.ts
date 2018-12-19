@@ -1,7 +1,7 @@
 import { ApiModelProperty } from '@nestjs/swagger';
-import {IsBoolean, IsDate, IsEmail, IsNumber, IsString} from 'class-validator';
-import {BloodType} from "../../users/enum/blood-type.enum";
-import {Gender} from "../../users/enum/gender.enum";
+import { IsBoolean, IsEmail, IsNumber, IsString, IsDateString, IsOptional } from 'class-validator';
+import { BloodType } from '../../users/enum/blood-type.enum';
+import { Gender } from '../../users/enum/gender.enum';
 
 export class RegisterDto {
     @IsString()
@@ -20,7 +20,7 @@ export class RegisterDto {
     @ApiModelProperty()
     readonly isDoctor: boolean;
 
-    @IsString()
+    @IsOptional()
     @ApiModelProperty()
     readonly doctorId: string;
 
@@ -40,7 +40,7 @@ export class RegisterDto {
     @ApiModelProperty()
     readonly gender: Gender;
 
-    @IsString()
+    @IsDateString()
     @ApiModelProperty()
     readonly birthday: string;
 }

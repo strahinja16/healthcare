@@ -1,13 +1,14 @@
 
-import {Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository} from 'typeorm';
 import { CreateExaminationDto } from './dto/createExamination.dto';
 import { Examination } from './entity/examination.entity';
-import {User} from "../users/entity/user.entity";
+import { User } from '../users/entity/user.entity';
+import { IExaminationsService } from './interfaces/examinations-service.interface';
 
 @Injectable()
-export class ExaminationsService {
+export class ExaminationsService implements IExaminationsService{
     constructor(
         @InjectRepository(Examination)
         private readonly examinationsRepository: Repository<Examination>,
@@ -32,7 +33,7 @@ export class ExaminationsService {
             return new HttpException('User not found.', HttpStatus.BAD_REQUEST);
         }
 
-        let examination = { ... examinationDto, user: null, appointment: new Date(examinationDto.appointment) };
+        const examination = { ... examinationDto, user: null, appointment: new Date(examinationDto.appointment) };
         examination.user = user;
 
         return await this.examinationsRepository.save(examination as Examination);

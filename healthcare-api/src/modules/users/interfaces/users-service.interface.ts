@@ -1,6 +1,6 @@
-import {User} from "../entity/user.entity";
-import {CreateUserDto} from "../dto/createUser.dto";
-import {DeleteResult} from "typeorm";
+import { User } from '../entity/user.entity';
+import { CreateUserDto } from '../dto/createUser.dto';
+import { DeleteResult } from 'typeorm';
 
 export interface IUsersService {
     findAll(): Promise<User[]>;
