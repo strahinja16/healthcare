@@ -12,6 +12,16 @@ services:
     depends_on:
       - postgres
       - redis
+
+  redis-micro:
+    build: ./healthcare-redis
+    command: npm start
+    volumes:
+    - ./healthcare-redis:/app
+    - /app/node_modules
+    depends_on:
+    - redis
+
   postgres:
     image: postgres
     ports:
@@ -20,10 +30,12 @@ services:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
       - POSTGRES_DB=healthcare
+
   redis:
     image: redis:latest
     ports:
       - "6379:6379"
+
   frontend:
     build:
       context: ./healthcare-frontend
