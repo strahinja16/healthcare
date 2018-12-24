@@ -16,7 +16,7 @@
     "react": "16.6.1",
     "react-native": "0.57.5",
     "react-native-device-info": "^0.24.3",
-    "react-native-linear-gradient": "^2.4.4",
+    "react-native-linear-gradient": "^2.5.3",
     "react-native-router-flux": "^4.0.6",
     "react-redux": "^5.1.1",
     "redux": "^4.0.1",

@@ -4,6 +4,8 @@ import {
 } from 'react-native-router-flux';
 import { Alert, BackHandler } from 'react-native';
 import Home from '../components/Home';
+import RegisterForm from '../components/RegisterForm';
+import LoginForm from '../components/Login';
 
 const styles = {
   scenesStyle: {
@@ -40,12 +42,24 @@ class RouterComponent extends Component {
         sceneStyle={styles.scenesStyle}
       >
         <Stack hideNavBar key="root">
+          <Stack key="auth">
+            <Scene
+              initial
+              key="login"
+              title="Login"
+              component={LoginForm}
+            />
+            <Scene
+              key="register"
+              title="Register"
+              component={RegisterForm}
+            />
+          </Stack>
           <Stack key="main">
             <Scene
               title="Home"
               key="home"
               component={Home}
-              initial
             />
           </Stack>
         </Stack>
