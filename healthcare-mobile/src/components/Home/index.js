@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, AsyncStorage, NetInfo } from 'react-native';
 import LottieView from 'lottie-react-native';
 import LGCointainer from '../common/LGContainer';
 import styles from './style';
 import { Actions } from 'react-native-router-flux';
-import { Button } from 'native-base';
 
 class Home extends Component {
   constructor(props) {
@@ -13,8 +12,29 @@ class Home extends Component {
     this.state = { loading: true };
   }
 
-  componentDidMount() {
-    setTimeout(() => Actions.auth(), 2000);
+  componentWillUnmount() {
+    this.lottie.reset();
+  }
+
+  async componentDidMount() {
+    this.lottie.play();
+
+    try {
+      const { type } = await NetInfo.getConnectionInfo();
+      const token = await AsyncStorage.getItem('_token');
+
+      if (token && type !== 'none') {
+        Actions.main({ type: 'reset', text: 'Dashboard' });
+        console.log('Dashboard');
+      } else if (token) {
+        Actions.main({ type: 'reset', text: 'Preview' });
+        console.log('Preview');
+      } else {
+        Actions.auth({ type: 'reset' });
+      }
+    } catch (e) {
+      Alert.alert('Error', 'Please restart the application.');
+    }
   }
 
   render() {
@@ -22,9 +42,9 @@ class Home extends Component {
       <LGCointainer>
         <View style={styles.contentStyle}>
           <LottieView
+            ref={lottie => this.lottie = lottie}
             source={require('./animation.json')}
             style={styles.animationStyle}
-            autoPlay
           />
           <Text style={styles.textStyle}>HealthCare</Text>
         </View>

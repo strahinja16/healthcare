@@ -13,18 +13,12 @@ export function register(name, email, password) {
     name,
     email,
     password,
+    isDoctor: false,
   });
 }
 
-export function resetPassword(password, token) {
-  return axios.post('/auth/reset-password', {
-    password,
-    token,
-  });
-}
-
-export function verifyToken(token) {
-  return axios.post('/auth/verify-token', {
-    token,
+export function forgotPassword(email) {
+  return axios.post('/auth/forgot-password', {
+    email,
   });
 }

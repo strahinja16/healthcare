@@ -4,19 +4,26 @@ import {
 } from 'react-native-router-flux';
 import { Alert, BackHandler } from 'react-native';
 import Home from '../components/Home';
-import RegisterForm from '../components/RegisterForm';
+import RegisterForm from '../components/Register';
 import LoginForm from '../components/Login';
+import Dashboard from '../components/Dashboard';
+import ForgotPassword from '../components/ForgotPassword';
 
 const styles = {
   scenesStyle: {
     backgroundColor: '#f2f2f2',
   },
+  titleStyle: {
+    color: '#fff',
+    fontSize: 30,
+  },
+  headerTintColor: '#fff'
 };
 
 class RouterComponent extends Component {
   handleBackPress() {
     this.funcName = 'handleBackPress';
-    if (Actions.currentScene === 'home') {
+    if (Actions.state.routes.length === 1 && Actions.state.routes[0].routes.length === 1) {
       Alert.alert(
         'Exit',
         'Are you sure?', [{
@@ -40,16 +47,23 @@ class RouterComponent extends Component {
       <Router
         backAndroidHandler={this.handleBackPress}
         sceneStyle={styles.scenesStyle}
+        headerTintColor={styles.headerTintColor}
       >
-        <Stack hideNavBar key="root">
-        <Stack hideNavBar key="load">
+        <Stack
+          titleStyle={styles.titleStyle}
+          headerLayoutPreset='center'
+          hideNavBar
+          key="root"
+        >
+          <Stack hideNavBar key="load">
             <Scene
               initial
               title="Home"
               key="home"
               component={Home}
             />
-          <Stack key="auth">
+          </Stack>
+          <Stack navTransparent key="auth">
             <Scene
               initial
               key="login"
@@ -61,7 +75,19 @@ class RouterComponent extends Component {
               title="Register"
               component={RegisterForm}
             />
+            <Scene
+              key="forgotPassword"
+              title="Forgot Password"
+              component={ForgotPassword}
+            />
           </Stack>
+          <Stack hideNavBar key="main">
+            <Scene
+              initial
+              title="Dashboard"
+              key="dashboard"
+              component={Dashboard}
+            />
           </Stack>
         </Stack>
       </Router>

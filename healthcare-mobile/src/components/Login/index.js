@@ -8,6 +8,9 @@ import styles from './style';
 import { Actions } from 'react-native-router-flux';
 import Button from '../common/Button';
 import LGContainer from '../common/LGContainer';
+import extractErrorsFromResponse from '../../util/extractErrorMessagesFromResponse';
+import validate from '../../validation';
+import validationSchema from './validation';
 
 class Login extends Component {
   constructor(props) {
@@ -17,37 +20,30 @@ class Login extends Component {
       loading: false,
       email: null,
       password: null,
-      loadingApp: true,
     };
 
     this.login = this.login.bind(this);
   }
 
-  componentDidMount() {
-    AsyncStorage.getItem('_token')
-      .then(value => {
-        if(value) {
-          Actions.main();
-        }
-        this.setState({ loadingApp: false });
-      })
-      .catch(() =>{
-        this.setState({ loadingApp: false });
-      });
-  }
-
   async login() {
     this.setState({ loading: true });
     const { email, password } = this.state;
+
+    const error = validate(this.state, validationSchema);
+    if (error) {
+      this.setState({ loading: false });
+      return Alert.alert('Error', error);
+    }
+
     try {
-      const { data: { data }} = await loginApi(email, password);
+      const { data } = await loginApi(email, password);
       await AsyncStorage.setItem('_token', data.token);
       delete data.token;
       await AsyncStorage.setItem('user', JSON.stringify(data));
-      Actions.main();
+      Actions.main({ type: 'reset', text: 'Dashboard' });
     } catch(e) {
-      console.log(e); 
-      Alert.alert('Error.');
+      const messages = extractErrorsFromResponse(e.response);
+      Alert.alert('Error', messages.length > 0 && messages[0]);
       this.setState({ loading: false });
     }
   }
@@ -57,6 +53,8 @@ class Login extends Component {
     return (
       <View>
         <Card style={styles.cardStyle}>
+          <Text style={styles.textHeaderStyle}>Your personal healthcare assistant</Text>
+          <Text style={styles.textDescriptionStyle}>Sign in or request a new account</Text>
           <Form>
             <Item style={styles.itemStyle}>
                 <Input
@@ -79,8 +77,16 @@ class Login extends Component {
             </Item>
           </Form>
           { loading ? <Spinner /> : (<Button onPress={this.login}>Login</Button>) }
-          <ButtonBase transparent style={styles.alignSelf}><Text style={{color: styles.inputPlaceholderColor}} >Forgot Password?</Text></ButtonBase>
-          <Text style={styles.alignSelf}>OR</Text>
+          <ButtonBase
+            onPress={() => Actions.forgotPassword()}
+            transparent
+            style={styles.alignSelf}
+          >
+            <Text style={{color: styles.inputPlaceholderColor}}>
+              Forgot Password?
+            </Text>
+          </ButtonBase>
+          <Text style={styles.textOrStyle}>OR</Text>
           <Button onPress={() => Actions.register()}>Register</Button>
         </Card>
       </View>
@@ -88,12 +94,10 @@ class Login extends Component {
   }
 
   render() {
-    const { loadingApp } = this.state;
-
     return (
         <LGContainer>
         <Content padder contentContainerStyle={styles.contentStyle}>
-          { loadingApp ? <Spinner color={styles.spinnerColor} /> : this.renderButtons() }
+          {this.renderButtons()}
         </Content>
       </LGContainer>
     );

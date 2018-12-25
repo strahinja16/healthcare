@@ -14,9 +14,9 @@ const Button = ({ onPress, children, style }) => (
         end={{ x: 1, y: 1 }}
         locations={[0.0, 0.99]}
         colors={['#56b1d2', '#56e5a6']}
-        style={styles.linearGradient}
+        style={[styles.linearGradient, style]}
       >
-      <ButtonBase transparent style={[styles.btnStyle, style]} onPress={onPress}>
+      <ButtonBase transparent style={styles.btnStyle} onPress={onPress}>
         <Text style={styles.buttonText}>
           {children}
         </Text>

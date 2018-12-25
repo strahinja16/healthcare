@@ -40,9 +40,8 @@ export default {
     marginRight: 40,
     color: '#56bbc9',
   },
-  textOrStyle: {
-    alignSelf: 'center',
-    color: '#56bbc9',
+  buttonStyle: {
+    marginTop: 30,
   },
   inputPlaceholderColor: '#9aa0ab',
   spinnerColor: style.spinnerColor,
