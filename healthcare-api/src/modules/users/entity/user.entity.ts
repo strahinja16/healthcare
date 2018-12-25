@@ -29,13 +29,13 @@ export class User {
         this.name = user && user.name || undefined;
         this.email = user && user.email || undefined;
         this.password = user && user.password || undefined;
-        this.isDoctor = user && user.isDoctor || undefined;
         this.doctorId = user && user.doctorId || undefined;
         this.height = user && user.height || undefined;
         this.weight = user && user.weight || undefined;
         this.bloodType = user && user.bloodType || undefined;
+        this.isDoctor = user && user.isDoctor;
         this.gender = user && user.gender || undefined;
-        this.birthday = user && new Date(user.birthday) || undefined;
+        this.birthday = user && user.birthday && new Date(user.birthday) || undefined;
         this.registerToken = user && user.registerToken || undefined;
         this.status = user && user.status === Status.Active ? Status.Active : Status.Inactive || undefined;
     }
@@ -74,10 +74,14 @@ export class User {
     })
     weight: number;
 
-    @Column('varchar')
+    @Column('varchar', {
+      nullable: true,
+    })
     bloodType: BloodType;
 
-    @Column('varchar')
+    @Column('varchar', {
+      nullable: true,
+    })
     gender: Gender;
 
     @Column({

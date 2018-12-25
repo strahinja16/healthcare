@@ -24,22 +24,27 @@ export class RegisterDto {
     @ApiModelProperty()
     readonly doctorId: string;
 
+    @IsOptional()
     @IsNumber()
     @ApiModelProperty()
     readonly height: number;
 
+    @IsOptional()
     @IsNumber()
     @ApiModelProperty()
     readonly weight: number;
 
+    @IsOptional()
     @IsString()
     @ApiModelProperty()
     readonly bloodType: BloodType;
 
+    @IsOptional()
     @IsString()
     @ApiModelProperty()
     readonly gender: Gender;
 
+    @IsOptional()
     @IsDateString()
     @ApiModelProperty()
     readonly birthday: string;
