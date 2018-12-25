@@ -42,6 +42,13 @@ class RouterComponent extends Component {
         sceneStyle={styles.scenesStyle}
       >
         <Stack hideNavBar key="root">
+        <Stack hideNavBar key="load">
+            <Scene
+              initial
+              title="Home"
+              key="home"
+              component={Home}
+            />
           <Stack key="auth">
             <Scene
               initial
@@ -55,12 +62,6 @@ class RouterComponent extends Component {
               component={RegisterForm}
             />
           </Stack>
-          <Stack key="main">
-            <Scene
-              title="Home"
-              key="home"
-              component={Home}
-            />
           </Stack>
         </Stack>
       </Router>
