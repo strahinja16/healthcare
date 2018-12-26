@@ -7,6 +7,7 @@ import { User } from './entity/user.entity';
 import { IUsersService } from './interfaces/users-service.interface';
 import {Prescription} from "../prescriptions/entity/prescription.entity";
 import {Examination} from "../examinations/entity/examination.entity";
+import {Measurement} from "../measurements/entity/measurement.entity";
 
 @Injectable()
 export class UsersService implements IUsersService {
@@ -17,6 +18,8 @@ export class UsersService implements IUsersService {
         private readonly prescriptionsRepository: Repository<Prescription>,
         @InjectRepository(Examination)
         private readonly examinationsRepository: Repository<Examination>,
+        @InjectRepository(Measurement)
+        private readonly measurementsRepository: Repository<Measurement>,
     ) {}
 
     async findAll(): Promise<User[]> {
@@ -36,7 +39,13 @@ export class UsersService implements IUsersService {
     async findExaminations(id): Promise<Examination[] | null> {
         const examinations = await this.examinationsRepository.find({ relations: ['user']});
         return examinations
-            .filter(exam => exam.user.id ===  id );
+            .filter(exam => exam.user.id === id);
+    }
+
+    async findMeasurements(id): Promise<Measurement[] | null> {
+        const measurements = await this.measurementsRepository.find({ relations: ['user']});
+        return measurements
+            .filter(measurement => measurement.user.id ===  id );
     }
 
     async findById(id: string): Promise<User> {
@@ -64,10 +73,11 @@ export class UsersService implements IUsersService {
         return await this.usersRepository.save(user);
     }
 
-    async updateDoctor(id: string, doctorId: string): Promise<User | null> {
+    async updateDoctor(lbo: string, doctorId: string): Promise<User | null> {
+        console.log(lbo, doctorId);
 
-        let user = await this.findById(id);
-        if (!user.id) {
+        let user = await this.findOne({ where: { lbo }});
+        if (!user) {
             throw new HttpException('User does not exist', HttpStatus.BAD_REQUEST);
         }
 

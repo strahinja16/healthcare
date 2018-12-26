@@ -5,8 +5,7 @@ export const LOGOUT_ACTION = '@auth/logout';
 export const HOME_ALL_USERS_ACTION = '@home/all';
 export const HOME_NEW_USER_ACTION = '@home/new';
 
-export const GET_SUGAR_PRESURE_DATA_ACTION = '@chart/getPresure';
-export const GET_SUGAR_CHART_DATA_ACTION = '@chart/getSugar';
+export const GET_CHART_DATA_ACTION = '@chart/getAll';
 
 export const SET_BREADCRUMB_ACTION = '@breadcrumb/set';
 
