@@ -14,14 +14,14 @@ import { PasswordRecovery } from './entity/password-recovery.entity';
 import { CreateUserDto } from '../users/dto/createUser.dto';
 import { Status } from '../users/enum/status.enum';
 import { IAuthService } from './interfaces/auth-service.interface';
+import {MailerProvider} from "@nest-modules/mailer";
 
 @Injectable()
 export class AuthService implements IAuthService {
     constructor(
         @InjectRepository(PasswordRecovery)
         private readonly passwordRecoveryRepository: Repository<PasswordRecovery>,
-        @Inject('MailerProvider')
-        private readonly mailerProvider,
+        private readonly mailerProvider: MailerProvider,
         private readonly usersService: UsersService,
         private readonly configService: ConfigService,
     ) {}
@@ -143,13 +143,12 @@ export class AuthService implements IAuthService {
 
         if (!passwordRecovery) throw new HttpException('Password recovery not found.', HttpStatus.NOT_FOUND);
 
-        // console.log(passwordRecovery);
         const { user } = passwordRecovery;
 
         const updatedUser: CreateUserDto = {
             ...user,
             password: crypto.createHmac('sha256', password).digest('hex'),
-            birthday: user.birthday.toString(),
+            birthday: null,
         };
 
         await this.usersService.update(user.id, updatedUser);
@@ -161,9 +160,9 @@ export class AuthService implements IAuthService {
 
         const updatedUser: CreateUserDto = {
             ...user,
-            birthday: user.birthday.toString(),
             registerToken: null,
             status: Status.Active,
+            birthday: null,
         };
 
         await this.usersService.update(user.id, updatedUser);

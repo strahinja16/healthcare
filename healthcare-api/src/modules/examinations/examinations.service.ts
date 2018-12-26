@@ -52,6 +52,19 @@ export class ExaminationsService implements IExaminationsService{
         return await this.examinationsRepository.save(examination);
     }
 
+    async updateArrival(id: string): Promise<Examination | null> {
+
+        let examination = await this.examinationsRepository.findOne(id);
+
+        if (!examination.id) {
+            throw new HttpException('Examination does not exist', HttpStatus.BAD_REQUEST);
+        }
+
+        examination.showedUp = true;
+
+        return await this.examinationsRepository.save(examination);
+    }
+
     private _assign(examination: Examination, newValue: CreateExaminationDto): Examination {
         // tslint:disable-next-line:no-string-literal
         for (const key of Object.keys(newValue)) {

@@ -6,7 +6,7 @@ import {
   Label, List, Divider, Button,
 } from 'semantic-ui-react';
 
-const Examination = ({ examination: {appointment, showed, id, note}, examinationFinished }) => {
+const Examination = ({ examination: {appointment, showedUp, id, note}, examinationFinished }) => {
   const today = moment().diff(appointment, 'days');
   return (
     <List.Item>
@@ -15,7 +15,7 @@ const Examination = ({ examination: {appointment, showed, id, note}, examination
           Scheduled for {moment(appointment).format('lll')}
         </Label>
         <Divider hidden />
-        { today && !showed
+        { today && !showedUp
           ? (
             <Button
               basic

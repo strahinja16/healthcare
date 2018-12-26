@@ -103,9 +103,9 @@ class PatientPage extends Component {
       <Grid columns={2} divided>
         <Grid.Column>
           <PatientProfile patient={patient} />
-          <Divider hidden />
-          <Button basic color="black" fluid onClick={() => this.pushCharts()}>View more...</Button>
-          <Divider />
+          {/*<Divider hidden />*/}
+          {/*<Button basic color="black" fluid onClick={() => this.pushCharts()}>View more...</Button>*/}
+          {/*<Divider />*/}
         </Grid.Column>
 
         <Grid.Column>

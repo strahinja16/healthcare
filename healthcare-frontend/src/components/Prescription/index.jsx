@@ -6,7 +6,7 @@ import {
   Label, List, Divider,
 } from 'semantic-ui-react';
 
-const Prescription = ({ prescription: { drug, hours, note, dueDate} }) => (
+const Prescription = ({ prescription: { drug, hoursFrequency, note, dueDate, quantity} }) => (
   <List.Item>
     <Fragment>
       <Label as="a" color="teal" ribbon>
@@ -14,7 +14,9 @@ const Prescription = ({ prescription: { drug, hours, note, dueDate} }) => (
       </Label>
       <Divider hidden />
       <Divider hidden />
-      <List.Icon name="pills" /><strong>{drug}</strong> every <strong>{hours}h</strong>
+      <List.Icon name="pills" />
+      <strong>{drug}</strong>.  <strong>{quantity}</strong> {quantity > 1 ? 'pills': 'pill'} every
+        <strong> {hoursFrequency}h</strong>
       <Divider hidden />
       <List.Description>{note}</List.Description>
     </Fragment>

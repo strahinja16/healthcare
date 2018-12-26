@@ -19,24 +19,24 @@ const INITIAL_STATE = Map({
 export default handleActions(
   {
 
-    [GET_EXAMINATIONS_ACTION](state, { payload: { data } }) {
-      return state.set('examinations', data);
+    [GET_EXAMINATIONS_ACTION](state, { payload }) {
+      return state.set('examinations', payload);
     },
     [EXAMINATION_FINISHED_ACTION](state, { payload }) {
 
       const examinations = state.get('examinations');
 
       const editedExaminations = examinations.map((examination) => {
-        if (examination.id === payload) {
-          examination.showed = true;
+        if (examination.id === payload.id) {
+          examination = payload;
         }
         return examination;
       });
 
       return state.set('examinations', editedExaminations);
     },
-    [CREATE_EXAMINATION_ACTION](state, {payload: { data }}) {
-      const examination = data;
+    [CREATE_EXAMINATION_ACTION](state, { payload }) {
+      const examination = payload;
       const examinations = state.get('examinations');
       const examinationsWithNew = examinations.concat(examination);
       return state.set('examinations', examinationsWithNew);

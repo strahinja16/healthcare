@@ -5,16 +5,38 @@ import { DeleteResult, Repository } from 'typeorm';
 import { CreateUserDto } from './dto/createUser.dto';
 import { User } from './entity/user.entity';
 import { IUsersService } from './interfaces/users-service.interface';
+import {Prescription} from "../prescriptions/entity/prescription.entity";
+import {Examination} from "../examinations/entity/examination.entity";
 
 @Injectable()
 export class UsersService implements IUsersService {
     constructor(
         @InjectRepository(User)
         private readonly usersRepository: Repository<User>,
+        @InjectRepository(Prescription)
+        private readonly prescriptionsRepository: Repository<Prescription>,
+        @InjectRepository(Examination)
+        private readonly examinationsRepository: Repository<Examination>,
     ) {}
 
     async findAll(): Promise<User[]> {
         return await this.usersRepository.find();
+    }
+
+    async findAllPatients(doctorId): Promise<User[]> {
+        return await this.usersRepository.find({ where: { doctorId }});
+    }
+
+    async findPrescriptions(id): Promise<Prescription[] | null> {
+        const prescriptions = await this.prescriptionsRepository.find({ relations: ['user']});
+        return prescriptions
+            .filter(pres => pres.user.id ===  id );
+    }
+
+    async findExaminations(id): Promise<Examination[] | null> {
+        const examinations = await this.examinationsRepository.find({ relations: ['user']});
+        return examinations
+            .filter(exam => exam.user.id ===  id );
     }
 
     async findById(id: string): Promise<User> {
@@ -42,6 +64,17 @@ export class UsersService implements IUsersService {
         return await this.usersRepository.save(user);
     }
 
+    async updateDoctor(id: string, doctorId: string): Promise<User | null> {
+
+        let user = await this.findById(id);
+        if (!user.id) {
+            throw new HttpException('User does not exist', HttpStatus.BAD_REQUEST);
+        }
+
+        user.doctorId = doctorId;
+
+        return await this.usersRepository.save(user);
+    }
     public async delete(id: string): Promise<DeleteResult> {
 
         return await this.usersRepository.delete(id);

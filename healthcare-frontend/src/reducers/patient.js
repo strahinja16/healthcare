@@ -16,8 +16,8 @@ const INITIAL_STATE = Map({
 export default handleActions(
   {
 
-    [GET_PATIENT_ACTION](state, { payload: { data } }) {
-      return state.set('patient', data);
+    [GET_PATIENT_ACTION](state, { payload }) {
+      return state.set('patient', payload);
     },
 
   },

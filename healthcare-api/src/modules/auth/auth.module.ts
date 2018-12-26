@@ -8,7 +8,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [UsersModule, ConfigModule, TypeOrmModule.forFeature([PasswordRecovery])],
-  providers: [AuthService],
+    providers: [
+        { provide: 'IAuthService', useClass: AuthService }
+    ],
   controllers: [AuthController],
 })
 export class AuthModule {}

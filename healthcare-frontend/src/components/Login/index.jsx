@@ -38,12 +38,14 @@ class Login extends Component {
 
   runLoginAction() {
     const { email, password } = this.state;
-    const { login: loginAction } = this.props;
+    const { login: loginAction, push } = this.props;
     this.setState({ loading: true });
-    loginAction(email, password).catch((e) => {
-      const { data } = e.response;
-      this.setError(data.message);
-      this.setState({ loading: false });
+    loginAction(email, password)
+      .then(() => push('/home'))
+      .catch((e) => {
+        const { data } = e.response;
+        this.setError(data.message);
+        this.setState({ loading: false });
     });
   }
 

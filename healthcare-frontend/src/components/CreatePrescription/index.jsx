@@ -5,6 +5,7 @@ import {
 } from 'semantic-ui-react';
 import Joi from 'joi-browser';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { Alert } from '../elements';
 import style from './style.scss';
 
@@ -44,10 +45,11 @@ class CreatePrescription extends Component {
     this.setState({ loading: true });
     onSubmit({
       drug,
-      hours: parseInt(hour, 10),
+      hoursFrequency: parseInt(hour, 10),
       quantity: parseInt(pills, 10),
       note,
       userId: id.id,
+      dueDate: moment().add(2, 'days').toString(),
     })
       .then(() => {
         goBack();

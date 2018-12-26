@@ -8,6 +8,7 @@ import { Measurement } from './entity/measurement.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([ Measurement, User])],
   controllers: [MeasurementsController],
-  providers: [ MeasurementsService ],
-})
+    providers: [
+        { provide: 'IMeasurementsService', useClass: MeasurementsService }
+    ],})
 export class MeasurementsModule {}

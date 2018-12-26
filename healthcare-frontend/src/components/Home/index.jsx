@@ -13,10 +13,30 @@ class Home extends Component {
 
     this.state = {
       isVisible: false,
-      userId: ""
-    }
+      user: {},
+    };
 
     this.renderUsers = this.renderUsers.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onAddUser = this.onAddUser.bind(this);
+  }
+
+  onInputChange(e) {
+    this.setState({ user: e.target.value })
+  }
+
+  onAddUser() {
+    const { user } = this.state;
+    const { doctor, addUser, pushAction } = this.props;
+    console.log(user, doctor.get('id'));
+
+    addUser(user, doctor.get('id'))
+      .then(() => pushAction('/home'));
+
+    this.setState({
+      isVisible: false,
+      user: {},
+    });
   }
 
   renderUsers(users, pushAction) {
@@ -39,13 +59,9 @@ class Home extends Component {
   }
 
   render() {
-    const { users } = this.props;
-    const { pushAction } = this.props;
-    const { name } = this.props;
-    const { addUser } = this.props;
-    let icon = "add";
-    if (this.state.isVisible)
-      icon = "close";
+    const { users, pushAction, name } = this.props;
+    const { isVisible } = this.state;
+    const icon = isVisible ? 'close': 'add';
     return (
       <div className={style.maxWidth}>
         <Grid columns={3}>
@@ -67,14 +83,9 @@ class Home extends Component {
             <Divider hidden />
             <div hidden={!this.state.isVisible}>
               <Segment className={style.corrner}>
-                <Input placeholder='User id' fluid onChange={event => {
-                  this.setState({ userId: event.target.value })
-                }} />
+                <Input placeholder='User id' fluid onChange={this.onInputChange} />
                 <Divider hidden />
-                <Button basic color='green' content='Add new patient' fluid onClick={() => {
-                  this.setState({isVisible: false, userId: ""});
-                  addUser(this.state.userId)
-                }} />
+                <Button basic color='green' content='Add new patient' fluid onClick={this.onAddUser} />
               </Segment>
             </div>
           </Grid.Column>

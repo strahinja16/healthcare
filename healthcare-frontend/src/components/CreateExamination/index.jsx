@@ -7,6 +7,7 @@ import Joi from 'joi-browser';
 import PropTypes from 'prop-types';
 import { Alert } from '../elements';
 import style from './style.scss';
+import moment from "moment";
 
 class CreateExamination extends Component {
   constructor(props) {
@@ -37,14 +38,16 @@ class CreateExamination extends Component {
     onSubmit({
       note,
       userId: id.id,
+      appointment: moment().add(2, 'days').toString(),
+      showedUp: false,
     })
-      .then(() => {
-        goBack();
-      })
-      .catch(({ response: { data: { message } } }) => {
-        this.setError(message);
-        this.setState({ loading: false });
-      });
+    .then(() => {
+      goBack();
+    })
+    .catch(({ response: { data: { message } } }) => {
+      this.setError(message);
+      this.setState({ loading: false });
+    });
   }
 
   validateForm() {
