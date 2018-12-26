@@ -17,8 +17,8 @@ const INITIAL_STATE = Map({
 export default handleActions(
   {
 
-    [GET_ACTIVE_PRESCRIPTIONS_ACTION](state, { payload: { data } }) {
-      return state.set('prescriptions', data);
+    [GET_ACTIVE_PRESCRIPTIONS_ACTION](state, { payload }) {
+      return state.set('prescriptions', payload);
     },
     [CREATE_PRESCRIPTION_ACTION](state, {payload: { data }}) {
       const prescription = data;

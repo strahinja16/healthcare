@@ -14,14 +14,14 @@ import { PasswordRecovery } from './entity/password-recovery.entity';
 import { CreateUserDto } from '../users/dto/createUser.dto';
 import { Status } from '../users/enum/status.enum';
 import { IAuthService } from './interfaces/auth-service.interface';
+import {MailerProvider} from "@nest-modules/mailer";
 
 @Injectable()
 export class AuthService implements IAuthService {
     constructor(
         @InjectRepository(PasswordRecovery)
         private readonly passwordRecoveryRepository: Repository<PasswordRecovery>,
-        @Inject('MailerProvider')
-        private readonly mailerProvider,
+        private readonly mailerProvider: MailerProvider,
         private readonly usersService: UsersService,
         private readonly configService: ConfigService,
     ) {}

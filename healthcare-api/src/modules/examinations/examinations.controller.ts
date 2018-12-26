@@ -7,16 +7,20 @@ import {
     Post,
     Put,
     UsePipes,
-    ValidationPipe,
+    ValidationPipe, Inject,
 } from '@nestjs/common';
-import { ExaminationsService } from './examinations.service';
 import { CreateExaminationDto} from './dto/createExamination.dto';
 import { ApiUseTags } from '@nestjs/swagger';
+import {IExaminationsService} from "./interfaces/examinations-service.interface";
 
 @ApiUseTags('examinations')
 @Controller('examinations')
 export class ExaminationsController {
-    constructor(private readonly examinationsService: ExaminationsService) { }
+    private readonly examinationsService: IExaminationsService;
+
+    constructor(@Inject('IExaminationsService') examinationsService: IExaminationsService) {
+        this.examinationsService = examinationsService;
+    }
 
     @Post()
     @UsePipes(new ValidationPipe())

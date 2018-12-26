@@ -17,6 +17,10 @@ export class UsersService implements IUsersService {
         return await this.usersRepository.find();
     }
 
+    async findAllPatients(doctorId): Promise<User[]> {
+        return await this.usersRepository.find({ where: { doctorId }});
+    }
+
     async findById(id: string): Promise<User> {
         return await this.usersRepository.findOne(id);
     }
@@ -42,6 +46,17 @@ export class UsersService implements IUsersService {
         return await this.usersRepository.save(user);
     }
 
+    async updateDoctor(id: string, doctorId: string): Promise<User | null> {
+        let user = await this.usersRepository.findOne(id);
+
+        if (!user.id) {
+            throw new HttpException('User does not exist', HttpStatus.BAD_REQUEST);
+        }
+
+        user.doctorId = doctorId;
+
+        return await this.usersRepository.save(user);
+    }
     public async delete(id: string): Promise<DeleteResult> {
 
         return await this.usersRepository.delete(id);

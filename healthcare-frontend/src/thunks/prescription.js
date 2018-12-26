@@ -10,12 +10,6 @@ import {
 
 export function getActivePrescriptions(id) {
   return dispatch => getActivePrescriptionsApi(id)
-    .then((response) => {
-      const { data } = response;
-      return {
-        data,
-      };
-    })
     .then(({ data }) => {
       dispatch(getActivePrescriptionsAction(data));
     })
@@ -24,12 +18,6 @@ export function getActivePrescriptions(id) {
 
 export function createPrescription(payload) {
   return dispatch => createPrescriptionApi(payload)
-    .then((response) => {
-      const { data } = response;
-      return {
-        data,
-      };
-    })
     .then(({ data }) => {
       dispatch(createPrescriptionAction(data));
     })

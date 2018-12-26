@@ -1,10 +1,10 @@
 
 import axios from '.';
 
-export function getUsers() {
-  return axios.get('/users');
+export function getUsers(id) {
+  return axios.get(`/users/${id}/patients`);
 }
 
-export function addUsers(id) {
-  return axios.post(`/users/${id}/doctor`);
+export function assignDoctor(id, doctorId) {
+  return axios.put(`/users/${id}/doctor`, { id: doctorId });
 }

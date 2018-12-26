@@ -1,7 +1,6 @@
 
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { Grid } from 'semantic-ui-react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -14,8 +13,8 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
-    const { loadUsersAction } = this.props;
-    loadUsersAction();
+    const { loadUsersAction, self } = this.props;
+    loadUsersAction(self.get('id'));
   }
 
   render() {
@@ -26,16 +25,19 @@ class HomePage extends Component {
     }
     return (
       <Grid>
-        <Home users={users} pushAction={push} name={self} addUser={addUser} />
+        <Home users={users} doctor={self} pushAction={push} name={self.get('name')} addUser={addUser} />
       </Grid>
     );
   }
 }
 
-const mapStateToProps = ({ user, auth }) => ({
-  users: user.get('users'),
-  self: auth.get('user').get('name')
-});
+const mapStateToProps = ({ user, auth }) => {
+  return (
+    {
+      users: user.get('users'),
+      self: auth.get('user'),
+    });
+};
 
 const mapDispatchToProps = dispatch => bindActionCreators(
   {

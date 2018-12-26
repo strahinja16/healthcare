@@ -9,14 +9,18 @@ import {
     Put,
     Delete,
     UsePipes,
-    ValidationPipe,
+    ValidationPipe, Inject,
 } from '@nestjs/common';
-import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/createUser.dto';
+import {IUsersService} from "./interfaces/users-service.interface";
 
 @Controller('users')
 export class UsersController {
-    constructor(private readonly usersService: UsersService) { }
+    private readonly usersService: IUsersService;
+
+    constructor(@Inject('UsersService') usersService: IUsersService) {
+        this.usersService = usersService;
+    }
 
     @Get()
     public async getUsers(@Response() res) {
@@ -28,6 +32,12 @@ export class UsersController {
     public async getUser(@Response() res, @Param() param) {
         const user = await this.usersService.findById(param.id);
         return res.status(HttpStatus.OK).json(user);
+    }
+
+    @Get('/:id/patients')
+    public async getUserPatients(@Response() res, @Param() param) {
+        const users = await this.usersService.findAllPatients(param.id);
+        return res.status(HttpStatus.OK).json(users);
     }
 
     @Get('/:id/prescriptions')
@@ -59,6 +69,12 @@ export class UsersController {
     public async updateUser(@Param() param, @Response() res, @Body() body) {
 
         const user = await this.usersService.update(param.id, body);
+        return res.status(HttpStatus.OK).json(user);
+    }
+
+    @Put('/:id/doctor')
+    public async updateUserDoctor(@Param() param, @Response() res, @Body() body) {
+        const user = await this.usersService.updateDoctor(param.id, body.id);
         return res.status(HttpStatus.OK).json(user);
     }
 

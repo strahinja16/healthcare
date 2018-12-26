@@ -4,12 +4,6 @@ import { getPatient as getPatientApi } from '../api/patient';
 
 export function getPatient(id) {
   return dispatch => getPatientApi(id)
-    .then((response) => {
-      const { data } = response;
-      return {
-        data,
-      };
-    })
     .then(({ data }) => {
       dispatch(getPatientAction(data));
     })

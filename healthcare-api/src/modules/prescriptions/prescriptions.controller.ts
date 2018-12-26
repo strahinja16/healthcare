@@ -7,14 +7,18 @@ import {
     Post,
     Put,
     UsePipes,
-    ValidationPipe,
+    ValidationPipe, Inject,
 } from '@nestjs/common';
-import { PrescriptionsService } from './prescriptions.service';
 import { CreatePrescriptionDto} from './dto/createPrescription.dto';
+import {IPrescriptionsService} from "./interfaces/prescriptions-service.interface";
 
 @Controller('prescriptions')
 export class PrescriptionsController {
-    constructor(private readonly prescriptionsService: PrescriptionsService) { }
+    private readonly prescriptionsService: IPrescriptionsService;
+
+    constructor(@Inject('IPrescriptionsService') prescriptionsService: IPrescriptionsService) {
+        this.prescriptionsService = prescriptionsService;
+    }
 
     @Post()
     @UsePipes(new ValidationPipe())

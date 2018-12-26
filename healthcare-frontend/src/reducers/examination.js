@@ -19,8 +19,8 @@ const INITIAL_STATE = Map({
 export default handleActions(
   {
 
-    [GET_EXAMINATIONS_ACTION](state, { payload: { data } }) {
-      return state.set('examinations', data);
+    [GET_EXAMINATIONS_ACTION](state, { payload }) {
+      return state.set('examinations', payload);
     },
     [EXAMINATION_FINISHED_ACTION](state, { payload }) {
 

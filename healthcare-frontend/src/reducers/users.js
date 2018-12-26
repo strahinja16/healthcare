@@ -16,8 +16,8 @@ const INITIAL_STATE = Map({
 export default handleActions(
   {
 
-    [HOME_ALL_USERS_ACTION](state, { payload: { data } }) {
-      return state.set("users", data);
+    [HOME_ALL_USERS_ACTION](state, { payload }) {
+      return state.set("users", payload);
     },
 
     [HOME_NEW_USER_ACTION](state, payload) {

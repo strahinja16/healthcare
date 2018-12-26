@@ -5,16 +5,20 @@ import {
     Body,
     Post,
     UsePipes,
-    ValidationPipe,
+    ValidationPipe, Inject,
 } from '@nestjs/common';
-import { MeasurementsService } from './measurements.service';
 import { CreateMeasurementDto} from './dto/createMeasurement.dto';
 import { ApiUseTags } from '@nestjs/swagger';
+import {IMeasurementsService} from "./interfaces/measurements-service.interface";
 
 @ApiUseTags('measurements')
 @Controller('measurements')
 export class MeasurementsController {
-    constructor(private readonly measurementsService: MeasurementsService) { }
+    private readonly measurementsService: IMeasurementsService;
+
+    constructor(@Inject('IMeasurementsService') measurementsService: IMeasurementsService) {
+        this.measurementsService = measurementsService;
+    }
 
     @Post()
     @UsePipes(new ValidationPipe())

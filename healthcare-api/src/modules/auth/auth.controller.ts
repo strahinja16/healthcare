@@ -1,16 +1,19 @@
-import { Body, Controller, HttpStatus, Param, Post, Res, UsePipes, ValidationPipe } from '@nestjs/common';
-import { AuthService } from './auth.service';
+import {Body, Controller, HttpStatus, Inject, Param, Post, Res, UsePipes, ValidationPipe} from '@nestjs/common';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { IResetPassword } from './interfaces/auth-reset-password.interface';
 import { ConfigService } from '../config/config.service';
+import {IAuthService} from "./interfaces/auth-service.interface";
 
 @Controller('auth')
 export class AuthController {
+    private readonly authService: IAuthService;
     constructor(
-        private authService: AuthService,
+        @Inject('IAuthService') authService: IAuthService,
         private configService: ConfigService,
-    ) {}
+    ) {
+        this.authService = authService;
+    }
 
     @Post('/login')
     @UsePipes(new ValidationPipe())
