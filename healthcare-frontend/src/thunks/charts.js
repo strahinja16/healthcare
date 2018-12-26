@@ -1,15 +1,10 @@
-import { getPresurChartDataAction, getSugarChartDataAction } from '../reducers/charts';
+import { getCharts } from '../reducers/charts';
 import { getChartData as getChartDataApi } from '../api/charts';
+import formatMeasurements from "../util/formatMeasurements";
 
-export function getPresureData(id) {
+export function getMeasurements(id) {
   return dispatch => getChartDataApi(id)
-    .then((response) => {
-      const { data } = response;
-      return {
-        data,
-      };
-    })
     .then(({ data }) => {
-      dispatch(getPresurChartDataAction(data));
+      dispatch(getCharts(formatMeasurements(data)));
     });
 }

@@ -19,6 +19,7 @@ export class UserSeed  {
 
         const user = new User();
 
+        user.lbo = uuid();
         user.id = doctorIds[i];
         user.name = faker.name.findName();
         user.password = crypto.createHmac('sha256', 'test').digest('hex');
@@ -38,6 +39,7 @@ export class UserSeed  {
 
           const user = new User();
 
+          user.lbo = uuid();
           user.name = faker.name.findName();
           user.password = crypto.createHmac('sha256', 'test').digest('hex');
           user.email = `user${i}@test.com`;

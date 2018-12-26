@@ -13,7 +13,7 @@ class Home extends Component {
 
     this.state = {
       isVisible: false,
-      user: {},
+      lbo: '',
     };
 
     this.renderUsers = this.renderUsers.bind(this);
@@ -22,20 +22,19 @@ class Home extends Component {
   }
 
   onInputChange(e) {
-    this.setState({ user: e.target.value })
+    this.setState({ lbo: e.target.value })
   }
 
   onAddUser() {
-    const { user } = this.state;
+    const { lbo } = this.state;
     const { doctor, addUser, pushAction } = this.props;
-    console.log(user, doctor.get('id'));
 
-    addUser(user, doctor.get('id'))
+    addUser(lbo, doctor.get('id'))
       .then(() => pushAction('/home'));
 
     this.setState({
       isVisible: false,
-      user: {},
+      lbo: '',
     });
   }
 
@@ -60,7 +59,7 @@ class Home extends Component {
 
   render() {
     const { users, pushAction, name } = this.props;
-    const { isVisible } = this.state;
+    const { isVisible, lbo } = this.state;
     const icon = isVisible ? 'close': 'add';
     return (
       <div className={style.maxWidth}>
@@ -83,7 +82,7 @@ class Home extends Component {
             <Divider hidden />
             <div hidden={!this.state.isVisible}>
               <Segment className={style.corrner}>
-                <Input placeholder='User id' fluid onChange={this.onInputChange} />
+                <Input placeholder='User lbo' fluid value={lbo} onChange={this.onInputChange} />
                 <Divider hidden />
                 <Button basic color='green' content='Add new patient' fluid onClick={this.onAddUser} />
               </Segment>

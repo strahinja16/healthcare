@@ -48,8 +48,8 @@ export class UsersController {
 
     @Get('/:id/measurements')
     public async getUserMeasurements(@Response() res, @Param() param) {
-        const user = await this.usersService.findOne({ id: param.id, relations: ['measurements'] });
-        return res.status(HttpStatus.OK).json(user.measurements);
+        const measurements = await this.usersService.findMeasurements(param.id);
+        return res.status(HttpStatus.OK).json(measurements);
     }
 
     @Get('/:id/examinations')
@@ -72,9 +72,9 @@ export class UsersController {
         return res.status(HttpStatus.OK).json(user);
     }
 
-    @Put('/:id/doctor')
+    @Put('/:lbo/doctor')
     public async updateUserDoctor(@Param() param, @Response() res, @Body() body) {
-        const user = await this.usersService.updateDoctor(param.id, body.id);
+        const user = await this.usersService.updateDoctor(param.lbo, body.id);
         return res.status(HttpStatus.OK).json(user);
     }
 

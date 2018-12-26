@@ -1,3 +1,4 @@
+import { v4 as uuid } from 'uuid';
 import {
     Column,
     CreateDateColumn,
@@ -25,6 +26,7 @@ export class User {
     constructor(user: CreateUserDto);
     constructor(user?: any)
     {
+        this.lbo = uuid();
         this.id = user && user.id || undefined;
         this.name = user && user.name || undefined;
         this.email = user && user.email || undefined;
@@ -63,6 +65,9 @@ export class User {
         nullable: true,
     })
     doctorId: string;
+
+    @Column()
+    lbo: string;
 
     @Column({
         nullable: true,

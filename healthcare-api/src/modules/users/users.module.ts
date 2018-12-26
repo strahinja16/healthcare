@@ -6,9 +6,10 @@ import { AuthMiddleware } from '../../common/middleware';
 import { User } from './entity/user.entity';
 import {Prescription} from "../prescriptions/entity/prescription.entity";
 import {Examination} from "../examinations/entity/examination.entity";
+import {Measurement} from "../measurements/entity/measurement.entity";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([User, Prescription, Examination])],
+    imports: [TypeOrmModule.forFeature([User, Prescription, Examination, Measurement])],
     controllers: [UsersController],
     providers: [
         UsersService,

@@ -43,18 +43,18 @@ class PatientPage extends Component {
   }
 
   pushCharts() {
-    const { history: { location, push } } = this.props;
-    push(`${location.pathname}/charts`);
+    const { history: { location: { pathname }, push } } = this.props;
+    push(`${pathname}/charts`);
   }
 
   createPrescription() {
-    const { history: { location, push } } = this.props;
-    push(`${location.pathname}/prescription`);
+    const { history: { location: { pathname }, push } } = this.props;
+    push(`${pathname}/prescription`);
   }
 
   createExamination() {
-    const { history: { location, push } } = this.props;
-    push(`${location.pathname}/examination`);
+    const { history: { location: { pathname }, push } } = this.props;
+    push(`${pathname}/examination`);
   }
 
   examinationFinished(id) {
@@ -103,9 +103,9 @@ class PatientPage extends Component {
       <Grid columns={2} divided>
         <Grid.Column>
           <PatientProfile patient={patient} />
-          {/*<Divider hidden />*/}
-          {/*<Button basic color="black" fluid onClick={() => this.pushCharts()}>View more...</Button>*/}
-          {/*<Divider />*/}
+          <Divider hidden />
+          <Button basic color="black" fluid onClick={() => this.pushCharts()}>View more...</Button>
+          <Divider />
         </Grid.Column>
 
         <Grid.Column>

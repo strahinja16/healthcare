@@ -9,8 +9,8 @@ export function getUsers(id) {
     });
 }
 
-export function addUser(id, payload) {
-  return dispatch => assignDoctor(id, payload)
+export function addUser(lbo, payload) {
+  return dispatch => assignDoctor(lbo, payload)
     .then(({ data }) => {
       dispatch(newUser(data));
     });
