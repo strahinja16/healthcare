@@ -20,11 +20,11 @@ export default handleActions(
       return state.set("users", payload);
     },
 
-    [HOME_NEW_USER_ACTION](state, payload) {
-      const usr = payload.payload.data.data;
-      const newList = state.get('users');
-      const ret = newList.concat(usr);
-      return state.set("users", ret);
+    [HOME_NEW_USER_ACTION](state, { payload }) {
+      const user = payload;
+      const users = state.get('users');
+      const usersWithNew = users.concat(user);
+      return state.set("users", usersWithNew);
     },
 
   },

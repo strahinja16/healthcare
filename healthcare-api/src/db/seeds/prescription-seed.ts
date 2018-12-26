@@ -17,7 +17,7 @@ export class PrescriptionSeed  {
           let prescription = new Prescription();
           prescription.drug = faker.random.arrayElement(drugs);
           prescription.hoursFrequency = faker.random.arrayElement(hours);
-          prescription.quantity = faker.random.number(5);
+          prescription.quantity = faker.random.number({ min: 1, max: 5});
           prescription.note = faker.lorem.sentence();
           prescription.dueDate = faker.date.future();
           prescription.user = patient;
@@ -26,7 +26,7 @@ export class PrescriptionSeed  {
           prescription = new Prescription();
           prescription.drug = faker.random.arrayElement(drugs);
           prescription.hoursFrequency = faker.random.arrayElement(hours);
-          prescription.quantity = faker.random.number(1, 10);
+          prescription.quantity = faker.random.number({ min: 1, max: 5});
           prescription.note = faker.lorem.sentence();
           prescription.dueDate = faker.date.future();
           prescription.user = patient;

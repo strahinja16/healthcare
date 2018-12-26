@@ -12,6 +12,6 @@ export function getUsers(id) {
 export function addUser(id, payload) {
   return dispatch => assignDoctor(id, payload)
     .then(({ data }) => {
-      dispatch(newUser({ data }));
+      dispatch(newUser(data));
     });
 }

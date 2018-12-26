@@ -27,16 +27,16 @@ export default handleActions(
       const examinations = state.get('examinations');
 
       const editedExaminations = examinations.map((examination) => {
-        if (examination.id === payload) {
-          examination.showed = true;
+        if (examination.id === payload.id) {
+          examination = payload;
         }
         return examination;
       });
 
       return state.set('examinations', editedExaminations);
     },
-    [CREATE_EXAMINATION_ACTION](state, {payload: { data }}) {
-      const examination = data;
+    [CREATE_EXAMINATION_ACTION](state, { payload }) {
+      const examination = payload;
       const examinations = state.get('examinations');
       const examinationsWithNew = examinations.concat(examination);
       return state.set('examinations', examinationsWithNew);

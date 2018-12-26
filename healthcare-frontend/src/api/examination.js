@@ -6,7 +6,7 @@ export function getExaminations(id) {
 }
 
 export function examinationFinished(id) {
-  return axios.put(`/examinations/${id}`);
+  return axios.put(`/examinations/${id}/arrival`);
 }
 
 export function createExamination(payload) {

@@ -1,4 +1,4 @@
-import {Body, Controller, HttpStatus, Inject, Param, Post, Res, UsePipes, ValidationPipe} from '@nestjs/common';
+import {Body, Controller, Get, HttpStatus, Inject, Param, Post, Res, UsePipes, ValidationPipe} from '@nestjs/common';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { IResetPassword } from './interfaces/auth-reset-password.interface';
@@ -47,7 +47,7 @@ export class AuthController {
         res.status(HttpStatus.ACCEPTED).json('Password successfully changed.');
     }
 
-    @Post('/confirm/:token')
+    @Get('/confirm/:token')
     @UsePipes(new ValidationPipe())
     public async confirmToken(@Param() param, @Res() res) {
         await this.authService.confirmToken(param.token);

@@ -21,7 +21,7 @@ export function getExaminations(id) {
 export function examinationFinished(id) {
   return dispatch => examinationFinishedApi(id)
     .then(({ data }) => {
-      dispatch(createExaminationAction(data));
+      dispatch(examinationFinishedAction(data));
     })
     .catch(e => console.log(e));
 }

@@ -42,8 +42,8 @@ export class UsersController {
 
     @Get('/:id/prescriptions')
     public async getUserPrescriptions(@Response() res, @Param() param) {
-        const user = await this.usersService.findOne({ id: param.id, relations: ['prescriptions'] });
-        return res.status(HttpStatus.OK).json(user.prescriptions);
+        const prescriptions = await this.usersService.findPrescriptions(param.id);
+        return res.status(HttpStatus.OK).json(prescriptions);
     }
 
     @Get('/:id/measurements')
@@ -54,8 +54,8 @@ export class UsersController {
 
     @Get('/:id/examinations')
     public async getUserExaminations(@Response() res, @Param() param) {
-        const user = await this.usersService.findOne({ id: param.id, relations: ['examinations'] });
-        return res.status(HttpStatus.OK).json(user.examinations);
+        const examinations = await this.usersService.findExaminations(param.id);
+        return res.status(HttpStatus.OK).json(examinations);
     }
 
     @Post()

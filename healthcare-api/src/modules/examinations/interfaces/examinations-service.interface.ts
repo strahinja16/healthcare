@@ -7,4 +7,5 @@ export interface IExaminationsService {
     findOne(query: object): Promise<Examination>;
     create(createExaminationDto: CreateExaminationDto): Promise<Examination | HttpException>;
     update(id: string, newValue: CreateExaminationDto): Promise<Examination | null>;
+    updateArrival(id: string): Promise<Examination | null>
 }

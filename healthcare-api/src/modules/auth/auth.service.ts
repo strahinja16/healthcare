@@ -143,13 +143,12 @@ export class AuthService implements IAuthService {
 
         if (!passwordRecovery) throw new HttpException('Password recovery not found.', HttpStatus.NOT_FOUND);
 
-        // console.log(passwordRecovery);
         const { user } = passwordRecovery;
 
         const updatedUser: CreateUserDto = {
             ...user,
             password: crypto.createHmac('sha256', password).digest('hex'),
-            birthday: user.birthday.toString(),
+            birthday: null,
         };
 
         await this.usersService.update(user.id, updatedUser);
@@ -161,9 +160,9 @@ export class AuthService implements IAuthService {
 
         const updatedUser: CreateUserDto = {
             ...user,
-            birthday: user.birthday.toString(),
             registerToken: null,
             status: Status.Active,
+            birthday: null,
         };
 
         await this.usersService.update(user.id, updatedUser);

@@ -20,8 +20,8 @@ export default handleActions(
     [GET_ACTIVE_PRESCRIPTIONS_ACTION](state, { payload }) {
       return state.set('prescriptions', payload);
     },
-    [CREATE_PRESCRIPTION_ACTION](state, {payload: { data }}) {
-      const prescription = data;
+    [CREATE_PRESCRIPTION_ACTION](state, { payload }) {
+      const prescription = payload;
       const prescriptions = state.get('prescriptions');
       const prescriptionsWithNew = prescriptions.concat(prescription);
       return state.set('prescriptions', prescriptionsWithNew);

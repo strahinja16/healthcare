@@ -27,9 +27,11 @@ class Home extends Component {
 
   onAddUser() {
     const { user } = this.state;
-    const { doctor, addUser } = this.props;
+    const { doctor, addUser, pushAction } = this.props;
+    console.log(user, doctor.get('id'));
 
-    addUser(user, doctor.get('id'));
+    addUser(user, doctor.get('id'))
+      .then(() => pushAction('/home'));
 
     this.setState({
       isVisible: false,
@@ -57,7 +59,7 @@ class Home extends Component {
   }
 
   render() {
-    const { users, pushAction, name, addUser } = this.props;
+    const { users, pushAction, name } = this.props;
     const { isVisible } = this.state;
     const icon = isVisible ? 'close': 'add';
     return (
