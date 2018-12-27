@@ -14,6 +14,6 @@ export default {
     marginRight: 20,
   },
   header: {
-    color: 'red',
+    color: '#55b5ce',
   },
 };

@@ -13,7 +13,6 @@ class PrescriptionsPage extends Component {
 
   componentDidMount() {
     const { getPrescriptionsAction, prescriptions, user: { id } } = this.props;
-    console.log(prescriptions);
     if(!prescriptions) {
       getPrescriptionsAction(id).catch(e => console.log(e));
     }

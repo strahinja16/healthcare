@@ -9,9 +9,11 @@ export default {
     borderBottomWidth: 1,
     marginLeft: 20,
     marginRight: 20,
-    backgroundColor: 'pink',
-    borderBottomColor: 'blue',
+    backgroundColor: '#fff',
     flexDirection: 'row',
+  },
+  scrollViewStyle: {
+    paddingVertical: 80,
   },
   contentStyle: {
     flex: 1,
@@ -44,7 +46,7 @@ export default {
   button: {
     flex: 1,  
     alignSelf: 'flex-end',
-    backgroundColor: '#ddd',
+    backgroundColor: '#fff',
     borderWidth: 0,
     elevation: 0,
     borderLeftWidth: 1,
@@ -52,6 +54,6 @@ export default {
     borderColor: '#000',
   },
   buttonText: {
-    color: 'yellow',
+    color: '#000',
   },
 };

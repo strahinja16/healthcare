@@ -3,12 +3,12 @@ import React from 'react';
 import PropType from 'prop-types';
 import PrescriptionDetails from '../../components/PrescriptionDetails';
 
-const PrescriptionDetailsPage = ({ perscription }) => (
-  <PrescriptionDetails perscription={perscription} />
+const PrescriptionDetailsPage = ({ prescription }) => (
+  <PrescriptionDetails prescription={prescription} />
 );
 
 PrescriptionDetailsPage.propTypes = {
-  perscription: PropType.shape({}).isRequired,
+  prescription: PropType.shape({}).isRequired,
 };
 
 export default PrescriptionDetailsPage;

@@ -1,5 +1,6 @@
 
 import React, { Component } from 'react';
+import { ScrollView } from 'react-native';
 import { View, Text, Button, Card, Content, Spinner } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import PropType from 'prop-types';
@@ -12,9 +13,10 @@ class Perscriptions extends Component {
    
     this.renderPrescriptions = this.renderPrescriptions.bind(this);
     this.renderSpinner = this.renderSpinner.bind(this);
+    this.preparePrescriptions = this.preparePrescriptions.bind(this);
   }
 
-  renderPrescriptions() {
+  preparePrescriptions() {
     const { prescriptions } = this.props;
 
     return prescriptions.map((prescription, key) =>
@@ -26,7 +28,7 @@ class Perscriptions extends Component {
         </View>
         <View key={key} style={styles.info}>
           <Text style={styles.text}>Interval</Text>
-          <Text style={styles.value}>{prescription.hours}</Text>
+          <Text style={styles.value}>{prescription.hoursFrequency}</Text>
         </View>
         <View key={key} style={styles.info}>
           <Text style={styles.text}>Dose</Text>
@@ -35,12 +37,20 @@ class Perscriptions extends Component {
       </View>
       <View style={styles.buttonCol}>
         <Button style={styles.button} onPress={() => {
-            Actions.perscriptionDetails({ perscription: prescription });
+            Actions.prescriptionDetails({ prescription: prescription });
           }}>
           <Text style={styles.buttonText}>   ></Text>
         </Button>
       </View>
     </Card>);
+  }
+
+  renderPrescriptions() {
+    return (
+      <ScrollView contentContainerStyle={styles.scrollViewStyle}>
+        {this.preparePrescriptions()}
+      </ScrollView>
+    );
   }
 
   renderSpinner() {
@@ -52,10 +62,10 @@ class Perscriptions extends Component {
   }
 
   render() {
-    const { prescription } = this.props;
+    const { prescriptions } = this.props;
     return (
       <LGContainer>
-        {prescription ? this.renderPrescriptions() : this.renderSpinner()}
+        {prescriptions ? this.renderPrescriptions() : this.renderSpinner()}
       </LGContainer>
       );
   }

@@ -109,7 +109,7 @@ class RouterComponent extends Component {
               component={PrescriptionsPage}
             />
             <Scene
-              title="Prescription information"
+              title="Information"
               key="prescriptionDetails"
               component={PrescriptionDetailsPage}
             />
