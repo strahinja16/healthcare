@@ -1,20 +1,18 @@
 
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropType from 'prop-types';
 import { View } from 'react-native';
 import {
   Container, Content, Text, CardItem, Body, Card,
 } from 'native-base';
 import style from './style';
 import moment from 'moment';
-import BackEffect from '../BackEffects';
 
-const PerscriptionDetails = (props) => {
+const PrescriptionDetails = (props) => {
   const { perscription } = props;
   return (
     <Container style={style.containerStyle}>
       <Content contentContainerStyle={style.contentStyle}>
-      <BackEffect />
         <Card>
             <View style={style.informationsStyle}>
               <CardItem header bordered>
@@ -93,8 +91,8 @@ const PerscriptionDetails = (props) => {
   );
 };
 
-PerscriptionDetails.propTypes = {
-  perscription: PropTypes.shape({}).isRequired,
+PrescriptionDetails.propTypes = {
+  perscription: PropType.shape({}).isRequired,
 };
 
-export default PerscriptionDetails;
+export default PrescriptionDetails;

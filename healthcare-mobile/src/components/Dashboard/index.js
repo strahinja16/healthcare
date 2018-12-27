@@ -115,7 +115,7 @@ class Dashboard extends Component {
           <Card style={styles.cardButtonsStyle}>
             <Row>
               <Col style={styles.colWithButtonStyle}>
-                <Button style={styles.buttonColStyle}>
+                <Button style={styles.buttonColStyle} onPress={() => Actions.prescriptions()}>
                   <Icon name='pill' type="MaterialCommunityIcons" style={styles.innerIconStyle} />
                   <Text uppercase={false} style={styles.buttonColTextStyle}>Pills</Text>
                 </Button>

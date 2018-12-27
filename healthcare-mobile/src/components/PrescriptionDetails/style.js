@@ -1,4 +1,3 @@
-import theme from "../../theme";
 
 export default {
   contentStyle: {
@@ -9,13 +8,12 @@ export default {
   },
   containerStyle: {
     height: '100%',
-    backgroundColor: theme.colors.background,
   },
   informationsStyle: {
     marginLeft: 20,
     marginRight: 20,
   },
   header: {
-    color: theme.colors.primary,
+    color: 'red',
   },
 };

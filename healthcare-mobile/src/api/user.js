@@ -10,3 +10,7 @@ export function editProfile(id, bloodType, height, weight, birthday, gender, lbo
     lbo,
   });
 }
+
+export function getPrescriptions(id) {
+  return axios.get(`/users/${id}/prescriptions`);
+}
