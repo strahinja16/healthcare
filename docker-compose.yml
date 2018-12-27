@@ -1,6 +1,17 @@
 version: '3'
 
 services:
+  medications-api:
+    build: ./healthcare-medications-server
+    ports:
+    - "3002:3002"
+    command: npm run start
+    volumes:
+    - ./healthcare-medications-server:/app
+    - /app/node_modules
+    depends_on:
+    - postgres-medications
+
   nest-api:
     build: ./healthcare-api
     ports:
@@ -30,6 +41,15 @@ services:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
       - POSTGRES_DB=healthcare
+
+  postgres-medications:
+    image: postgres
+    ports:
+    - "5001:5432"
+    environment:
+    - POSTGRES_USER=root
+    - POSTGRES_PASSWORD=root
+    - POSTGRES_DB=medications
 
   redis:
     image: redis:latest
