@@ -7,6 +7,7 @@ import LoadingPage from '../pages/Loading';
 import RegisterForm from '../components/Register';
 import LoginPage from '../pages/Login';
 import DashboardPage from '../pages/Dashboard';
+import EditProfilePage from '../pages/EditProfile';
 import ForgotPassword from '../components/ForgotPassword';
 
 const styles = {
@@ -81,12 +82,18 @@ class RouterComponent extends Component {
               component={ForgotPassword}
             />
           </Stack>
-          <Stack hideNavBar key="main">
+          <Stack navTransparent key="main">
             <Scene
               initial
+              hideNavBar
               title="Dashboard"
               key="dashboard"
               component={DashboardPage}
+            />
+            <Scene
+              title="My profile"
+              key="profile"
+              component={EditProfilePage}
             />
           </Stack>
         </Stack>

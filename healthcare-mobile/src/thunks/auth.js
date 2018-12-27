@@ -1,6 +1,12 @@
 import { AsyncStorage } from 'react-native';
-import { loginUser, logoutUser, loadUserAndToken } from '../reducers/auth';
+import {
+  loginUser,
+  logoutUser,
+  loadUserAndToken,
+  editProfile,
+} from '../reducers/auth';
 import { login as loginApi } from '../api/auth';
+import { editProfile as editProfileApi } from '../api/profile';
 
 export function logout() {
   return async (dispatch) => {
@@ -24,6 +30,20 @@ export function login(email, password) {
       await AsyncStorage.setItem('_token', payload.token);
       await AsyncStorage.setItem('user', JSON.stringify(payload.user));
       dispatch(loginUser(payload));
+    });
+}
+
+export function editProfileAction(id, bloodType, height, weight, birthday, gender, lbo) {
+  return dispatch => editProfileApi(id, bloodType, height, weight, birthday, gender, lbo)
+    .then((response) => {
+      const { data } = response;
+      return {
+        user: data,
+      };
+    })
+    .then(async (payload) => {
+      await AsyncStorage.setItem('user', JSON.stringify(payload.user));
+      dispatch(editProfile(payload));
     });
 }
 

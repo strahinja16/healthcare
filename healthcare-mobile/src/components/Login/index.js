@@ -38,7 +38,7 @@ class Login extends Component {
     try {
       const { loginAction } = this.props;
       await loginAction(email, password);
-      Actions.main({ type: 'reset', preview: false });
+      Actions.main({ type: 'reset' });
     } catch(e) {
       const messages = extractErrorsFromResponse(e.response);
       Alert.alert('Error', messages.length > 0 && messages[0]);

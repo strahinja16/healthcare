@@ -8,6 +8,10 @@ const DashboardPage = ({ user, preview }) => (
   <Dashboard user={user} preview={preview} />
 );
 
+DashboardPage.defaultProps = {
+  preview: false,
+};
+
 DashboardPage.propTypes = {
   user: PropType.shape({}).isRequired,
   preview: PropType.bool.isRequired,

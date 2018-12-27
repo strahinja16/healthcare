@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Content, Card, Text, Icon, Button, Row, Col } from 'native-base';
+import { Actions } from 'react-native-router-flux';
 import PropType from 'prop-types';
 import moment from 'moment';
 import LGContainer from '../common/LGContainer';
@@ -26,7 +27,7 @@ class Dashboard extends Component {
                 <Text style={styles.textStyle}>{user.email}</Text>
               </View>
               <View style={styles.buttonWrapper}>
-                <Button rounded style={styles.buttonStyle}>
+                <Button rounded style={styles.buttonStyle} onPress={() => Actions.profile()}>
                   <Text uppercase={false} style={styles.buttonTextStyle}>My account</Text>
                 </Button>
               </View>

@@ -28,11 +28,9 @@ class Home extends Component {
       loadUserAndToken({ token, user })
 
       if (token && type !== 'none') {
-        Actions.main({ type: 'reset', preview: false });
-        console.log('Dashboard');
+        Actions.main({ type: 'reset' });
       } else if (token) {
         Actions.main({ type: 'reset', preview: true });
-        console.log('Preview');
       } else {
         Actions.auth({ type: 'reset' });
       }
