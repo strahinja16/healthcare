@@ -9,6 +9,7 @@ export class PrescriptionSeed  {
       const insertData = [];
 
       const drugs = ['Abarelix', 'Benzagel', 'Bosentan', 'Cedax', 'Celecoxib', 'Daptacel', 'Dactinomycin', 'Efudex', 'Fenofibrate', 'Kapidex'];
+      const diseases = ['Arthritis', 'Asthma', 'Bronchitis', 'Cancer', 'Diabetes', 'Hypertension', 'Hyperthermia', 'Flu', 'Malaria', 'Thrombosis']
       const hours = [1, 3, 6, 8, 12, 24, 48];
 
       const patients = await usersRepository.find({ isDoctor: false });
@@ -19,6 +20,7 @@ export class PrescriptionSeed  {
           prescription.hoursFrequency = faker.random.arrayElement(hours);
           prescription.quantity = faker.random.number({ min: 1, max: 5});
           prescription.note = faker.lorem.sentence();
+          prescription.disease = faker.random.arrayElement(diseases);
           prescription.dueDate = faker.date.future();
           prescription.user = patient;
           insertData.push(prescriptionRepository.save(prescription));
@@ -28,6 +30,7 @@ export class PrescriptionSeed  {
           prescription.hoursFrequency = faker.random.arrayElement(hours);
           prescription.quantity = faker.random.number({ min: 1, max: 5});
           prescription.note = faker.lorem.sentence();
+          prescription.disease = faker.random.arrayElement(diseases);
           prescription.dueDate = faker.date.future();
           prescription.user = patient;
           insertData.push(prescriptionRepository.save(prescription));
