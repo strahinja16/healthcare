@@ -2,14 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const logger = require('services/logger');
-// const router = require('./routes');
+const router = require('./routes');
 require('models');
 
 const app = express();
-
-const router = express.Router();
-
-router.get('/asd', (req,res) => res.send('Hello world'));
 
 /**
  * Init middleware

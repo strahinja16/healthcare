@@ -2,7 +2,7 @@ const { Router } = require('express');
 
 const router = Router();
 
-router.post('/', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     console.log(req);
     return res.status(200).send("Helloo");
