@@ -15,6 +15,9 @@ export class CreatePrescriptionDto {
     readonly note: string;
 
     @IsString()
+    readonly disease: string;
+
+    @IsString()
     readonly dueDate: string;
 
     @IsString()

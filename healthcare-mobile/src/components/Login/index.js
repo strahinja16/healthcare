@@ -3,7 +3,7 @@ import { Alert, View, AsyncStorage, Text } from 'react-native';
 import {
   Content, Spinner, Form, Item, Input, Card, Button as ButtonBase,
 } from 'native-base';
-import { login as loginApi } from '../../api/auth';
+import PropTypes from 'prop-types';
 import styles from './style';
 import { Actions } from 'react-native-router-flux';
 import Button from '../common/Button';
@@ -36,11 +36,9 @@ class Login extends Component {
     }
 
     try {
-      const { data } = await loginApi(email, password);
-      await AsyncStorage.setItem('_token', data.token);
-      delete data.token;
-      await AsyncStorage.setItem('user', JSON.stringify(data));
-      Actions.main({ type: 'reset', text: 'Dashboard' });
+      const { loginAction } = this.props;
+      await loginAction(email, password);
+      Actions.main({ type: 'reset' });
     } catch(e) {
       const messages = extractErrorsFromResponse(e.response);
       Alert.alert('Error', messages.length > 0 && messages[0]);
@@ -103,5 +101,9 @@ class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {
+  loginAction: PropTypes.func.isRequired,
+};
 
 export default Login;

@@ -3,10 +3,14 @@ import {
   Stack, Scene, Router, Actions,
 } from 'react-native-router-flux';
 import { Alert, BackHandler } from 'react-native';
-import Home from '../components/Home';
+import LoadingPage from '../pages/Loading';
 import RegisterForm from '../components/Register';
-import LoginForm from '../components/Login';
-import Dashboard from '../components/Dashboard';
+import LoginPage from '../pages/Login';
+import DashboardPage from '../pages/Dashboard';
+import EditProfilePage from '../pages/EditProfile';
+import MeasurementsPage from '../pages/Measurements';
+import PrescriptionsPage from '../pages/Prescriptions';
+import PrescriptionDetailsPage from '../pages/PrescriptionDetails';
 import ForgotPassword from '../components/ForgotPassword';
 
 const styles = {
@@ -60,7 +64,7 @@ class RouterComponent extends Component {
               initial
               title="Home"
               key="home"
-              component={Home}
+              component={LoadingPage}
             />
           </Stack>
           <Stack navTransparent key="auth">
@@ -68,7 +72,7 @@ class RouterComponent extends Component {
               initial
               key="login"
               title="Login"
-              component={LoginForm}
+              component={LoginPage}
             />
             <Scene
               key="register"
@@ -81,12 +85,33 @@ class RouterComponent extends Component {
               component={ForgotPassword}
             />
           </Stack>
-          <Stack hideNavBar key="main">
+          <Stack navTransparent key="main">
             <Scene
               initial
+              hideNavBar
               title="Dashboard"
               key="dashboard"
-              component={Dashboard}
+              component={DashboardPage}
+            />
+            <Scene
+              title="My profile"
+              key="profile"
+              component={EditProfilePage}
+            />
+            <Scene
+              title="Add new measurement"
+              key="measurements"
+              component={MeasurementsPage}
+            />
+            <Scene
+              title="My prescriptions"
+              key="prescriptions"
+              component={PrescriptionsPage}
+            />
+            <Scene
+              title="Information"
+              key="prescriptionDetails"
+              component={PrescriptionDetailsPage}
             />
           </Stack>
         </Stack>

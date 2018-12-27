@@ -23,6 +23,9 @@ export class Prescription {
     note: string;
 
     @Column()
+    disease: string;
+
+    @Column()
     dueDate: Date;
 
     @ManyToOne(type => User, user => user.prescriptions)

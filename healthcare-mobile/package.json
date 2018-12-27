@@ -11,12 +11,13 @@
     "immutable": "^4.0.0-rc.12",
     "lodash": "^4.17.11",
     "lottie-react-native": "^2.5.5",
-    "moment": "^2.22.2",
+    "moment": "^2.23.0",
     "native-base": "^2.8.1",
     "prop-types": "^15.6.2",
     "react": "16.6.1",
     "react-native": "0.57.5",
     "react-native-device-info": "^0.24.3",
+    "react-native-fontawesome": "^5.7.0",
     "react-native-linear-gradient": "^2.5.3",
     "react-native-router-flux": "^4.0.6",
     "react-native-vector-icons": "^6.1.0",
@@ -47,5 +48,10 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts/"
+    ]
   }
 }
