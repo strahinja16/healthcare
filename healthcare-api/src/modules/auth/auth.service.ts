@@ -21,7 +21,7 @@ export class AuthService implements IAuthService {
     constructor(
         @InjectRepository(PasswordRecovery)
         private readonly passwordRecoveryRepository: Repository<PasswordRecovery>,
-        private readonly mailerProvider: MailerProvider,
+        @Inject('MailerProvider') private readonly mailerProvider: MailerProvider,
         private readonly usersService: UsersService,
         private readonly configService: ConfigService,
     ) {}
