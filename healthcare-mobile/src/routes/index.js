@@ -3,10 +3,10 @@ import {
   Stack, Scene, Router, Actions,
 } from 'react-native-router-flux';
 import { Alert, BackHandler } from 'react-native';
-import Home from '../components/Home';
+import LoadingPage from '../pages/Loading';
 import RegisterForm from '../components/Register';
-import LoginForm from '../components/Login';
-import Dashboard from '../components/Dashboard';
+import LoginPage from '../pages/Login';
+import DashboardPage from '../pages/Dashboard';
 import ForgotPassword from '../components/ForgotPassword';
 
 const styles = {
@@ -60,7 +60,7 @@ class RouterComponent extends Component {
               initial
               title="Home"
               key="home"
-              component={Home}
+              component={LoadingPage}
             />
           </Stack>
           <Stack navTransparent key="auth">
@@ -68,7 +68,7 @@ class RouterComponent extends Component {
               initial
               key="login"
               title="Login"
-              component={LoginForm}
+              component={LoginPage}
             />
             <Scene
               key="register"
@@ -86,7 +86,7 @@ class RouterComponent extends Component {
               initial
               title="Dashboard"
               key="dashboard"
-              component={Dashboard}
+              component={DashboardPage}
             />
           </Stack>
         </Stack>
