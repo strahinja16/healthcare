@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Content, Card, Text, Icon, Button, Row, Col } from 'native-base';
 import PropType from 'prop-types';
+import moment from 'moment';
 import LGContainer from '../common/LGContainer';
 import styles from './style';
 
@@ -26,7 +27,7 @@ class Dashboard extends Component {
               </View>
               <View style={styles.buttonWrapper}>
                 <Button rounded style={styles.buttonStyle}>
-                  <Text style={styles.buttonTextStyle}>My account</Text>
+                  <Text uppercase={false} style={styles.buttonTextStyle}>My account</Text>
                 </Button>
               </View>
           </Card>
@@ -82,10 +83,58 @@ class Dashboard extends Component {
                 </Row>
               </Col>
             </Row>
+            
+            <Row>
+              <Col style={styles.columnStyle}>
+                <Row>
+                  <Col style={styles.columnIconStyle}>
+                    <Icon name='cake' type="MaterialCommunityIcons" style={styles.innerIconStyle} />
+                  </Col>
+                  <Col style={styles.inner2column}>
+                    <Text>{moment(user.birthday).format('YYYY/MM/DD')}</Text>
+                    <Text>Birthday</Text>
+                  </Col>
+                </Row>
+              </Col>
+              
+              <Col style={styles.columnStyle}>
+                <Row>
+                  <Col style={styles.columnIconStyle}>
+                    <Icon name='account-card-details' type="MaterialCommunityIcons" style={styles.innerIconStyle} />
+                  </Col>
+                  <Col style={styles.inner2column}>
+                    <Text>{user.lbo}</Text>
+                    <Text>SSN</Text>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
           </Card>
 
-          <Card>
-            <Text>asd</Text>
+          <Card style={styles.cardButtonsStyle}>
+            <Row>
+              <Col style={styles.colWithButtonStyle}>
+                <Button style={styles.buttonColStyle}>
+                  <Icon name='pill' type="MaterialCommunityIcons" style={styles.innerIconStyle} />
+                  <Text uppercase={false} style={styles.buttonColTextStyle}>Pills</Text>
+                </Button>
+              </Col>
+              <Col style={styles.colWithButtonStyle}>
+                <Button style={styles.buttonColStyle}>
+                    <Icon name='timeline' type="MaterialIcons" style={styles.innerIconStyle} />
+                    <Text uppercase={false} style={styles.buttonColTextStyle}>Measurements</Text>
+                </Button>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col style={styles.colWithButtonStyle}>
+                <Button style={styles.buttonColStyle}>
+                  <Icon name='medkit' type="FontAwesome" style={styles.helpIconStyle} />
+                  <Text uppercase={false} style={styles.buttonColTextStyle}>Request help</Text>
+                </Button>
+              </Col>
+            </Row>
           </Card>
         </Content>
       </LGContainer>

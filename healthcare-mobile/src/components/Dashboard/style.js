@@ -71,4 +71,37 @@ export default {
 
     borderRadius: 0,
   },
+  cardButtonsStyle: {
+    marginTop: 125,
+    backgroundColor: '#ddd',
+    position: 'relative',
+  },
+  colWithButtonStyle: {
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 5,
+    paddingRight: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonColStyle: {
+    paddingTop: 15,
+    paddingBottom: 15,
+    backgroundColor: '#fff',
+    alignSelf: 'center',
+    width: '100%',
+    height: '100%',
+    borderRadius: 10,
+    flexDirection: 'column',
+  },
+  buttonColTextStyle: {
+    color: '#000',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    alignSelf: 'center',
+  },
+  helpIconStyle: {
+    color: 'red',
+    fontSize: 40,
+  },
 };
