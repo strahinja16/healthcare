@@ -41,7 +41,7 @@ export class MeasurementsService implements IMeasurementsService {
             pulse: measurementDto.pulse ? parseInt(measurementDto.pulse, 10) : null,
         };
 
-        if (measurement.pulse === null && measurement.temperature === null && measurement.sugar === null ) {
+        if (measurement.pulse === null && measurement.temperature === null && measurement.sugar === null && measurement.pressure === null) {
             return new HttpException('Please input at least one measurement.', HttpStatus.BAD_REQUEST);
         }
 

@@ -121,7 +121,7 @@ class Dashboard extends Component {
                 </Button>
               </Col>
               <Col style={styles.colWithButtonStyle}>
-                <Button style={styles.buttonColStyle}>
+                <Button style={styles.buttonColStyle} onPress={() => Actions.measurements()}>
                     <Icon name='timeline' type="MaterialIcons" style={styles.innerIconStyle} />
                     <Text uppercase={false} style={styles.buttonColTextStyle}>Measurements</Text>
                 </Button>

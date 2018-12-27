@@ -6,7 +6,7 @@ import {
   editProfile,
 } from '../reducers/auth';
 import { login as loginApi } from '../api/auth';
-import { editProfile as editProfileApi } from '../api/profile';
+import { editProfile as editProfileApi } from '../api/user';
 
 export function logout() {
   return async (dispatch) => {

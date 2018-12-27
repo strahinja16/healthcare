@@ -8,6 +8,7 @@ import RegisterForm from '../components/Register';
 import LoginPage from '../pages/Login';
 import DashboardPage from '../pages/Dashboard';
 import EditProfilePage from '../pages/EditProfile';
+import MeasurementsPage from '../pages/Measurements';
 import ForgotPassword from '../components/ForgotPassword';
 
 const styles = {
@@ -94,6 +95,11 @@ class RouterComponent extends Component {
               title="My profile"
               key="profile"
               component={EditProfilePage}
+            />
+            <Scene
+              title="Add new measurement"
+              key="measurements"
+              component={MeasurementsPage}
             />
           </Stack>
         </Stack>
