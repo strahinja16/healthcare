@@ -10,6 +10,10 @@ const schema = {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  description: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
 };
 
 class Medication extends Sequelize.Model {

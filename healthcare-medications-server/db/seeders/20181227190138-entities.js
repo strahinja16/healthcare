@@ -1,4 +1,5 @@
 const uuid = require('uuid/v4');
+const faker = require('faker');
 
 module.exports = {
   up: async (queryInterface) => {
@@ -18,6 +19,7 @@ module.exports = {
       medications.push({
         id: medicationIds[i],
         name: medicationNames[i],
+        description: faker.lorem.sentence(),
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -27,6 +29,7 @@ module.exports = {
       diseases.push({
         id: diseaseIds[i],
         name: diseasesName[i],
+        description: faker.lorem.sentence(),
         createdAt: new Date(),
         updatedAt: new Date(),
       });

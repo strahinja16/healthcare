@@ -21,7 +21,7 @@ if (process.env.NODE_ENV === 'development') {
   });
 }
 
-app.use('/', router);
+app.use('/api', router);
 
 /**
  * Exports express
