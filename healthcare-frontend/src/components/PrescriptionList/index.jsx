@@ -12,13 +12,13 @@ const PrescriptionList = ({ prescriptions, createPrescription }) => (
     <Button basic color='teal' onClick={createPrescription} content='Add new prescription' fluid />
     <List divided relaxed>
       {
-          prescriptions.map(prescription => (
-            <Prescription
-              key={prescription.id}
-              prescription={prescription}
-            />
-          ))
-        }
+        prescriptions.map(prescription => (
+          <Prescription
+            key={prescription.id}
+            prescription={prescription}
+          />
+        ))
+      }
     </List>
   </div>
 );

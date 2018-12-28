@@ -21,7 +21,7 @@ const Examination = ({ examination: {appointment, showedUp, id, note}, examinati
               basic
               color="orange"
               onClick={() => examinationFinished(id)}
-            >Examined ✓
+            >Submit patient arrival ✓
             </Button>
           )
           : null }

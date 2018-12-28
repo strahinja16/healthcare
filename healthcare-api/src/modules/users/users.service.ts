@@ -1,4 +1,5 @@
 
+import * as moment from 'moment';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
@@ -33,19 +34,21 @@ export class UsersService implements IUsersService {
     async findPrescriptions(id): Promise<Prescription[] | null> {
         const prescriptions = await this.prescriptionsRepository.find({ relations: ['user']});
         return prescriptions
-            .filter(pres => pres.user.id ===  id );
+            .filter(pres => pres.user.id ===  id && moment().isBefore(moment(pres.dueDate)) )
+            .sort((a, b) => moment(a.dueDate).isBefore(b.dueDate) ? 1 : -1);
     }
 
     async findExaminations(id): Promise<Examination[] | null> {
         const examinations = await this.examinationsRepository.find({ relations: ['user']});
         return examinations
-            .filter(exam => exam.user.id === id);
+            .filter(exam => exam.user.id === id)
+            .sort((a, b) => moment(a.appointment).isBefore(b.appointment) ? 1 : -1);
     }
 
     async findMeasurements(id): Promise<Measurement[] | null> {
         const measurements = await this.measurementsRepository.find({ relations: ['user']});
         return measurements
-            .filter(measurement => measurement.user.id ===  id );
+            .filter(measurement => measurement.user.id ===  id);
     }
 
     async findById(id: string): Promise<User> {
