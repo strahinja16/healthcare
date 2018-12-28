@@ -3,9 +3,9 @@ const faker = require('faker');
 
 module.exports = {
   up: async (queryInterface) => {
-    const medicationNames = ['Immuprex', 'Loratamine', 'Penifine', 'Amcicilin', 'Chlorpatch'];
+    const medicationNames = ['Abarelix', 'Benzagel', 'Bosentan', 'Cedax', 'Celecoxib', 'Daptacel', 'Dactinomycin', 'Efudex', 'Fenofibrate', 'Kapidex'];
     const sideEffectNames = ['Nausea', 'Rash', 'Vomiting'];
-    const diseasesName = [ 'HodginksLymphoma', 'Adenovirus', 'Hiv'];
+    const diseasesName = ['Arthritis', 'Asthma', 'Bronchitis', 'Cancer', 'Diabetes', 'Hypertension', 'Hyperthermia', 'Flu', 'Malaria', 'Thrombosis'];
 
     const medicationIds = [ uuid(), uuid(), uuid(), uuid(), uuid()];
     const sideEffectIds = [ uuid(), uuid(), uuid()];

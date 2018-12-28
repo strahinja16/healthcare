@@ -9,7 +9,7 @@ export class PrescriptionSeed  {
       const insertData = [];
 
       const drugs = ['Abarelix', 'Benzagel', 'Bosentan', 'Cedax', 'Celecoxib', 'Daptacel', 'Dactinomycin', 'Efudex', 'Fenofibrate', 'Kapidex'];
-      const diseases = ['Arthritis', 'Asthma', 'Bronchitis', 'Cancer', 'Diabetes', 'Hypertension', 'Hyperthermia', 'Flu', 'Malaria', 'Thrombosis']
+      const diseases = ['Arthritis', 'Asthma', 'Bronchitis', 'Cancer', 'Diabetes', 'Hypertension', 'Hyperthermia', 'Flu', 'Malaria', 'Thrombosis'];
       const hours = [1, 3, 6, 8, 12, 24, 48];
 
       const patients = await usersRepository.find({ isDoctor: false });
