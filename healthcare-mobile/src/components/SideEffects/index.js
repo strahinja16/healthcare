@@ -5,6 +5,7 @@ import PropType from 'prop-types';
 import { Card, CardItem, Text, Body, Content, Spinner } from 'native-base';
 import LGContainer from '../common/LGContainer';
 import { getSideEffects as getSideEffectsApi } from '../../api/medications';
+import extractErrorsFromResponse from '../../util/extractErrorMessagesFromResponse';
 import styles from './styles';
 
 class SideEffects extends Component {
@@ -25,12 +26,22 @@ class SideEffects extends Component {
         this.setState({ sideEffects });
       })
       .catch(e => {
-        Alert.alert('Error', e.response.data);
+        const messages = extractErrorsFromResponse(e.response);
+        Alert.alert('Error', messages.length > 0 && messages[0]);
       });
   }
 
   renderSideEffects() {
     const { sideEffects } = this.state;
+    if(sideEffects.length === 0) {
+      return (<Card style={styles.cardStyle}>
+          <CardItem header bordered>
+            <Text style={styles.header}>
+              Empty
+            </Text>
+          </CardItem>
+        </Card>);
+    }
     return sideEffects.map((sideEffect, key) =>
         <Card style={styles.cardStyle}>
           <CardItem header bordered>

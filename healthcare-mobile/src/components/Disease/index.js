@@ -3,8 +3,10 @@ import React, { Component } from 'react';
 import { Alert } from 'react-native';
 import PropType from 'prop-types';
 import { Card, CardItem, Text, Body, Content, Spinner } from 'native-base';
+import { Actions } from 'react-native-router-flux';
 import LGContainer from '../common/LGContainer';
 import { getDisease as getDiseaseApi } from '../../api/medications';
+import extractErrorsFromResponse from '../../util/extractErrorMessagesFromResponse';
 import styles from './styles';
 
 class Disease extends Component {
@@ -24,7 +26,9 @@ class Disease extends Component {
         this.setState({ disease });
       })
       .catch(e => {
-        Alert.alert('Error', e.response.data);
+        const messages = extractErrorsFromResponse(e.response);
+        Alert.alert('Error', messages.length > 0 && messages[0]);
+        Actions.main({ type: 'reset' });
       });
   }
 

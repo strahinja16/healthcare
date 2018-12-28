@@ -5,11 +5,24 @@ module.exports = {
     const { name } = ctx.params;
 
     try {
-        return await axios.get(`/diseases/${name}`);
+        const { data } = await axios.get(`/diseases/${name}`);
+        return data;
     } catch (e) {
         return null;
     }
   },
+
+  async getSideEffectsByDrugName(ctx) {
+    const { drugName } = ctx.params;
+
+    try {
+      const { data } = await axios.get(`/side-effects/${drugName}`);
+      return data;
+  } catch (e) {
+      return null;
+  }
+},
+
   async getDiseasesNameLike(ctx) {
     const { name } = ctx.params;
 
