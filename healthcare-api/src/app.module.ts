@@ -7,6 +7,7 @@ import { ConfigModule } from './modules/config/config.module';
 import { PrescriptionsModule } from './modules/prescriptions/prescriptions.module';
 import { ExaminationsModule } from './modules/examinations/examinations.module';
 import { MeasurementsModule } from './modules/measurements/measurements.module';
+import {MoleculerModule} from "./modules/moleculer/moleculer.module";
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { MeasurementsModule } from './modules/measurements/measurements.module';
       PrescriptionsModule,
       ExaminationsModule,
       MeasurementsModule,
+      MoleculerModule,
   ],
 })
 export class AppModule {}
