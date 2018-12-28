@@ -11,6 +11,8 @@ import EditProfilePage from '../pages/EditProfile';
 import MeasurementsPage from '../pages/Measurements';
 import PrescriptionsPage from '../pages/Prescriptions';
 import PrescriptionDetailsPage from '../pages/PrescriptionDetails';
+import DiseasePage from '../pages/Disease';
+import SideEffectsPage from '../pages/SideEffects';
 import ForgotPassword from '../components/ForgotPassword';
 
 const styles = {
@@ -112,6 +114,16 @@ class RouterComponent extends Component {
               title="Information"
               key="prescriptionDetails"
               component={PrescriptionDetailsPage}
+            />
+            <Scene
+              title="Disease"
+              key="disease"
+              component={DiseasePage}
+            />
+            <Scene
+              title="Drug side effects"
+              key="sideEffects"
+              component={SideEffectsPage}
             />
           </Stack>
         </Stack>

@@ -17,7 +17,7 @@ const initBroker = () => {
   });
 
   broker.createService({
-    name: 'event',
+    name: 'medicine',
     events,
     actions,
   });

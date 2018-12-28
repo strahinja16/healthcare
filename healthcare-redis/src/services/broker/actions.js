@@ -1,7 +1,13 @@
+const axios = require('api');
 
 module.exports = {
-  async get(ctx) {
+  async getDiseaseByName(ctx) {
+    const { name } = ctx.params;
 
-    return null;
+    try {
+        return await axios.get(`/diseases/${name}`);
+    } catch (e) {
+        return null;
+    }
   },
 };

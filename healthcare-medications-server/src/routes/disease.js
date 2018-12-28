@@ -42,4 +42,26 @@ router.get('/:name/medications', async (req, res) => {
   }
 });
 
+router.get('/:name', async (req, res) => {
+    try {
+        const { name } = req.params;
+        const disease = await Disease.findOne({
+            where: {
+                name,
+            }
+        });
+
+        if (!disease) {
+            return res.status(404).send('Not found.');
+        }
+
+        return res.status(200).send({ disease: { name: disease.name, description: disease.description } });
+    } catch (e) {
+        logger.error(e);
+        return res.status(500).send({
+            message: responses(500),
+        });
+    }
+});
+
 module.exports = router;
