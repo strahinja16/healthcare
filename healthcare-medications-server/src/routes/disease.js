@@ -55,7 +55,7 @@ router.get('/:name', async (req, res) => {
             return res.status(404).send('Not found.');
         }
 
-        return res.status(200).send({ disease });
+        return res.status(200).send({ disease: { name: disease.name, description: disease.description } });
     } catch (e) {
         logger.error(e);
         return res.status(500).send({
