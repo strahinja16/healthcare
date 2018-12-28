@@ -9,5 +9,5 @@ ADD . /app
 RUN npm ci
 RUN npm install -g nodemon
 
-EXPOSE 3001
+EXPOSE 3003
 CMD ["node", "/app/src/bin/www"]

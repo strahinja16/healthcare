@@ -1,19 +1,18 @@
 
-import fetch from '.';
-import axios from 'axios';
+import axios from '.';
 
 export function getActivePrescriptions(id) {
-  return fetch.get(`/users/${id}/prescriptions`);
+  return axios.get(`/users/${id}/prescriptions`);
 }
 
 export function createPrescription(payload) {
-  return fetch.post('/prescriptions', payload);
+  return axios.post('/prescriptions', payload);
 }
 
 export function getDiseases(like) {
-  return axios.get(`http://localhost:3002/api/diseases/search/${like}`);
+  return axios.get(`/prescriptions/disease/search/${like}`);
 }
 
 export function getDrugsByDisease(name) {
-  return axios.get(`http://localhost:3002/api/diseases/${name}/medications`);
+  return axios.get(`/prescriptions/disease/${name}/medications`);
 }

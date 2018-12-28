@@ -13,6 +13,16 @@ export class Broker {
         Broker.broker.start();
     }
 
+    public static async getDiseasesNameLike(name) {
+        return await Broker.broker
+            .call('medicine.getDiseasesNameLike', { name: name });
+    }
+
+    public static async getMedicationsForDisease(name) {
+        return await Broker.broker
+            .call('medicine.getMedicationsForDisease', { name:name });
+    }
+
     private static intializeBroker(): ServiceBroker {
         return new ServiceBroker({
             nodeID: 'api-1',
