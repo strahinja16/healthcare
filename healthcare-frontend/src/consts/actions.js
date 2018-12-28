@@ -17,4 +17,6 @@ export const GET_EXAMINATIONS_ACTION = '@examinations/all';
 export const EXAMINATION_FINISHED_ACTION = '@examination/finished';
 export const CREATE_EXAMINATION_ACTION = '@examination/add';
 
-export const CREATE_PRESCRIPTION_ACTION = '@prescription/add';
+export const CREATE_PRESCRIPTION_ACTION = '@prescription/addPrescriptions';
+export const GET_DISEASES_ACTION = '@prescription/addDiseases';
+export const GET_DRUGS_BY_DISEASE_ACTION = '@prescription/addDrugs';

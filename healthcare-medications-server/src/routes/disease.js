@@ -26,4 +26,20 @@ router.get('/search/:like', async (req, res) => {
   }
 });
 
+router.get('/:name/medications', async (req, res) => {
+  try {
+    const { name } = req.params;
+    const disease = await Disease.findOne({ where: { name } });
+
+    const medications = await disease.getMedications().map(medication => medication.name);
+
+    return res.status(200).send(medications);
+  } catch (e) {
+    logger.error(e);
+    return res.status(500).send({
+      message: responses(500),
+    });
+  }
+});
+
 module.exports = router;
