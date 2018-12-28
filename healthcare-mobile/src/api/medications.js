@@ -1,9 +1,9 @@
-import axios from './api2';
+import axios from '.';
 
 export function getDisease(diseaseName) {
-  return axios.get(`/diseases/${diseaseName}`);
+  return axios.get(`/prescriptions/disease/${diseaseName}`);
 }
 
 export function getSideEffects(drugName) {
-  return axios.get(`/side-effects/${drugName}`);
+  return axios.get(`/prescriptions/side-effects/${drugName}`);
 }

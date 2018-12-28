@@ -7,7 +7,7 @@ import {
     Post,
     Put,
     UsePipes,
-    ValidationPipe, Inject, Get,
+    ValidationPipe, Inject, Get, HttpException,
 } from '@nestjs/common';
 import { CreatePrescriptionDto} from './dto/createPrescription.dto';
 import {IPrescriptionsService} from "./interfaces/prescriptions-service.interface";
@@ -44,6 +44,28 @@ export class PrescriptionsController {
     public async getMedicationsForDisease(@Param() param, @Response() res, @Body() body) {
         const medications = await Broker.getMedicationsForDisease(param.name);
         return res.status(HttpStatus.OK).json(medications);
+    }
+
+    @Get('/disease/:name')
+    public async getDisease(@Param() param, @Response() res, @Body() body) {
+        const disease = await Broker.getDisease(param.name);
+
+        if(!disease) {
+            throw new HttpException('Not found.', HttpStatus.BAD_REQUEST);
+        }
+
+        return res.status(HttpStatus.OK).json(disease);
+    }
+
+    @Get('/side-effects/:drugName')
+    public async getSideEffectsForDrug(@Param() param, @Response() res, @Body() body) {
+        const sideEffects = await Broker.getSideEffectsForDrug(param.drugName);
+
+        if(!sideEffects) {
+            throw new HttpException('Not found.', HttpStatus.BAD_REQUEST);
+        }
+
+        return res.status(HttpStatus.OK).json(sideEffects);
     }
 
 }

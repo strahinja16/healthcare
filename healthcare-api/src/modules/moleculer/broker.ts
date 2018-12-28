@@ -23,6 +23,14 @@ export class Broker {
             .call('medicine.getMedicationsForDisease', { name:name });
     }
 
+    public static async getDisease(name) {
+        return await Broker.broker.call('medicine.getDiseaseByName', { name });
+    }
+
+    public static async getSideEffectsForDrug(drugName) {
+        return await Broker.broker.call('medicine.getSideEffectsByDrugName', { drugName });
+    }
+
     private static intializeBroker(): ServiceBroker {
         return new ServiceBroker({
             nodeID: 'api-1',

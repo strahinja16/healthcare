@@ -27,8 +27,6 @@ services:
   redis-micro:
     build: ./healthcare-redis
     command: npm start
-    ports:
-      - "3003:3003"
     volumes:
     - ./healthcare-redis:/app
     - /app/node_modules
