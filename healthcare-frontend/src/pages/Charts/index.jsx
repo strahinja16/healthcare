@@ -40,12 +40,11 @@ class ChartsPage extends Component {
     if (!charts) {
       return null;
     }
-    return Object.keys(MEASUREMENTS).map(measurement => {
-      return (<Fragment key={MEASUREMENTS[measurement]}>
+    return Object.keys(MEASUREMENTS).map(measurement =>
+      (<Fragment key={MEASUREMENTS[measurement]}>
         <Header as="h1">{MEASUREMENTS[measurement]}</Header>
         <Chart type={measurement} data={charts[MEASUREMENTS[measurement]]}/>
-      </Fragment>)
-    })
+      </Fragment>))
   }
 
   render() {

@@ -1,9 +1,7 @@
 
 import React, { Component, Fragment } from 'react';
-import {
-  Label, List, Divider,
-} from 'semantic-ui-react';
-import { Line, HorizontalBar } from "react-chartjs-2";
+
+import { Line } from "react-chartjs-2";
 import prepareChartMeasurement from "../../util/prepareChartMeasurement";
 
 class Chart extends Component {
