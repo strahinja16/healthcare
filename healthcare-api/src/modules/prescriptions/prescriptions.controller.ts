@@ -25,6 +25,7 @@ export class PrescriptionsController {
     @UsePipes(new ValidationPipe())
     public async createPrescription(@Response() res, @Body() createPrescriptionDto: CreatePrescriptionDto) {
         const prescription = await this.prescriptionsService.create(createPrescriptionDto);
+        Broker.emitPrescribedEvent(createPrescriptionDto.drug);
         return res.status(HttpStatus.OK).json(prescription);
     }
 

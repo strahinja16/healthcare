@@ -1,4 +1,5 @@
 const redis = require('./');
+const { getSideEffectsByDrugName } = require('api/drug');
 
 class DrugService {
     generateKey(key) {
@@ -11,6 +12,18 @@ class DrugService {
 
     async getSideEffectsForDrug(key) {
         return await redis.smembers(this.generateKey(key));
+    }
+
+    async refreshAllDrugSideEffects() {
+        const keys = await redis.keys(this.generateKey('*'));
+        keys.forEach(async (key) => {
+            const ss = key.split(':');
+            const drugName = ss[1];
+
+            const { data } = await getSideEffectsByDrugName(drugName);
+
+            this.setSideEffectsForDrug(drugName, data);
+        });
     }
 }
 

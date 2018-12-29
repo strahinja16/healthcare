@@ -22,6 +22,7 @@
     "ioredis": "^4.3.0",
     "module-alias": "^2.1.0",
     "moleculer": "^0.13.5",
+    "node-cron": "^2.0.3",
     "winston": "^3.1.0"
   },
   "devDependencies": {

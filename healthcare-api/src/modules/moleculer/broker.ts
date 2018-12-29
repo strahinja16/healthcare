@@ -31,6 +31,10 @@ export class Broker {
         return await Broker.broker.call('medicine.getSideEffectsByDrugName', { drugName });
     }
 
+    public static emitPrescribedEvent(drugName) {
+        Broker.broker.emit('drug.prescribed', { drugName });
+    }
+
     private static intializeBroker(): ServiceBroker {
         return new ServiceBroker({
             nodeID: 'api-1',
