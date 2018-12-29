@@ -51,7 +51,7 @@ class Login extends Component {
     return (
       <View>
         <Card style={styles.cardStyle}>
-          <Text style={styles.textHeaderStyle}>Your personal healthcare assistant</Text>
+          <Text style={styles.textHeaderStyle}>Your personal HealthCare assistant</Text>
           <Text style={styles.textDescriptionStyle}>Sign in or request a new account</Text>
           <Form>
             <Item style={styles.itemStyle}>

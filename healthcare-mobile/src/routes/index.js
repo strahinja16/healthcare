@@ -101,7 +101,7 @@ class RouterComponent extends Component {
               component={EditProfilePage}
             />
             <Scene
-              title="Add new measurement"
+              title="New measurement"
               key="measurements"
               component={MeasurementsPage}
             />

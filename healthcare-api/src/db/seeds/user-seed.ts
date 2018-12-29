@@ -19,7 +19,7 @@ export class UserSeed  {
 
         const user = new User();
 
-        user.lbo = uuid();
+        user.lbo = faker.random.alphaNumeric({ count: 6 });
         user.id = doctorIds[i];
         user.name = faker.name.findName();
         user.password = crypto.createHmac('sha256', 'test').digest('hex');
