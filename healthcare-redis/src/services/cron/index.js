@@ -3,7 +3,7 @@ const diseaseService = require('services/redis/disease');
 const drugService = require('services/redis/drug');
 
 const initCron = () => {
-    cron.schedule("0 0 * * *", async () => {
+    cron.schedule("0 */12 * * *", async () => {
         await diseaseService.refreshAllDiseasesData();
         await diseaseService.refreshAllDiseaseDrugs();
 

@@ -4,6 +4,10 @@ const {
     getDrugsForDisease,
 } = require('api/disease');
 
+function setExpirationForKey(key) {
+    redis.expire(key, 60 * 60);
+}
+
 class DiseaseService {
     generateKeyForDisease(key) {
         return `diseases:${key}:name`;
@@ -14,19 +18,27 @@ class DiseaseService {
     }
 
     async setDisease(key, disease) {
-        return await redis.hmset(this.generateKeyForDisease(key), disease);
+        const k = this.generateKeyForDisease(key);
+        await redis.hmset(k, disease);
+        setExpirationForKey(k);
     }
 
     async getDisease(key) {
-        return await redis.hgetall(this.generateKeyForDisease(key));
+        const k = this.generateKeyForDisease(key);
+        setExpirationForKey(k);
+        return await redis.hgetall(k);
     }
 
     async setDrugsForDisease(key, drugs) {
-        return await redis.sadd(this.generateKeyForDrugs(key), drugs);
+        const k = this.generateKeyForDrugs(key);
+        await redis.sadd(k, drugs);
+        setExpirationForKey(k);
     }
 
     async getDrugsForDisease(key) {
-        return await redis.smembers(this.generateKeyForDrugs(key));
+        const k = this.generateKeyForDrugs(key);
+        setExpirationForKey(k);
+        return await redis.smembers(k);
     }
 
     async refreshAllDiseasesData() {

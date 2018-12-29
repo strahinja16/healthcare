@@ -1,17 +1,25 @@
 const redis = require('./');
 const { getSideEffectsByDrugName } = require('api/drug');
 
+function setExpirationForKey(key) {
+    redis.expire(key, 60 * 60);
+}
+
 class DrugService {
     generateKey(key) {
         return `drugs:${key}:side-effects`;
     }
 
     async setSideEffectsForDrug(key, drugs) {
-        return await redis.sadd(this.generateKey(key), drugs);
+        const k = this.generateKey(key);
+        await redis.sadd(k, drugs);
+        setExpirationForKey(k);
     }
 
     async getSideEffectsForDrug(key) {
-        return await redis.smembers(this.generateKey(key));
+        const k = this.generateKey(key);
+        setExpirationForKey(k);
+        return await redis.smembers(k);
     }
 
     async refreshAllDrugSideEffects() {
