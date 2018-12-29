@@ -29,10 +29,6 @@ class DiseaseService {
         return await redis.smembers(this.generateKeyForDrugs(key));
     }
 
-    async getProba() {
-        return redis.keys('diseases:*:name');
-    }
-
     async refreshAllDiseasesData() {
         const keys = await redis.keys(this.generateKeyForDisease('*'));
         keys.forEach(async (key) => {
