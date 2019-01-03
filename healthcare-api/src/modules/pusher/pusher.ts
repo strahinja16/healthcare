@@ -10,7 +10,7 @@ export class Pusher {
     }
 
     public static async test() {
-        Pusher.getInstance().trigger('my-channel', 'my-event', {
+        Pusher.getInstance().trigger('test2', 'x3', {
             "message": "hello world"
         });
     }

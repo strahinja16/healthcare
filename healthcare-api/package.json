@@ -7,7 +7,7 @@
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",
     "start": "ts-node -r tsconfig-paths/register src/main.ts",
-    "start:dev": "nodemon -w",
+    "start:dev": "nodemon -wL",
     "start:debug": "nodemon --config nodemon-debug.json",
     "prestart:prod": "rimraf dist && tsc",
     "start:prod": "node dist/main.js",

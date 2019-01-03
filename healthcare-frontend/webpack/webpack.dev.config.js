@@ -15,6 +15,10 @@ module.exports = {
     hotOnly: true,
     host: '0.0.0.0',
   },
+  watchOptions: {
+    poll: 1000,
+    aggregateTimeout: 1000
+  },
 
   plugins: [
     ...baseConfig.plugins,
