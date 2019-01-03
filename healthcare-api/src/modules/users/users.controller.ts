@@ -13,6 +13,7 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/createUser.dto';
 import {IUsersService} from "./interfaces/users-service.interface";
+import {Pusher} from "../pusher/pusher";
 
 @Controller('users')
 export class UsersController {
@@ -37,6 +38,7 @@ export class UsersController {
     @Get('/:id/patients')
     public async getUserPatients(@Response() res, @Param() param) {
         const users = await this.usersService.findAllPatients(param.id);
+        await Pusher.test();
         return res.status(HttpStatus.OK).json(users);
     }
 

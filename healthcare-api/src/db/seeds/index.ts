@@ -1,10 +1,10 @@
 #!/usr/bin/env ts-node
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from '../../app.module';
 import { UserSeed } from './user-seed';
 import { MeasurementSeed } from './measurement-seed';
 import { PrescriptionSeed } from './prescription-seed';
 import { ExaminationSeed } from './examination-seed';
+import {AppModule} from "../../app.module";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

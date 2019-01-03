@@ -8,6 +8,7 @@ import { PrescriptionsModule } from './modules/prescriptions/prescriptions.modul
 import { ExaminationsModule } from './modules/examinations/examinations.module';
 import { MeasurementsModule } from './modules/measurements/measurements.module';
 import {MoleculerModule} from "./modules/moleculer/moleculer.module";
+import { PusherModule } from './modules/pusher/pusher.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import {MoleculerModule} from "./modules/moleculer/moleculer.module";
       ExaminationsModule,
       MeasurementsModule,
       MoleculerModule,
+      PusherModule,
   ],
 })
 export class AppModule {}
