@@ -9,6 +9,7 @@ import { IUsersService } from './interfaces/users-service.interface';
 import {Prescription} from "../prescriptions/entity/prescription.entity";
 import {Examination} from "../examinations/entity/examination.entity";
 import {Measurement} from "../measurements/entity/measurement.entity";
+import {Pusher} from "../pusher/pusher";
 
 @Injectable()
 export class UsersService implements IUsersService {
@@ -73,11 +74,14 @@ export class UsersService implements IUsersService {
 
         user = this._assign(user, newValue);
 
-        return await this.usersRepository.save(user);
+        const updated = await this.usersRepository.save(user);
+
+        await Pusher.updateUser(updated);
+
+        return updated;
     }
 
     async updateDoctor(lbo: string, doctorId: string): Promise<User | null> {
-        console.log(lbo, doctorId);
 
         let user = await this.findOne({ where: { lbo }});
         if (!user) {

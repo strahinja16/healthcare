@@ -9,6 +9,9 @@ import { getPatient } from '../../thunks/patient';
 import PatientProfile from '../../components/PatientProfile';
 import Chart from '../../components/Chart';
 import { getMeasurements } from "../../thunks/charts";
+import { addMeasurement } from "../../reducers/charts";
+import { getPatient as getPatientAction } from "../../reducers/patient";
+import pusher from '../../services/pusher';
 
 
 class ChartsPage extends Component {
@@ -23,11 +26,29 @@ class ChartsPage extends Component {
     const {
       getPatientAction,
       match:{ params: { id } },
-      getChartsAction
+      getChartsAction,
+      addMeasurementPushAction,
+      updatePatientPushAction,
     } = this.props;
 
     getChartsAction(id);
     getPatientAction(id);
+
+    pusher
+      .subscribe(`measurements-${id}`)
+      .bind('create', ({ measurement }) => addMeasurementPushAction(measurement));
+
+    pusher
+      .subscribe(`users-${id}`)
+      .bind('update', ({ user }) => updatePatientPushAction(user));
+  }
+
+  componentWillUnmount() {
+    const {
+      match:{ params: { id } },
+    } = this.props;
+    pusher.unsubscribe(`measurements-${id}`);
+    pusher.unsubscribe(`users-${id}`);
   }
 
   goBack() {
@@ -77,6 +98,8 @@ const mapDispatchToProps = dispatch => bindActionCreators(
   {
     getPatientAction: getPatient,
     getChartsAction: getMeasurements,
+    addMeasurementPushAction: addMeasurement,
+    updatePatientPushAction: getPatientAction,
   },
   dispatch,
 );

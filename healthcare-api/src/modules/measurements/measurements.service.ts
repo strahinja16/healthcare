@@ -6,6 +6,7 @@ import { CreateMeasurementDto } from './dto/createMeasurement.dto';
 import { Measurement } from './entity/measurement.entity';
 import { User } from '../users/entity/user.entity';
 import { IMeasurementsService } from './interfaces/measurements-service.interface';
+import {Pusher} from "../pusher/pusher";
 
 @Injectable()
 export class MeasurementsService implements IMeasurementsService {
@@ -41,12 +42,16 @@ export class MeasurementsService implements IMeasurementsService {
             pulse: measurementDto.pulse ? parseInt(measurementDto.pulse, 10) : null,
         };
 
-        if (measurement.pulse === null && measurement.temperature === null && measurement.sugar === null && measurement.pressure === null) {
+        if (!measurement.pulse && !measurement.temperature && !measurement.sugar && !measurement.pressure) {
             return new HttpException('Please input at least one measurement.', HttpStatus.BAD_REQUEST);
         }
 
         measurement.user = user;
 
-        return await this.measurementsRepository.save(measurement as Measurement);
+        const created =  await this.measurementsRepository.save(measurement as Measurement);
+
+        await Pusher.createMeasurement(created, user.id);
+
+        return created;
     }
 }
