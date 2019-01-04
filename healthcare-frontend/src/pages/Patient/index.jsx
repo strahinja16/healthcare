@@ -13,6 +13,8 @@ import PrescriptionList from '../../components/PrescriptionList';
 import { getActivePrescriptions } from '../../thunks/prescription';
 import { examinationFinished, getExaminations } from '../../thunks/examination';
 import ExaminationList from '../../components/ExaminationList';
+import { getPatient as getPatientAction } from "../../reducers/patient";
+import pusher from "../../services/pusher";
 
 
 class PatientPage extends Component {
@@ -35,11 +37,23 @@ class PatientPage extends Component {
       },
       getActivePrescriptionsAction,
       getExaminationsAction,
+      updatePatientPushAction,
     } = this.props;
 
     getPatientAction(id);
     getActivePrescriptionsAction(id);
     getExaminationsAction(id);
+
+    pusher
+      .subscribe(`users-${id}`)
+      .bind('update', ({ user }) => updatePatientPushAction(user));
+  }
+
+  componentWillUnmount() {
+    const {
+      match:{ params: { id } },
+    } = this.props;
+    pusher.unsubscribe(`users-${id}`);
   }
 
   pushCharts() {
@@ -127,6 +141,7 @@ PatientPage.propTypes = {
   getExaminationsAction: PropTypes.func.isRequired,
   examinationFinishedAction: PropTypes.func.isRequired,
   getActivePrescriptionsAction: PropTypes.func.isRequired,
+  updatePatientPushAction: PropTypes.func.isRequired,
   patient: PropTypes.shape({}),
   prescriptions: PropTypes.arrayOf(PropTypes.shape({})),
   examinations: PropTypes.arrayOf(PropTypes.shape({})),
@@ -147,6 +162,7 @@ const mapDispatchToProps = dispatch => bindActionCreators(
     getActivePrescriptionsAction: getActivePrescriptions,
     getExaminationsAction: getExaminations,
     examinationFinishedAction: examinationFinished,
+    updatePatientPushAction: getPatientAction,
   },
   dispatch,
 );

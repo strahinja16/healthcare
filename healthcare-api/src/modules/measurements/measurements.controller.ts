@@ -5,7 +5,7 @@ import {
     Body,
     Post,
     UsePipes,
-    ValidationPipe, Inject,
+    ValidationPipe, Inject, Param,
 } from '@nestjs/common';
 import { CreateMeasurementDto} from './dto/createMeasurement.dto';
 import { ApiUseTags } from '@nestjs/swagger';

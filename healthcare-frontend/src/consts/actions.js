@@ -6,6 +6,7 @@ export const HOME_ALL_USERS_ACTION = '@home/all';
 export const HOME_NEW_USER_ACTION = '@home/new';
 
 export const GET_CHART_DATA_ACTION = '@chart/getAll';
+export const ADD_CHART_DATA_ACTION = '@chart/add';
 
 export const SET_BREADCRUMB_ACTION = '@breadcrumb/set';
 

@@ -13,7 +13,6 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/createUser.dto';
 import {IUsersService} from "./interfaces/users-service.interface";
-import {Pusher} from "../pusher/pusher";
 
 @Controller('users')
 export class UsersController {
@@ -38,7 +37,6 @@ export class UsersController {
     @Get('/:id/patients')
     public async getUserPatients(@Response() res, @Param() param) {
         const users = await this.usersService.findAllPatients(param.id);
-        await Pusher.test();
         return res.status(HttpStatus.OK).json(users);
     }
 
@@ -69,7 +67,6 @@ export class UsersController {
 
     @Put('/:id')
     public async updateUser(@Param() param, @Response() res, @Body() body) {
-
         const user = await this.usersService.update(param.id, body);
         return res.status(HttpStatus.OK).json(user);
     }
