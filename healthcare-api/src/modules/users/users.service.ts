@@ -9,7 +9,7 @@ import { IUsersService } from './interfaces/users-service.interface';
 import {Prescription} from "../prescriptions/entity/prescription.entity";
 import {Examination} from "../examinations/entity/examination.entity";
 import {Measurement} from "../measurements/entity/measurement.entity";
-import {Pusher} from "../pusher/pusher";
+import {PusherService} from "../pusher/pusher";
 
 @Injectable()
 export class UsersService implements IUsersService {
@@ -76,7 +76,7 @@ export class UsersService implements IUsersService {
 
         const updated = await this.usersRepository.save(user);
 
-        await Pusher.updateUser(updated);
+        await PusherService.updateUser(updated);
 
         return updated;
     }

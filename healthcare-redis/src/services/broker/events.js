@@ -1,10 +1,9 @@
 const logger = require('services/logger');
-const axios = require('api');
 const drugService = require('services/redis/drug');
 const { getSideEffectsByDrugName } = require('api/drug');
 
 module.exports = {
-  'drug.prescribed': async (data, sender) => {
+  'drug.prescribed': async (data) => {
     try {
         const { drugName } = data;
         const { data: sideEffects } = await getSideEffectsByDrugName(drugName);

@@ -6,6 +6,7 @@ import { CreatePrescriptionDto } from './dto/createPrescription.dto';
 import { Prescription } from './entity/prescription.entity';
 import { User } from '../users/entity/user.entity';
 import { IPrescriptionsService } from './interfaces/prescriptions-service.interface';
+import {PusherService} from "../pusher/pusher";
 
 @Injectable()
 export class PrescriptionsService implements IPrescriptionsService{
@@ -40,7 +41,11 @@ export class PrescriptionsService implements IPrescriptionsService{
         };
         prescription.user = user;
 
-        return await this.prescriptionsRepository.save(prescription as Prescription);
+        const created = await this.prescriptionsRepository.save(prescription as Prescription);
+
+        await PusherService.createPrescription(created, user.id);
+
+        return created;
     }
 
     async update(id: string, newValue: CreatePrescriptionDto): Promise<Prescription | null> {

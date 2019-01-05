@@ -6,7 +6,7 @@ import { CreateMeasurementDto } from './dto/createMeasurement.dto';
 import { Measurement } from './entity/measurement.entity';
 import { User } from '../users/entity/user.entity';
 import { IMeasurementsService } from './interfaces/measurements-service.interface';
-import {Pusher} from "../pusher/pusher";
+import { PusherService} from "../pusher/pusher";
 
 @Injectable()
 export class MeasurementsService implements IMeasurementsService {
@@ -50,7 +50,7 @@ export class MeasurementsService implements IMeasurementsService {
 
         const created =  await this.measurementsRepository.save(measurement as Measurement);
 
-        await Pusher.createMeasurement(created, user.id);
+        await PusherService.createMeasurement(created, user.id);
 
         return created;
     }

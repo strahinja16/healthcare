@@ -6,6 +6,7 @@ import { CreateExaminationDto } from './dto/createExamination.dto';
 import { Examination } from './entity/examination.entity';
 import { User } from '../users/entity/user.entity';
 import { IExaminationsService } from './interfaces/examinations-service.interface';
+import {PusherService} from '../pusher/pusher';
 
 @Injectable()
 export class ExaminationsService implements IExaminationsService{
@@ -36,7 +37,11 @@ export class ExaminationsService implements IExaminationsService{
         const examination = { ... examinationDto, user: null, appointment: new Date(examinationDto.appointment) };
         examination.user = user;
 
-        return await this.examinationsRepository.save(examination as Examination);
+        const created = await this.examinationsRepository.save(examination as Examination);
+
+        await PusherService.createExamination(created, user.id);
+
+        return created;
     }
 
     async update(id: string, newValue: CreateExaminationDto): Promise<Examination | null> {

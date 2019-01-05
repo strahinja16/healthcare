@@ -1,21 +1,30 @@
-import * as ImportedPusher from 'pusher';
+import * as Pusher from 'pusher';
 import {Measurement} from "../measurements/entity/measurement.entity";
 import {User} from "../users/entity/user.entity";
 import {Prescription} from "../prescriptions/entity/prescription.entity";
 import {Examination} from "../examinations/entity/examination.entity";
 import {EventType} from "./event-type.enum";
 
-export class Pusher {
-    private static pusher: ImportedPusher = Pusher.intializePusher();
+export class PusherService {
+    private static pusherService: PusherService = new PusherService();
+    private readonly pusher: Pusher;
 
-    private constructor() {}
+    private constructor() {
+        this.pusher = new Pusher({
+            appId: '683863',
+            key: 'f15495b1a9cc2b74d7ed',
+            secret: '2f20085f5836beac3089',
+            cluster: 'eu',
+            useTLS: true
+        });
+    }
 
     public static getInstance() {
-        return Pusher.pusher;
+        return this.pusherService.pusher;
     }
 
     public static async createMeasurement(measurement: Measurement, userId): Promise<void> {
-        Pusher
+        PusherService
             .getInstance()
             .trigger(
                 `measurements-${userId}`,
@@ -25,7 +34,7 @@ export class Pusher {
     }
 
     public static async updateUser(user: User): Promise<void> {
-        Pusher
+        PusherService
             .getInstance()
             .trigger(
                 `users-${user.id}`,
@@ -35,7 +44,7 @@ export class Pusher {
     }
 
     public static async createPrescription(prescription: Prescription, userId): Promise<void> {
-        Pusher
+        PusherService
             .getInstance()
             .trigger(
                 `prescriptions-${userId}`,
@@ -45,22 +54,12 @@ export class Pusher {
     }
 
     public static async createExamination(examination: Examination, userId): Promise<void> {
-        Pusher
+        PusherService
             .getInstance()
             .trigger(
                 `examinations-${userId}`,
                  EventType.Create,
                 { examination }
             );
-    }
-
-    private static intializePusher(): ImportedPusher {
-        return new ImportedPusher({
-            appId: '683863',
-            key: 'f15495b1a9cc2b74d7ed',
-            secret: '2f20085f5836beac3089',
-            cluster: 'eu',
-            useTLS: true
-        });
     }
 }
