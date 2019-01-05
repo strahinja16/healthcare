@@ -1,12 +1,12 @@
 
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import {Injectable, HttpException, HttpStatus, Inject} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository} from 'typeorm';
 import { CreatePrescriptionDto } from './dto/createPrescription.dto';
 import { Prescription } from './entity/prescription.entity';
 import { User } from '../users/entity/user.entity';
 import { IPrescriptionsService } from './interfaces/prescriptions-service.interface';
-import {PusherService} from "../pusher/pusher";
+import {IPusherService} from "../pusher/interfaces/pusher-service.interface";
 
 @Injectable()
 export class PrescriptionsService implements IPrescriptionsService{
@@ -15,6 +15,7 @@ export class PrescriptionsService implements IPrescriptionsService{
         private readonly prescriptionsRepository: Repository<Prescription>,
         @InjectRepository(User)
         private readonly usersRepository: Repository<User>,
+        @Inject('PusherService') private readonly pusherService: IPusherService,
     ) {}
 
     async findById(id: string): Promise<Prescription> {
@@ -43,7 +44,7 @@ export class PrescriptionsService implements IPrescriptionsService{
 
         const created = await this.prescriptionsRepository.save(prescription as Prescription);
 
-        await PusherService.createPrescription(created, user.id);
+        await this.pusherService.createPrescription(created, user.id);
 
         return created;
     }

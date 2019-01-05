@@ -4,9 +4,10 @@ import { ExaminationsService } from './examinations.service';
 import { User } from '../users/entity/user.entity';
 import { Examination } from './entity/examination.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import {PusherModule} from "../pusher/pusher.module";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Examination, User])],
+  imports: [TypeOrmModule.forFeature([Examination, User]), PusherModule],
   controllers: [ExaminationsController],
   providers: [
       { provide: 'IExaminationsService', useClass: ExaminationsService }

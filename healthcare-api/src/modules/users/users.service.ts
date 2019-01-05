@@ -1,6 +1,6 @@
 
 import * as moment from 'moment';
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import {Injectable, HttpException, HttpStatus, Inject} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
 import { CreateUserDto } from './dto/createUser.dto';
@@ -9,7 +9,8 @@ import { IUsersService } from './interfaces/users-service.interface';
 import {Prescription} from "../prescriptions/entity/prescription.entity";
 import {Examination} from "../examinations/entity/examination.entity";
 import {Measurement} from "../measurements/entity/measurement.entity";
-import {PusherService} from "../pusher/pusher";
+import {PusherService} from "../pusher/pusher.service";
+import {IPusherService} from "../pusher/interfaces/pusher-service.interface";
 
 @Injectable()
 export class UsersService implements IUsersService {
@@ -22,6 +23,7 @@ export class UsersService implements IUsersService {
         private readonly examinationsRepository: Repository<Examination>,
         @InjectRepository(Measurement)
         private readonly measurementsRepository: Repository<Measurement>,
+        @Inject('PusherService') private readonly pusherService: IPusherService,
     ) {}
 
     async findAll(): Promise<User[]> {
@@ -76,7 +78,7 @@ export class UsersService implements IUsersService {
 
         const updated = await this.usersRepository.save(user);
 
-        await PusherService.updateUser(updated);
+        await this.pusherService.updateUser(updated);
 
         return updated;
     }

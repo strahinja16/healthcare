@@ -8,7 +8,6 @@ import {Prescription} from "../prescriptions/entity/prescription.entity";
 import {Examination} from "../examinations/entity/examination.entity";
 import {Measurement} from "../measurements/entity/measurement.entity";
 import {PusherModule} from 'src/modules/pusher/pusher.module';
-import {AuthModule} from "../auth/auth.module";
 
 @Module({
     imports: [TypeOrmModule.forFeature([User, Prescription, Examination, Measurement]), PusherModule],

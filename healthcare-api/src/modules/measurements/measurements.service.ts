@@ -1,12 +1,12 @@
 
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import {Injectable, HttpException, HttpStatus, Inject} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository} from 'typeorm';
 import { CreateMeasurementDto } from './dto/createMeasurement.dto';
 import { Measurement } from './entity/measurement.entity';
 import { User } from '../users/entity/user.entity';
 import { IMeasurementsService } from './interfaces/measurements-service.interface';
-import { PusherService} from "../pusher/pusher";
+import {IPusherService} from "../pusher/interfaces/pusher-service.interface";
 
 @Injectable()
 export class MeasurementsService implements IMeasurementsService {
@@ -15,6 +15,7 @@ export class MeasurementsService implements IMeasurementsService {
         private readonly measurementsRepository: Repository<Measurement>,
         @InjectRepository(User)
         private readonly usersRepository: Repository<User>,
+        @Inject('PusherService') private readonly pusherService: IPusherService,
     ) {}
 
     async findById(id: string): Promise<Measurement> {
@@ -50,7 +51,7 @@ export class MeasurementsService implements IMeasurementsService {
 
         const created =  await this.measurementsRepository.save(measurement as Measurement);
 
-        await PusherService.createMeasurement(created, user.id);
+        await this.pusherService.createMeasurement(created, user.id);
 
         return created;
     }

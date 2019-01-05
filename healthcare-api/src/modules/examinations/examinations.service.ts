@@ -1,12 +1,12 @@
 
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import {Injectable, HttpException, HttpStatus, Inject} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository} from 'typeorm';
 import { CreateExaminationDto } from './dto/createExamination.dto';
 import { Examination } from './entity/examination.entity';
 import { User } from '../users/entity/user.entity';
 import { IExaminationsService } from './interfaces/examinations-service.interface';
-import {PusherService} from '../pusher/pusher';
+import {IPusherService} from "../pusher/interfaces/pusher-service.interface";
 
 @Injectable()
 export class ExaminationsService implements IExaminationsService{
@@ -15,6 +15,7 @@ export class ExaminationsService implements IExaminationsService{
         private readonly examinationsRepository: Repository<Examination>,
         @InjectRepository(User)
         private readonly usersRepository: Repository<User>,
+        @Inject('PusherService') private readonly pusherService: IPusherService,
     ) {}
 
     async findById(id: string): Promise<Examination> {
@@ -39,7 +40,7 @@ export class ExaminationsService implements IExaminationsService{
 
         const created = await this.examinationsRepository.save(examination as Examination);
 
-        await PusherService.createExamination(created, user.id);
+        await this.pusherService.createExamination(created, user.id);
 
         return created;
     }
