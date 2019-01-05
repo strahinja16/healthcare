@@ -11,8 +11,9 @@ import Chart from '../../components/Chart';
 import { getMeasurements } from "../../thunks/charts";
 import { addMeasurement } from "../../reducers/charts";
 import { getPatient as getPatientAction } from "../../reducers/patient";
-import pusher from '../../services/pusher';
-
+import pusher from '../../services/pusher.js';
+import pusherService from '../../services/pusher';
+import eventType from '../../services/pusher/event-type';
 
 class ChartsPage extends Component {
   constructor(props) {
@@ -34,21 +35,16 @@ class ChartsPage extends Component {
     getChartsAction(id);
     getPatientAction(id);
 
-    pusher
-      .subscribe(`measurements-${id}`)
-      .bind('create', ({ measurement }) => addMeasurementPushAction(measurement));
-
-    pusher
-      .subscribe(`users-${id}`)
-      .bind('update', ({ user }) => updatePatientPushAction(user));
+    pusherService.subscribe(`measurements-${id}`, eventType.Create, addMeasurementPushAction);
+    pusherService.subscribe(`users-${id}`, eventType.Update, updatePatientPushAction);
   }
 
   componentWillUnmount() {
     const {
       match:{ params: { id } },
     } = this.props;
-    pusher.unsubscribe(`measurements-${id}`);
-    pusher.unsubscribe(`users-${id}`);
+    pusherService.unsubscribe(`measurements-${id}`);
+    pusherService.unsubscribe(`users-${id}`);
   }
 
   goBack() {
