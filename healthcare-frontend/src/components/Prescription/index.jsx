@@ -1,5 +1,5 @@
 
-import React, { Fragment } from 'react';
+import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import {
@@ -8,7 +8,6 @@ import {
 
 const Prescription = ({ prescription: { drug, hoursFrequency, note, dueDate, quantity} }) => (
   <List.Item>
-    <Fragment>
       <Label as="a" color="teal" ribbon>
        Due {moment(dueDate).format('lll')}
       </Label>
@@ -19,7 +18,6 @@ const Prescription = ({ prescription: { drug, hoursFrequency, note, dueDate, qua
         <strong> {hoursFrequency}h</strong>
       <Divider hidden />
       <List.Description>{note}</List.Description>
-    </Fragment>
   </List.Item>
 );
 

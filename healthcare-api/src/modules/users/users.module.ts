@@ -8,9 +8,19 @@ import {Prescription} from "../prescriptions/entity/prescription.entity";
 import {Examination} from "../examinations/entity/examination.entity";
 import {Measurement} from "../measurements/entity/measurement.entity";
 import {PusherModule} from 'src/modules/pusher/pusher.module';
+import {Labwork} from "../labworks/entity/labwork.entity";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([User, Prescription, Examination, Measurement]), PusherModule],
+    imports: [
+        TypeOrmModule.forFeature([
+            User, 
+            Prescription, 
+            Examination, 
+            Measurement, 
+            Labwork
+        ]), 
+        PusherModule
+    ],
     controllers: [UsersController],
     providers: [
         UsersService,

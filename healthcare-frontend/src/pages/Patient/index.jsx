@@ -14,17 +14,23 @@ import { getActivePrescriptions } from '../../thunks/prescription';
 import { examinationFinished, getExaminations } from '../../thunks/examination';
 import ExaminationList from '../../components/ExaminationList';
 import { getPatient as getPatientAction } from "../../reducers/patient";
-import pusher from "../../services/pusher";
+import pusherService from "../../services/pusher";
+import CreateLabworkModal from "../../components/CreateLabworkModal";
+import {createLabwork, getLabworks, removeLabwork} from "../../thunks/labwork";
+import LabworkList from "../../components/LabworkList";
 
 
 class PatientPage extends Component {
   constructor(props) {
     super(props);
 
+    this.modalRef = React.createRef();
+    this.openModal = this.openModal.bind(this);
     this.pushCharts = this.pushCharts.bind(this);
     this.examinationFinished = this.examinationFinished.bind(this);
     this.createPrescription = this.createPrescription.bind(this);
     this.createExamination = this.createExamination.bind(this);
+    this.getPanes = this.getPanes.bind(this);
   }
 
   componentDidMount() {
@@ -38,22 +44,26 @@ class PatientPage extends Component {
       getActivePrescriptionsAction,
       getExaminationsAction,
       updatePatientPushAction,
+      getLabworksAction,
     } = this.props;
 
     getPatientAction(id);
     getActivePrescriptionsAction(id);
+    getLabworksAction(id);
     getExaminationsAction(id);
 
-    pusher
-      .subscribe(`users-${id}`)
-      .bind('update', ({ user }) => updatePatientPushAction(user));
+    pusherService.subscribe(`users-${id}`, 'update', updatePatientPushAction);
   }
 
   componentWillUnmount() {
     const {
       match:{ params: { id } },
     } = this.props;
-    pusher.unsubscribe(`users-${id}`);
+    pusherService.unsubscribe(`users-${id}`);
+  }
+
+  openModal() {
+    this.modalRef.current.open();
   }
 
   pushCharts() {
@@ -77,14 +87,19 @@ class PatientPage extends Component {
     examinationFinishedAction(id);
   }
 
-  render() {
-    const { patient, prescriptions, examinations } = this.props;
-    if (!patient || !prescriptions || !examinations) {
-      return null;
-    }
+  getPanes() {
+    const {
+      prescriptions,
+      examinations,
+      labworks,
+      match:{ params: { id } },
+      createLabworkAction,
+      removeLabworkAction,
+    } = this.props;
 
     const noBorder = { border: '0px' };
-    const panes = [
+
+    return [
       {
         menuItem: 'Prescriptions',
         render: () => (
@@ -111,7 +126,31 @@ class PatientPage extends Component {
           </Tab.Pane>
         ),
       },
+      {
+        menuItem: 'Labworks',
+        render: () => (
+          <Tab.Pane
+            attached={false}
+            style={noBorder}
+          >
+            <LabworkList createLabwork={this.openModal} removeLabwork={removeLabworkAction} labworks={labworks}/>
+            <CreateLabworkModal ref={this.modalRef} createLabworkAction={createLabworkAction} id={id}/>
+          </Tab.Pane>
+        ),
+      },
     ];
+  }
+
+  render() {
+    const {
+      patient,
+      prescriptions,
+      examinations,
+      labworks,
+    } = this.props;
+    if (!patient || !prescriptions || !examinations || !labworks ) {
+      return null;
+    }
 
     return (
       <Grid columns={2} divided>
@@ -123,7 +162,7 @@ class PatientPage extends Component {
         </Grid.Column>
 
         <Grid.Column>
-          <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
+          <Tab menu={{ secondary: true, pointing: true }} panes={this.getPanes()} />
         </Grid.Column>
       </Grid>
     );
@@ -134,6 +173,7 @@ PatientPage.defaultProps = {
   patient: null,
   prescriptions: null,
   examinations: null,
+  labworks: null,
 };
 
 PatientPage.propTypes = {
@@ -142,6 +182,9 @@ PatientPage.propTypes = {
   examinationFinishedAction: PropTypes.func.isRequired,
   getActivePrescriptionsAction: PropTypes.func.isRequired,
   updatePatientPushAction: PropTypes.func.isRequired,
+  createLabworkAction: PropTypes.func.isRequired,
+  getLabworksAction: PropTypes.func.isRequired,
+  removeLabworkAction: PropTypes.func.isRequired,
   patient: PropTypes.shape({}),
   prescriptions: PropTypes.arrayOf(PropTypes.shape({})),
   examinations: PropTypes.arrayOf(PropTypes.shape({})),
@@ -150,10 +193,11 @@ PatientPage.propTypes = {
 };
 
 
-const mapStateToProps = ({ patient, prescription, examination }) => ({
+const mapStateToProps = ({ patient, prescription, examination, labwork }) => ({
   patient: patient.get('patient'),
   prescriptions: prescription.get('prescriptions'),
   examinations: examination.get('examinations'),
+  labworks: labwork.get('labworks'),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
@@ -163,6 +207,9 @@ const mapDispatchToProps = dispatch => bindActionCreators(
     getExaminationsAction: getExaminations,
     examinationFinishedAction: examinationFinished,
     updatePatientPushAction: getPatientAction,
+    createLabworkAction: createLabwork,
+    getLabworksAction: getLabworks,
+    removeLabworkAction: removeLabwork,
   },
   dispatch,
 );

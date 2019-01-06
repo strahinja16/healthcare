@@ -10,6 +10,7 @@ import patient from './patient';
 import prescription from './prescription';
 import examination from './examination';
 import charts from './charts';
+import labwork from './labwork';
 
 const persistConfig = {
   key: 'root',
@@ -25,7 +26,8 @@ const combinedReducers = combineReducers({
   patient,
   prescription,
   examination,
-  charts
+  charts,
+  labwork,
 });
 
 export default persistReducer(persistConfig, combinedReducers);
