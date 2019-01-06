@@ -1,5 +1,5 @@
 
-import React, { Fragment } from 'react';
+import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import {
@@ -10,8 +10,7 @@ const Examination = ({ examination: {appointment, showedUp, id, note}, examinati
   const today = moment().diff(appointment, 'days');
   return (
     <List.Item>
-      <Fragment>
-        <Label as="a" color="orange" ribbon>
+        <Label as="a" color="blue" ribbon>
           Scheduled for {moment(appointment).format('lll')}
         </Label>
         <Divider hidden />
@@ -19,7 +18,7 @@ const Examination = ({ examination: {appointment, showedUp, id, note}, examinati
           ? (
             <Button
               basic
-              color="orange"
+              color="blue"
               onClick={() => examinationFinished(id)}
             >Submit patient arrival ✓
             </Button>
@@ -27,7 +26,6 @@ const Examination = ({ examination: {appointment, showedUp, id, note}, examinati
           : null }
         <Divider />
         <List.Description>{note}</List.Description>
-      </Fragment>
     </List.Item>
   );
 };

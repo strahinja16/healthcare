@@ -11,6 +11,7 @@ import {Examination} from "../examinations/entity/examination.entity";
 import {Measurement} from "../measurements/entity/measurement.entity";
 import {PusherService} from "../pusher/pusher.service";
 import {IPusherService} from "../pusher/interfaces/pusher-service.interface";
+import {Labwork} from "../labworks/entity/labwork.entity";
 
 @Injectable()
 export class UsersService implements IUsersService {
@@ -23,6 +24,8 @@ export class UsersService implements IUsersService {
         private readonly examinationsRepository: Repository<Examination>,
         @InjectRepository(Measurement)
         private readonly measurementsRepository: Repository<Measurement>,
+        @InjectRepository(Labwork)
+        private readonly labworksRepository: Repository<Labwork>,
         @Inject('PusherService') private readonly pusherService: IPusherService,
     ) {}
 
@@ -52,6 +55,12 @@ export class UsersService implements IUsersService {
         const measurements = await this.measurementsRepository.find({ relations: ['user']});
         return measurements
             .filter(measurement => measurement.user.id ===  id);
+    }
+    
+    async findLabworks(id): Promise<Labwork[] | null> {
+        const labworks = await this.labworksRepository.find({ relations: ['user']});
+        return labworks
+            .filter(labwork => labwork.user.id === id);
     }
 
     async findById(id: string): Promise<User> {

@@ -58,6 +58,12 @@ export class UsersController {
         return res.status(HttpStatus.OK).json(examinations);
     }
 
+    @Get('/:id/labworks')
+    public async getUserLabworks(@Response() res, @Param() param) {
+        const labworks = await this.usersService.findLabworks(param.id);
+        return res.status(HttpStatus.OK).json(labworks);
+    }
+
     @Post()
     @UsePipes(new ValidationPipe())
     public async createUser(@Response() res, @Body() createUserDto: CreateUserDto) {

@@ -21,3 +21,7 @@ export const CREATE_EXAMINATION_ACTION = '@examination/add';
 export const CREATE_PRESCRIPTION_ACTION = '@prescription/addPrescriptions';
 export const GET_DISEASES_ACTION = '@prescription/addDiseases';
 export const GET_DRUGS_BY_DISEASE_ACTION = '@prescription/addDrugs';
+
+export const GET_LABWORKS_ACTION = '@labworks/all';
+export const CREATE_LABWORK_ACTION = '@labworks/add';
+export const REMOVE_LABWORK_ACTION = '@labworks/remove';

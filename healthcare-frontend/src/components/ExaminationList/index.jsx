@@ -11,7 +11,7 @@ const ExaminationList = ({ examinations, examinationFinished, createExamination 
   <div className={style.maxWidth}>
     <Button
       basic
-      color="orange"
+      color="blue"
       onClick={createExamination}
       content="Schedule an appointment"
       fluid

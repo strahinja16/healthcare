@@ -10,6 +10,7 @@ import Table from './Table';
 import Label from './Label';
 import Breadcrumb from './Breadcrumb';
 import ChangePassword from '../ChangePassword';
+import FileInput from './FileInput';
 
 export {
   Alert,
@@ -23,4 +24,5 @@ export {
   Label,
   Breadcrumb,
   ChangePassword,
+  FileInput,
 };
