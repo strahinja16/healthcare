@@ -4,22 +4,22 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { AuthMiddleware } from '../../common/middleware';
 import { User } from './entity/user.entity';
-import {Prescription} from "../prescriptions/entity/prescription.entity";
-import {Examination} from "../examinations/entity/examination.entity";
-import {Measurement} from "../measurements/entity/measurement.entity";
-import {PusherModule} from 'src/modules/pusher/pusher.module';
-import {Labwork} from "../labworks/entity/labwork.entity";
+import { Prescription } from '../prescriptions/entity/prescription.entity';
+import { Examination } from '../examinations/entity/examination.entity';
+import { Measurement } from '../measurements/entity/measurement.entity';
+import { PusherModule } from '../pusher/pusher.module';
+import { Labwork } from '../labworks/entity/labwork.entity';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([
-            User, 
-            Prescription, 
-            Examination, 
-            Measurement, 
+            User,
+            Prescription,
+            Examination,
+            Measurement,
             Labwork
-        ]), 
-        PusherModule
+        ]),
+        PusherModule,
     ],
     controllers: [UsersController],
     providers: [
