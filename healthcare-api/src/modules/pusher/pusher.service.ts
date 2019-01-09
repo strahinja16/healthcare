@@ -1,13 +1,14 @@
 import { Injectable} from '@nestjs/common';
-import { IPusherService} from "./interfaces/pusher-service.interface";
-import * as Pusher from "pusher";
-import {Measurement} from "../measurements/entity/measurement.entity";
-import {EventType} from "./enum/event-type.enum";
-import {User} from "../users/entity/user.entity";
-import {Prescription} from "../prescriptions/entity/prescription.entity";
-import {Examination} from "../examinations/entity/examination.entity";
-import {ConfigService} from "../config/config.service";
-import {IPusherOptions} from "./interfaces/pusher-options.interface";
+import { IPusherService} from './interfaces/pusher-service.interface';
+import * as Pusher from 'pusher';
+import { Measurement } from '../measurements/entity/measurement.entity';
+import { EventType } from './enum/event-type.enum';
+import { User } from '../users/entity/user.entity';
+import { Prescription } from '../prescriptions/entity/prescription.entity';
+import { Examination } from '../examinations/entity/examination.entity';
+import { ConfigService } from '../config/config.service';
+import { IPusherOptions } from './interfaces/pusher-options.interface';
+import { RequestedHelp } from '../requestedHelps/entity/requestedHelp.entity';
 
 @Injectable()
 export class PusherService implements IPusherService {
@@ -58,6 +59,15 @@ export class PusherService implements IPusherService {
                 `examinations-${userId}`,
                 EventType.Create,
                 { examination }
+            );
+    }
+
+    public async requestHelp(requestedHelp: Partial<RequestedHelp>): Promise<void> {
+        this.pusher
+            .trigger(
+                'sos',
+                EventType.RequestHelp,
+                { coordinates: requestedHelp.coordinates }
             );
     }
 }

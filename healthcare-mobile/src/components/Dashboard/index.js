@@ -1,16 +1,43 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Alert } from 'react-native';
 import { Content, Card, Text, Icon, Button, Row, Col } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import PropType from 'prop-types';
 import moment from 'moment';
 import LGContainer from '../common/LGContainer';
 import styles from './style';
+import { requestHelp as requestHelpApi } from '../../api/sos';
 
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
+
+    this.requestHelp = this.requestHelp.bind(this);
+    this.locationFound = this.locationFound.bind(this);
+  }
+
+  //Delete fn
+  requestHelp() {
+    // Actions.map();
+    
+    navigator.geolocation.getCurrentPosition(this.locationFound, this.getLocationError);
+  }
+
+  async locationFound(data) {
+    const { user: { id } } = this.props;
+    const { coords: { latitude, longitude } } = data;
+
+    try {
+      await requestHelpApi(id, longitude, latitude);
+      Alert.alert('Success', 'Sos signal sent. Waiting for response');
+    } catch(e) {
+      this.getLocationError(e);
+    }
+  }
+
+  getLocationError(error) {
+    Alert.alert('Error', 'Error while sending sos signal');
   }
 
   render() {
@@ -130,7 +157,7 @@ class Dashboard extends Component {
 
             <Row>
               <Col style={styles.colWithButtonStyle}>
-                <Button style={styles.buttonColStyle}>
+                <Button style={styles.buttonColStyle} onPress={this.requestHelp}>
                   <Icon name='medkit' type="FontAwesome" style={styles.helpIconStyle} />
                   <Text uppercase={false} style={styles.buttonColTextStyle}>Request help</Text>
                 </Button>

@@ -16,7 +16,8 @@ import { BloodType } from '../enum/blood-type.enum';
 import { PasswordRecovery } from '../../auth/entity/password-recovery.entity';
 import { Status } from '../enum/status.enum';
 import { CreateUserDto } from '../dto/createUser.dto';
-import {Labwork} from "../../labworks/entity/labwork.entity";
+import { Labwork } from '../../labworks/entity/labwork.entity';
+import { RequestedHelp } from '../../requestedHelps/entity/requestedHelp.entity';
 
 @Entity({
   name: 'users',
@@ -121,6 +122,9 @@ export class User {
 
     @OneToMany(type => Labwork, labwork => labwork.user)
     labworks: Labwork[];
+
+    @OneToMany(type => RequestedHelp, requestedHelp => requestedHelp.user)
+    requestedHelps: RequestedHelp[];
 
     @CreateDateColumn({ type: 'timestamp' })
     createdAt: Date;
