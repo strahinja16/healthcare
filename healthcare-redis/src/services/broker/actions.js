@@ -73,9 +73,9 @@ module.exports = {
 
       const { data } = await getDrugsForDisease(name);
 
-        if(data.length !== 0) {
-            await diseaseService.setDrugsForDisease(name, data);
-        }
+      if(data.length !== 0) {
+          await diseaseService.setDrugsForDisease(name, data);
+      }
 
       return data;
     } catch (e) {
