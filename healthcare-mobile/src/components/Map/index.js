@@ -7,6 +7,7 @@ import MapViewDirections from 'react-native-maps-directions';
 import LGContainer from '../common/LGContainer';
 import styles from './styles';
 import { getCurrentLocation } from '../../util/getCurrentPosition';
+import { confirmHelp as confirmHelpApi } from '../../api/sos';
 import config from '../../config/googleMaps';
 
 class Map extends Component {
@@ -95,13 +96,18 @@ class Map extends Component {
     }
   }
 
-  directionsReady(result) {
+  async directionsReady(result) {
     const { distance, coordinates, duration } = result;
+    const { channel } = this.props;
 
     Alert.alert('Info', `Distance: ${distance.toFixed(3)} km, estimated time: ${duration.toFixed(2)} min`);
-    // this.setState({ distance, duration });
     
     this.mapView.fitToCoordinates(coordinates);
+
+    try {
+      await confirmHelpApi(distance.toFixed(3), duration.toFixed(2), channel);
+    } catch(e) {
+    }
   }
 
   render() {
@@ -139,7 +145,7 @@ class Map extends Component {
 
 Map.propTypes = {
   helpCoordinates: PropType.shape({}).isRequired,
-  user: PropType.string.isRequired,
+  channel: PropType.string.isRequired,
 };
 
 export default Map;

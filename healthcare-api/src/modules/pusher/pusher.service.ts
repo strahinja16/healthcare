@@ -9,6 +9,7 @@ import { Examination } from '../examinations/entity/examination.entity';
 import { ConfigService } from '../config/config.service';
 import { IPusherOptions } from './interfaces/pusher-options.interface';
 import { RequestedHelp } from '../requestedHelps/entity/requestedHelp.entity';
+import { ConfirmHelpDto } from '../requestedHelps/dto/confirmHelpDto';
 
 @Injectable()
 export class PusherService implements IPusherService {
@@ -62,13 +63,24 @@ export class PusherService implements IPusherService {
             );
     }
 
-    public async requestHelp(requestedHelp: RequestedHelp): Promise<void> {
+    public async requestHelp(requestedHelp: RequestedHelp, channel: string): Promise<void> {
         const coordinates = JSON.parse(requestedHelp.coordinates.toString());
-        const data = { coordinates, user: requestedHelp.user.id };
+        const data = { coordinates, channel };
         this.pusher
             .trigger(
                 'sos',
                 EventType.RequestHelp,
+                { data },
+            );
+    }
+
+    public async confirmHelp(confirmHelpDto: ConfirmHelpDto): Promise<void> {
+        const { distance, duration, channel } = confirmHelpDto;
+        const data = { distance, duration };
+        this.pusher
+            .trigger(
+                'sos-requested',
+                `help-${channel}`,
                 { data },
             );
     }

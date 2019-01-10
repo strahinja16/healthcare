@@ -4,18 +4,18 @@ import PropType from 'prop-types';
 import { connect } from 'react-redux';
 import Map from '../../components/Map';
 
-const MapPage = ({ coordinates, user }) => (
-  <Map helpCoordinates={coordinates} user={user} />
+const MapPage = ({ coordinates, channel }) => (
+  <Map helpCoordinates={coordinates} channel={channel} />
 );
 
 MapPage.propTypes = {
   coordinates: PropType.shape({}).isRequired,
-  user: PropType.string.isRequired,
+  channel: PropType.string.isRequired,
 };
 
 const mapStateToProps = ({ sos }) => ({
   coordinates: sos.get('coordinates'),
-  user: sos.get('user'),
+  channel: sos.get('channel'),
 });
 
 export default connect(mapStateToProps)(MapPage);

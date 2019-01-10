@@ -9,7 +9,7 @@ export const requestedHelp = createAction(REQUESTED_HELP);
 // SET INITIAL STATE
 const INITIAL_STATE = Map({
   coordinates: null,
-  user: null,
+  channel: null,
 });
 
 // WRITE HANDLERS FOR ACTIONS
@@ -18,12 +18,12 @@ export default handleActions(
     [REQUESTED_HELP](
       state,
       {
-        payload: { coordinates, user },
+        payload: { coordinates, channel },
       },
     ) {
       return state.merge({
         coordinates,
-        user,
+        channel,
       });
     },
   },

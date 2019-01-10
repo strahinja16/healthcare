@@ -6,6 +6,7 @@ import { CreateRequestedHelpDto } from './dto/createRequestedHelpDto';
 import { IRequestedHelpsService } from './interfaces/requestedHelps-service.interface';
 import { User } from '../users/entity/user.entity';
 import { IPusherService } from '../pusher/interfaces/pusher-service.interface';
+import {ConfirmHelpDto} from "./dto/confirmHelpDto";
 
 @Injectable()
 export class RequestedHelpsService implements IRequestedHelpsService {
@@ -38,8 +39,12 @@ export class RequestedHelpsService implements IRequestedHelpsService {
             user,
         };
 
-        await this.pusherService.requestHelp(requestedHelp);
+        await this.pusherService.requestHelp(requestedHelp, createRequestedHelpDto.channel);
 
         return await this.requestedHelpsRepository.save(requestedHelp as RequestedHelp);
+    }
+
+    async confirmRequestedHelp(confirmHelpDto: ConfirmHelpDto): Promise<void> {
+        await this.pusherService.confirmHelp(confirmHelpDto);
     }
 }

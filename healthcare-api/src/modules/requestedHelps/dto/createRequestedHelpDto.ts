@@ -6,4 +6,7 @@ export class CreateRequestedHelpDto {
 
     @IsString()
     readonly userId: string;
+
+    @IsString()
+    readonly channel: string;
 }
