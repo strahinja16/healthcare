@@ -13,8 +13,8 @@ import PrescriptionsPage from '../pages/Prescriptions';
 import PrescriptionDetailsPage from '../pages/PrescriptionDetails';
 import DiseasePage from '../pages/Disease';
 import SideEffectsPage from '../pages/SideEffects';
+import MapPage from '../pages/Map';
 import ForgotPassword from '../components/ForgotPassword';
-import Map from '../components/Map';
 
 const styles = {
   scenesStyle: {
@@ -129,7 +129,7 @@ class RouterComponent extends Component {
             <Scene
               title="Map"
               key="map"
-              component={Map}
+              component={MapPage}
             />
           </Stack>
         </Stack>

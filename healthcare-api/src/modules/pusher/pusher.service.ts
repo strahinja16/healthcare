@@ -62,12 +62,14 @@ export class PusherService implements IPusherService {
             );
     }
 
-    public async requestHelp(requestedHelp: Partial<RequestedHelp>): Promise<void> {
+    public async requestHelp(requestedHelp: RequestedHelp): Promise<void> {
+        const coordinates = JSON.parse(requestedHelp.coordinates.toString());
+        const data = { coordinates, user: requestedHelp.user.id };
         this.pusher
             .trigger(
                 'sos',
                 EventType.RequestHelp,
-                { coordinates: requestedHelp.coordinates }
+                { data },
             );
     }
 }

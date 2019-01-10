@@ -1,7 +1,8 @@
 {
-  "appId":"",
   "key":"",
-  "secret":"",
-  "cluster":"",
-  "encrypted":true
+  "additionalConfig": {
+    "secret":"",
+    "cluster":"",
+    "encrypted": "true"
+  }
 }

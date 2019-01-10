@@ -7,6 +7,7 @@ import moment from 'moment';
 import LGContainer from '../common/LGContainer';
 import styles from './style';
 import { requestHelp as requestHelpApi } from '../../api/sos';
+import pusherService from '../../services/pusher';
 
 
 class Dashboard extends Component {

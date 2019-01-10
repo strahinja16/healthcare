@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Alert } from 'react-native';
 import PropType from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { requestedHelp as requestedHelpAction } from '../../reducers/sos';
 import pusherService from '../../services/pusher';
+import { Actions } from 'react-native-router-flux';
+import { getDistanceBetweenPoints } from '../../util/getDistanceBetweenCoords';
 
 class RequestHelpSubscribe extends Component {
 
@@ -12,19 +14,47 @@ class RequestHelpSubscribe extends Component {
     super(props);
 
     this.requestedHelpHandler = this.requestedHelpHandler.bind(this);
+    this.helpConfirmed = this.helpConfirmed.bind(this);
   }
 
   requestedHelpHandler(data) {
-    //Data validation
-    //Confirm help
+    navigator.geolocation.getCurrentPosition((locationData) => this.locationFound(locationData, data), this.getLocationError);
+  }
 
+  async locationFound(locationData, helpData) {
+    const { coords: { latitude, longitude } } = locationData;
+
+    const { coordinates } = helpData;
+
+    const d = getDistanceBetweenPoints(latitude, longitude, coordinates.latitude, coordinates.longitude);
+    const distance = 5;
+
+    if(d < distance && d !== 0) {
+      Alert.alert('Help requested', 'Check the location?',
+      [
+        {text: 'Cancel'},
+        {text: 'Yes', onPress: () => this.helpConfirmed(helpData)},
+      ],
+      { cancelable: false });
+    }
+  }
+
+  getLocationError(error) {
+    Alert.alert('Error', 'Error while getting location');
+  }
+
+  helpConfirmed(data) {
     const { requestedHelpPushAction } = this.props;
 
+    console.log(data);
+
     requestedHelpPushAction(data);
+
+    Actions.map();
   }
 
   componentDidMount() {
-    pusherService.subscribe('sos', 'request-help', this.requestedHelpHandler);
+    const ch = pusherService.subscribe('sos', 'request-help', this.requestedHelpHandler);
   }
 
   componentWillUnmount() {
