@@ -21,6 +21,7 @@
     "react-native-fontawesome": "^5.7.0",
     "react-native-linear-gradient": "^2.5.3",
     "react-native-maps": "^0.22.1",
+    "react-native-maps-directions": "^1.6.0",
     "react-native-router-flux": "^4.0.6",
     "react-native-vector-icons": "^6.1.0",
     "react-redux": "^5.1.1",

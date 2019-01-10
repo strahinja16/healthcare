@@ -57,4 +57,4 @@ buck-out/
 
 # Custom
 /src/config/pusher.json
-/src/config/googleGeoApi.xml
+/src/config/googleMaps.json

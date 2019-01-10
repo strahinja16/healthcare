@@ -11,7 +11,6 @@ class PusherService {
     const pusherChannel = this.pusher.subscribe(channel);
 
     pusherChannel.bind(event, ({ data }) => callback(data));
-    // pusherChannel.bind(event, ({ data }) => callback(data));
 
     return pusherChannel;
   }
