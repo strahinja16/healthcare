@@ -13,6 +13,7 @@ import PrescriptionsPage from '../pages/Prescriptions';
 import PrescriptionDetailsPage from '../pages/PrescriptionDetails';
 import DiseasePage from '../pages/Disease';
 import SideEffectsPage from '../pages/SideEffects';
+import MapPage from '../pages/Map';
 import ForgotPassword from '../components/ForgotPassword';
 
 const styles = {
@@ -124,6 +125,11 @@ class RouterComponent extends Component {
               title="Drug side effects"
               key="sideEffects"
               component={SideEffectsPage}
+            />
+            <Scene
+              title="Map"
+              key="map"
+              component={MapPage}
             />
           </Stack>
         </Stack>

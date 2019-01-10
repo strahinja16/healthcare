@@ -1,0 +1,8 @@
+{
+  "key":"",
+  "additionalConfig": {
+    "secret":"",
+    "cluster":"",
+    "encrypted": "true"
+  }
+}

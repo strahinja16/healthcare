@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, View, AsyncStorage, Text } from 'react-native';
+import { Alert, View, Text } from 'react-native';
 import {
   Content, Spinner, Form, Item, Input, Card, Button as ButtonBase,
 } from 'native-base';

@@ -7,9 +7,10 @@ import { ConfigModule } from './modules/config/config.module';
 import { PrescriptionsModule } from './modules/prescriptions/prescriptions.module';
 import { ExaminationsModule } from './modules/examinations/examinations.module';
 import { MeasurementsModule } from './modules/measurements/measurements.module';
-import {MoleculerModule} from "./modules/moleculer/moleculer.module";
+import { MoleculerModule } from './modules/moleculer/moleculer.module';
 import { PusherModule } from './modules/pusher/pusher.module';
 import { LabworksModule } from './modules/labworks/labworks.module';
+import { RequestedHelpsModule } from './modules/requestedHelps/requestedHelps.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { LabworksModule } from './modules/labworks/labworks.module';
       MoleculerModule,
       PusherModule,
       LabworksModule,
+      RequestedHelpsModule,
   ],
 })
 export class AppModule {}

@@ -5,6 +5,7 @@ import immutableTransform from 'redux-persist-transform-immutable';
 import storage from 'redux-persist/lib/storage';
 import auth from './auth';
 import medical from './medical';
+import sos from './sos';
 
 const persistConfig = {
   key: 'root',
@@ -16,6 +17,7 @@ const persistConfig = {
 const combinedReducers = combineReducers({
   auth,
   medical,
+  sos,
 });
 
 export default persistReducer(persistConfig, combinedReducers);
