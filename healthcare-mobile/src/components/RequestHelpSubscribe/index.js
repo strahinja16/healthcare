@@ -29,7 +29,7 @@ class RequestHelpSubscribe extends Component {
     const d = getDistanceBetweenPoints(latitude, longitude, coordinates.latitude, coordinates.longitude);
     const distance = 5;
 
-    if(d < distance && d !== 100) {
+    if(d < distance && d !== 0) {
       Alert.alert('Help requested', 'Check the location?',
       [
         {text: 'Cancel'},
