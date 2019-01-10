@@ -40,7 +40,9 @@ module.exports = {
 
       const { data } = await getSideEffectsByDrugName(drugName);
 
-      drugService.setSideEffectsForDrug(drugName, data);
+      if(data.length !== 0) {
+          drugService.setSideEffectsForDrug(drugName, data);
+      }
 
       return data;
   } catch (e) {
@@ -71,7 +73,9 @@ module.exports = {
 
       const { data } = await getDrugsForDisease(name);
 
-      await diseaseService.setDrugsForDisease(name, data);
+      if(data.length !== 0) {
+          await diseaseService.setDrugsForDisease(name, data);
+      }
 
       return data;
     } catch (e) {
