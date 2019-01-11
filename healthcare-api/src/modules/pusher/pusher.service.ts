@@ -32,7 +32,7 @@ export class PusherService implements IPusherService {
             .trigger(
                 `measurements-${userId}`,
                 EventType.Create,
-                { measurement }
+                { data: measurement }
             );
     }
 
@@ -41,7 +41,7 @@ export class PusherService implements IPusherService {
             .trigger(
                 `users-${user.id}`,
                 EventType.Update,
-                { user }
+                { data: user }
             );
     }
 
@@ -50,7 +50,7 @@ export class PusherService implements IPusherService {
             .trigger(
                 `prescriptions-${userId}`,
                 EventType.Create,
-                { prescription }
+                { data: prescription }
             );
     }
 
@@ -59,7 +59,7 @@ export class PusherService implements IPusherService {
             .trigger(
                 `examinations-${userId}`,
                 EventType.Create,
-                { examination }
+                { data: examination }
             );
     }
 

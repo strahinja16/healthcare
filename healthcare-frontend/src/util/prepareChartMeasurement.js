@@ -67,7 +67,7 @@ const prepareTemperatureMeasurements = (measurements) => ({
       {
         label: 'Temperature ( C )',
         backgroundColor: 'rgba(10,100,200,0.5)',
-        data: measurements.map(item => parseInt(item, 10)),
+        data: measurements.map(item => parseFloat(item)),
       },
     ], labels: Array.apply(null, {length: measurements.length}).map(Number.call, Number)
   },
