@@ -1,33 +1,30 @@
-const redis = require('./');
+const redisFacade = require('./');
 const { getSideEffectsByDrugName } = require('api/drug');
 
-function setExpirationForKey(key) {
-    redis.expire(key, 60 * 60);
-}
-
 class DrugService {
+    constructor() {
+        this.keyDuration = 60;
+    }
+
     generateKey(key) {
         return `drugs:${key}:side-effects`;
     }
 
     async setSideEffectsForDrug(key, drugs) {
         const k = this.generateKey(key);
-        await redis.sadd(k, drugs);
-        setExpirationForKey(k);
+
+        await redisFacade.addMembersToSet(k, drugs, this.keyDuration);
     }
 
     async getSideEffectsForDrug(key) {
         const k = this.generateKey(key);
-        setExpirationForKey(k);
-        return await redis.smembers(k);
+
+        return await redisFacade.getAllSetMembers(k, this.keyDuration);
     }
 
     async refreshAllDrugSideEffects() {
-        const keys = await redis.keys(this.generateKey('*'));
-        keys.forEach(async (key) => {
-            const ss = key.split(':');
-            const drugName = ss[1];
-
+        const drugNames = await redisFacade.getAllKeysByKey(this.generateKey('*'));
+        drugNames.forEach(async (drugName) => {
             const { data } = await getSideEffectsByDrugName(drugName);
 
             this.setSideEffectsForDrug(drugName, data);

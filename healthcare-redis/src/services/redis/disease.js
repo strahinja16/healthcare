@@ -1,14 +1,14 @@
-const redis = require('./');
+const redisFacade = require('./');
 const {
     getDiseaseByName,
     getDrugsForDisease,
 } = require('api/disease');
 
-function setExpirationForKey(key) {
-    redis.expire(key, 60 * 60);
-}
-
 class DiseaseService {
+    constructor() {
+        this.keyDuration = 60;
+    }
+
     generateKeyForDisease(key) {
         return `diseases:${key}:name`;
     }
@@ -19,46 +19,40 @@ class DiseaseService {
 
     async setDisease(key, disease) {
         const k = this.generateKeyForDisease(key);
-        await redis.hmset(k, disease);
-        setExpirationForKey(k);
+
+        await redisFacade.setHashValue(k, disease, this.keyDuration);
     }
 
     async getDisease(key) {
         const k = this.generateKeyForDisease(key);
-        setExpirationForKey(k);
-        return await redis.hgetall(k);
+
+        return await redisFacade.getHashValue(k, this.keyDuration);
     }
 
     async setDrugsForDisease(key, drugs) {
         const k = this.generateKeyForDrugs(key);
-        await redis.sadd(k, drugs);
-        setExpirationForKey(k);
+
+        await redisFacade.addMembersToSet(k, drugs, this.keyDuration);
     }
 
     async getDrugsForDisease(key) {
         const k = this.generateKeyForDrugs(key);
-        setExpirationForKey(k);
-        return await redis.smembers(k);
+
+        return await redisFacade.getAllSetMembers(k, this.keyDuration);
     }
 
     async refreshAllDiseasesData() {
-        const keys = await redis.keys(this.generateKeyForDisease('*'));
-        keys.forEach(async (key) => {
-            const ss = key.split(':');
-            const name = ss[1];
-
+        const names = await redisFacade.getAllKeysByKey(this.generateKeyForDisease('*'));
+        names.forEach(async (name) => {
             const { data } = await getDiseaseByName(name);
 
-            this.setDisease(name, data.disease);
+            this.setDisease(name, data);
         });
     }
 
     async refreshAllDiseaseDrugs() {
-        const keys = await redis.keys(this.generateKeyForDrugs('*'));
-        keys.forEach(async (key) => {
-            const ss = key.split(':');
-            const name = ss[1];
-
+        const names = await redisFacade.getAllKeysByKey(this.generateKeyForDrugs('*'));
+        names.forEach(async (name) => {
             const { data } = await getDrugsForDisease(name);
 
             this.setDrugsForDisease(name, data);
