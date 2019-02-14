@@ -41,7 +41,7 @@ class LGContainer extends Component {
         end={{ x: 0.5, y: 1 }}
         locations={[0.0, 0.99]}
         colors={['#56b1d2', '#56e5a6']}
-        style={[styles.linearGradient, style, { paddingTop }]}
+        style={[styles.linearGradient, { paddingTop }, style]}
       >
         {children}
       </LinearGradient>
