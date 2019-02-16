@@ -24,7 +24,6 @@ export class LabworksController {
     @UseInterceptors(FileInterceptor('file', { dest: 'uploads/'}))
     @UsePipes(new ValidationPipe())
     public async createLabworks(@UploadedFile() file, @Body() body: CreateLabworkDto,  @Response() res) {
-        console.log(file);
         const labwork = await this.labworksService.create(file, body);
         return res.status(HttpStatus.OK).json(labwork);
     }

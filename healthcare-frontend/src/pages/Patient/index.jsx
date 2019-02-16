@@ -1,36 +1,40 @@
 
-import React, { Component } from 'react';
+import React, {Component, Fragment} from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
-  Grid, Tab, Divider, Button,
+  Grid, Divider, Button,
 } from 'semantic-ui-react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getPatient } from '../../thunks/patient';
 import PatientProfile from '../../components/PatientProfile';
-import PrescriptionList from '../../components/PrescriptionList';
 import { getActivePrescriptions } from '../../thunks/prescription';
 import { examinationFinished, getExaminations } from '../../thunks/examination';
-import ExaminationList from '../../components/ExaminationList';
 import { getPatient as getPatientAction } from "../../reducers/patient";
 import pusherService from "../../services/pusher";
-import CreateLabworkModal from "../../components/CreateLabworkModal";
 import {createLabwork, getLabworks, removeLabwork} from "../../thunks/labwork";
-import LabworkList from "../../components/LabworkList";
+import Segment from "../../components/elements/Segment";
+import StrategyContext from "../../strategy";
+import PANES from '../../strategy/panes';
 
 
 class PatientPage extends Component {
   constructor(props) {
     super(props);
 
-    this.modalRef = React.createRef();
+    this.state = {
+      pane: null,
+    };
+
     this.openModal = this.openModal.bind(this);
     this.pushCharts = this.pushCharts.bind(this);
     this.examinationFinished = this.examinationFinished.bind(this);
     this.createPrescription = this.createPrescription.bind(this);
     this.createExamination = this.createExamination.bind(this);
-    this.getPanes = this.getPanes.bind(this);
+    this.createLabwork = this.createLabwork.bind(this);
+    this.renderPane = this.renderPane.bind(this);
+    this.setPane = this.setPane.bind(this);
   }
 
   componentDidMount() {
@@ -53,6 +57,15 @@ class PatientPage extends Component {
     getExaminationsAction(id);
 
     pusherService.subscribe(`users-${id}`, 'update', updatePatientPushAction);
+  }
+
+  componentWillReceiveProps() {
+    const { prescriptions } = this.props;
+    const props = {
+      createPrescription: this.createPrescription,
+      prescriptions,
+    };
+    this.setPane(PANES.Prescriptions, props);
   }
 
   componentWillUnmount() {
@@ -81,64 +94,42 @@ class PatientPage extends Component {
     push(`${pathname}/examination`);
   }
 
+  createLabwork() {
+    const { history: { location: { pathname }, push } } = this.props;
+    push(`${pathname}/labwork`);
+  }
+
   examinationFinished(id) {
     const { examinationFinishedAction } = this.props;
 
     examinationFinishedAction(id);
   }
 
-  getPanes() {
-    const {
+  setPane(type, props) {
+    this.setState({
+      pane: {
+        type,
+        props,
+      }
+    });
+  }
+
+  renderPane() {
+    const { pane } = this.state;
+    const { prescriptions } = this.props;
+
+    if (pane) {
+      const { type, props } = pane;
+      const strategyContext = new StrategyContext(type, props);
+      return strategyContext.getPane();
+    }
+
+    const props = {
+      createPrescription: this.createPrescription,
       prescriptions,
-      examinations,
-      labworks,
-      match:{ params: { id } },
-      createLabworkAction,
-      removeLabworkAction,
-    } = this.props;
-
-    const noBorder = { border: '0px' };
-
-    return [
-      {
-        menuItem: 'Prescriptions',
-        render: () => (
-          <Tab.Pane attached={false} style={noBorder}>
-            <PrescriptionList
-              createPrescription={this.createPrescription}
-              prescriptions={prescriptions}
-            />
-          </Tab.Pane>
-        ),
-      },
-      {
-        menuItem: 'Examination',
-        render: () => (
-          <Tab.Pane
-            attached={false}
-            style={noBorder}
-          >
-            <ExaminationList
-              createExamination={this.createExamination}
-              examinationFinished={this.examinationFinished}
-              examinations={examinations}
-            />
-          </Tab.Pane>
-        ),
-      },
-      {
-        menuItem: 'Labworks',
-        render: () => (
-          <Tab.Pane
-            attached={false}
-            style={noBorder}
-          >
-            <LabworkList createLabwork={this.openModal} removeLabwork={removeLabworkAction} labworks={labworks}/>
-            <CreateLabworkModal ref={this.modalRef} createLabworkAction={createLabworkAction} id={id}/>
-          </Tab.Pane>
-        ),
-      },
-    ];
+    };
+    const strategyContext = new StrategyContext(PANES.Prescriptions, props);
+    return strategyContext.getPane();
   }
 
   render() {
@@ -147,24 +138,76 @@ class PatientPage extends Component {
       prescriptions,
       examinations,
       labworks,
+      removeLabworkAction,
     } = this.props;
     if (!patient || !prescriptions || !examinations || !labworks ) {
       return null;
     }
 
-    return (
-      <Grid columns={2} divided>
-        <Grid.Column>
-          <PatientProfile patient={patient} />
-          <Divider hidden />
-          <Button basic color="black" fluid onClick={() => this.pushCharts()}>View more...</Button>
-          <Divider />
-        </Grid.Column>
 
-        <Grid.Column>
-          <Tab menu={{ secondary: true, pointing: true }} panes={this.getPanes()} />
-        </Grid.Column>
-      </Grid>
+    return (
+      <Fragment>
+        <Grid columns={2} divided>
+          <Grid.Column>
+            <PatientProfile patient={patient} />
+            <Divider hidden />
+            <Button basic color="black" fluid onClick={() => this.pushCharts()}>View more...</Button>
+            <Divider />
+          </Grid.Column>
+
+          <Grid.Column>
+            <div style={{ display: 'flex'}}>
+              <div style={{ margin: 'auto', display: 'inline'}}>
+                <Button
+                  basic
+                  color="teal"
+                  content="Prescriptions"
+                  onClick={() => {
+                    const props = {
+                      createPrescription: this.createPrescription,
+                      prescriptions,
+                    };
+                    this.setPane(PANES.Prescriptions, props);
+                  }}
+                />
+              </div>
+              <div style={{ margin: 'auto', display: 'inline'}}>
+                <Button
+                  basic
+                  color="blue"
+                  content="Examinations"
+                  onClick={() => {
+                    const props = {
+                      createExamination: this.createExamination,
+                      examinationFinished: this.examinationFinished,
+                      examinations,
+                    };
+                    this.setPane(PANES.Examinations, props);
+                  }}
+                />
+              </div>
+              <div style={{ margin: 'auto', display: 'inline'}}>
+                <Button
+                  content="Labworks"
+                  basic
+                  color="purple"
+                  onClick={() => {
+                    const props = {
+                      createLabwork: this.createLabwork,
+                      removeLabwork: removeLabworkAction,
+                      labworks,
+                    };
+                    this.setPane(PANES.Labworks, props);
+                  }}
+                />
+              </div>
+            </div>
+            <Segment>
+              {this.renderPane()}
+            </Segment>
+          </Grid.Column>
+        </Grid>
+      </Fragment>
     );
   }
 }

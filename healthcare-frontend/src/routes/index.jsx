@@ -9,6 +9,7 @@ import Home from '../pages/Home';
 import Patient from '../pages/Patient';
 import CreatePrescriptionPage from '../pages/CreatePrescriptionPage';
 import CreateExaminationPage from '../pages/CreateExaminationPage';
+import CreateLabwork from '../pages/CreateLabwork';
 import Charts from '../pages/Charts';
 
 const dynamicImport = loader =>
@@ -24,6 +25,7 @@ const LoggedInList = ({ isAdmin }) => (
     <Route exact path="/patient/:id" component={Patient} />
     <Route exact path="/patient/:id/prescription" component={CreatePrescriptionPage} />
     <Route exact path="/patient/:id/examination" component={CreateExaminationPage} />
+    <Route exact path="/patient/:id/labwork" component={CreateLabwork} />
     <Route exact path="/patient/:id/charts" component={Charts} />
     <Route path="/logout" component={dynamicImport(() => import('../components/Logout'))} />
     <Route path="/" component={Home} />
